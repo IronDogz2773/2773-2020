@@ -17,5 +17,5 @@ package frc.robot;
  */
 public final class Constants {
     public static double pi = 3.141592;
-    public static int x = 74;
+    public static int x = 76;
 }
