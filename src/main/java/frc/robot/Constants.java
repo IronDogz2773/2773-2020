@@ -16,6 +16,6 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static double pi = 3.14159;
+    public static double pi = 3.141592;
     public static int x = 74;
 }
