@@ -37,6 +37,8 @@ public class RobotContainer {
 
   public static Joystick joy = new Joystick(Constants.joyPort);
 
+  public final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+
 
 
   /**
