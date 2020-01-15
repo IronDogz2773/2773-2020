@@ -27,6 +27,7 @@ public class ShooterSubsystem extends SubsystemBase {
     //TODO start spinning motor
   }
 
+  //encoder tells me the speed is right if true
   public boolean checkSpinSpeed() {
     //TODO check speed
     return false;
