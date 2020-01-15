@@ -14,6 +14,7 @@ import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -29,6 +30,8 @@ public class RobotContainer {
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
+
+  public final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
   private final DriveManuallyCommand driveMan = new DriveManuallyCommand(driveSubsystem);
 
