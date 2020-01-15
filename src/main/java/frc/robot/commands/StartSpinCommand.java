@@ -41,6 +41,13 @@ public class StartSpinCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    if (shooter.checkSpinSpeed())
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
   }
 }
