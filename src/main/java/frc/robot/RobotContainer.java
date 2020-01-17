@@ -12,11 +12,13 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.StartSpinCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -34,11 +36,12 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final DriveManuallyCommand driveMan = new DriveManuallyCommand(driveSubsystem);
-  
+  private final StartSpinCommand startSpin = new StartSpinCommand(shooterSubsystem);
+
   public static Joystick joy = new Joystick(Constants.joyPort);
 
   
-
+  
 
 
   /**
@@ -57,6 +60,8 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    JoystickButton spinButton = new JoystickButton(joy, Constants.spinButton);
+    spinButton.whenPressed(startSpin);
   }
 
 
