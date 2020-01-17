@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.StartSpinCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -34,12 +35,9 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final DriveManuallyCommand driveMan = new DriveManuallyCommand(driveSubsystem);
+  private final StartSpinCommand spinCmd = new StartSpinCommand(shooterSubsystem);
   
   public static Joystick joy = new Joystick(Constants.joyPort);
-
-  
-
-
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -48,6 +46,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     driveSubsystem.setDefaultCommand(driveMan);
+    // TODO give remaining subsystems default commands
   }
 
   /**

@@ -7,10 +7,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class DriveManuallyCommand extends CommandBase {
 
      private final DriveSubsystem driveSubsystem;
+     private double speed;
+     private double rot;
 
     public DriveManuallyCommand(DriveSubsystem subsystem){
         driveSubsystem = subsystem;
-        addRequirements(subsystem); //have to have this
+        addRequirements(subsystem);
     }
 
     @Override
@@ -20,8 +22,10 @@ public class DriveManuallyCommand extends CommandBase {
 
     @Override
     public void execute(){
-        double speed = -RobotContainer.joy.getY();
-        double rot = RobotContainer.joy.getZ();
+        if(Math.abs(RobotContainer.joy.getY()) > .15)
+            speed = -RobotContainer.joy.getY();
+        if(Math.abs(RobotContainer.joy.getZ()) > .15)
+            rot = RobotContainer.joy.getZ();
         driveSubsystem.manDrive(speed, rot);
     }
 
