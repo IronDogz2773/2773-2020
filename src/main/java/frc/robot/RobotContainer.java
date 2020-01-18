@@ -36,13 +36,9 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final DriveManuallyCommand driveMan = new DriveManuallyCommand(driveSubsystem);
-  private final StartSpinCommand startSpin = new StartSpinCommand(shooterSubsystem);
-
+  private final StartSpinCommand spinCmd = new StartSpinCommand(shooterSubsystem);
+  
   public static Joystick joy = new Joystick(Constants.joyPort);
-
-  
-  
-
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -51,6 +47,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     driveSubsystem.setDefaultCommand(driveMan);
+    // TODO give remaining subsystems default commands
   }
 
   /**
@@ -61,7 +58,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     JoystickButton spinButton = new JoystickButton(joy, Constants.spinButton);
-    spinButton.whenPressed(startSpin);
+    spinButton.whenPressed(spinCmd);
   }
 
 
