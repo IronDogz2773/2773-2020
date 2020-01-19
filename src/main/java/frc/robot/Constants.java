@@ -27,4 +27,8 @@ public final class Constants {
     //USB
     public static int joyPort = 0;
     public static int gamePort = 1;
+    
+
+    // Buttons
+    public static int spinButton = 100;
 }
