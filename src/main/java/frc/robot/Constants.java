@@ -17,5 +17,18 @@ package frc.robot;
  */
 public final class Constants {
     public static double pi = 3.141592;
-    public static int x = 76;
+    
+    //PWM
+    public static int leftFrontPort = 0;
+    public static int rightFrontPort = 1;
+    public static int leftBackPort = 2;
+    public static int rightBackPort = 3;
+
+    //USB
+    public static int joyPort = 0;
+    public static int gamePort = 1;
+    
+
+    // Buttons
+    public static int spinButton = 100;
 }

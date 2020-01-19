@@ -8,10 +8,17 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.StartSpinCommand;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -21,11 +28,17 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  public final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private final DriveSubsystem driveSubsystem = new DriveSubsystem();
+  public final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
-
+  private final DriveManuallyCommand driveMan = new DriveManuallyCommand(driveSubsystem);
+  private final StartSpinCommand spinCmd = new StartSpinCommand(shooterSubsystem);
+  
+  public static Joystick joy = new Joystick(Constants.joyPort);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -33,6 +46,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    driveSubsystem.setDefaultCommand(driveMan);
+    // TODO give remaining subsystems default commands
   }
 
   /**
@@ -42,6 +57,8 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    JoystickButton spinButton = new JoystickButton(joy, Constants.spinButton);
+    spinButton.whenPressed(spinCmd);
   }
 
 
