@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  public static Joystick joy = new Joystick(Constants.joyPort);
 
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   public final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
@@ -35,10 +36,8 @@ public class RobotContainer {
   public final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private final DriveManuallyCommand driveMan = new DriveManuallyCommand(driveSubsystem);
+  private final DriveManuallyCommand driveMan = new DriveManuallyCommand(driveSubsystem, joy);
   private final StartSpinCommand spinCmd = new StartSpinCommand(shooterSubsystem);
-  
-  public static Joystick joy = new Joystick(Constants.joyPort);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
