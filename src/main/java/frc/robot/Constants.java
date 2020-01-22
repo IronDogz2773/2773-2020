@@ -17,6 +17,8 @@ package frc.robot;
  */
 public final class Constants {
     public static double pi = 3.141592;
+    public static double sInc = 0.01;
+    public static double rInc = 0.01;
     
     //PWM
     public static int leftFrontPort = 0;
