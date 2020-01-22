@@ -9,6 +9,7 @@ public class DriveManuallyCommand extends CommandBase {
 
      private final DriveSubsystem driveSubsystem;
      private double speed;
+     private double change;
      private double rot;
      private Joystick joy;
 
@@ -25,8 +26,13 @@ public class DriveManuallyCommand extends CommandBase {
 
     @Override
     public void execute(){
-        if(Math.abs(joy.getY()) > .15)
-            speed = -joy.getY();
+        if(Math.abs(joy.getY()) > .15){
+            change = joy.getY() - speed;
+            speed += change * 0.1;
+        }
+        else{
+            speed = 0;
+        }
         if(Math.abs(joy.getZ()) > .15)
             rot = joy.getZ();
         driveSubsystem.manDrive(speed, rot);
