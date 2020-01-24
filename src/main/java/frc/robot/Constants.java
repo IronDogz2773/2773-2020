@@ -25,6 +25,7 @@ public final class Constants {
     public static int rightFrontPort = 1;
     public static int leftBackPort = 2;
     public static int rightBackPort = 4;
+    public static int flyWheelPort = 5;
 
     //USB
     public static int joyPort = 0;
@@ -32,5 +33,5 @@ public final class Constants {
     
 
     // Buttons
-    public static int spinButton = 100;
+    public static int spinButton = 0;
 }

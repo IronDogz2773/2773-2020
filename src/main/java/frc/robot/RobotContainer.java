@@ -48,6 +48,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     driveSubsystem.setDefaultCommand(driveMan);
+    //shooterSubsystem.setDefaultCommand(spinCmd);
     // TODO give remaining subsystems default commands
   }
 
