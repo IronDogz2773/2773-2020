@@ -24,7 +24,7 @@ public final class Constants {
     public static int leftFrontPort = 0;
     public static int rightFrontPort = 1;
     public static int leftBackPort = 2;
-    public static int rightBackPort = 3;
+    public static int rightBackPort = 4;
 
     //USB
     public static int joyPort = 0;
