@@ -16,19 +16,21 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static double pi = 3.141592;
-    public static double sInc = 0.01;
-    public static double rInc = 0.01;
+    public static final double pi = 3.1415926535;
+    public static double speedIncrement  = 0.012;
+    public static double rotationIncrement = 0.03;
+    public static double rotationSpeedCap = 0.7;
+    public static double movementSpeedCap = 0.7;
     
     //PWM
-    public static int leftFrontPort = 0;
-    public static int rightFrontPort = 1;
-    public static int leftBackPort = 2;
-    public static int rightBackPort = 4;
-    public static int flyWheelPort = 5;
+    public static int leftFrontPort = 5;
+    public static int rightFrontPort = 4;
+    public static int leftBackPort = 7;
+    public static int rightBackPort = 6;
+    public static int flyWheelPort = 0;
 
     //USB
-    public static int joyPort = 0;
+    public static int joystickPort = 0;
     public static int gamePort = 1;
     
 
