@@ -36,7 +36,7 @@ public class StartSpinCommand extends CommandBase {
   @Override
   public void execute() {
     if (joystick.getRawButton(1)) {
-      shooter.startSpin(-1);
+      shooter.startSpin(1);
     }
     else 
     {
