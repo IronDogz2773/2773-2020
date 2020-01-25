@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveManuallyCommand;
+import frc.robot.commands.DriveVisionCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.StartSpinCommand;
 import frc.robot.subsystems.DriveSubsystem;
@@ -37,6 +38,7 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final DriveManuallyCommand driveMan = new DriveManuallyCommand(driveSubsystem, joy);
+  private final DriveVisionCommand visionCmd = new DriveVisionCommand(driveSubsystem, joy);
   private final StartSpinCommand spinCmd = new StartSpinCommand(shooterSubsystem);
 
   /**
@@ -58,6 +60,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     JoystickButton spinButton = new JoystickButton(joy, Constants.spinButton);
     spinButton.whenPressed(spinCmd);
+    JoystickButton visionButton = new JoystickButton(joy, Constants.spinButton);
+    visionButton.whenHeld(visionCmd, true);
   }
 
 
