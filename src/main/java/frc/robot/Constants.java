@@ -33,5 +33,5 @@ public final class Constants {
     
 
     // Buttons
-    public static int spinButton = 0;
+    public static int spinButton = 1;
 }
