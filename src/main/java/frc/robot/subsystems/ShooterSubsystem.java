@@ -7,10 +7,14 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class ShooterSubsystem extends SubsystemBase {
-  //TODO add motors
+
+  private final Spark flyWheel = new Spark(Constants.flyWheelPort);
+  
   /**
    * Creates a new ShooterSubsystem.
    */
@@ -23,14 +27,17 @@ public class ShooterSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void startSpin() {
-    //TODO start spinning motor
+  public void startSpin(double speed) {
+    flyWheel.set(speed);
+  }
+
+  public void stopSpin() {
+    flyWheel.set(0.0);
   }
 
   //encoder tells me the speed is right if true
-  public boolean checkSpinSpeed() {
-    //TODO check speed
-    return false;
+  public double checkSpinSpeed() {
+    return flyWheel.get(); 
   }
 
   public void send() {

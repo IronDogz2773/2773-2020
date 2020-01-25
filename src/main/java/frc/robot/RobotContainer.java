@@ -30,14 +30,16 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static Joystick joy = new Joystick(Constants.joyPort);
 
+  //Subsystems
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   public final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
   public final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
+  //Commands
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final DriveManuallyCommand driveMan = new DriveManuallyCommand(driveSubsystem, joy);
-  private final StartSpinCommand spinCmd = new StartSpinCommand(shooterSubsystem);
+  private final StartSpinCommand spinCmd = new StartSpinCommand(shooterSubsystem, joy);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -46,6 +48,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     driveSubsystem.setDefaultCommand(driveMan);
+    //shooterSubsystem.setDefaultCommand(spinCmd);
     // TODO give remaining subsystems default commands
   }
 

@@ -39,6 +39,13 @@ deploy {
 
 // Set this to true to enable desktop support.
 def includeDesktopSupport = false
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    umlDoclet
+}
 
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 4.
@@ -57,7 +64,14 @@ dependencies {
     // Enable simulation gui support. Must check the box in vscode to enable support
     // upon debugging
     simulation wpi.deps.sim.gui(wpi.platforms.desktop, false)
+    // Enable UMLdoclet
+    umlDoclet "nl.talsmasoftware:umldoclet:2.0.7"
 }
+
+javadoc {
+    options.docletpath = configurations.umlDoclet.files.asType(List)
+    options.doclet = "nl.talsmasoftware.umldoclet.UMLDoclet"
+ }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
 // in order to make them all available at runtime. Also adding the manifest so WPILib
