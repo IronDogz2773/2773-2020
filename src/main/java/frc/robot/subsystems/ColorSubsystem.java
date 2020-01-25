@@ -58,4 +58,7 @@ public class ColorSubsystem extends SubsystemBase {
         return "Unknown";
     }
   }
+  public String getFieldColor() {
+      return "";
+  }
 }
