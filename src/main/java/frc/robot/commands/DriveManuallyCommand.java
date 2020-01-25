@@ -1,6 +1,6 @@
 package frc.robot.commands;
 
-//import frc.robot.RobotContainer;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.Joystick;
@@ -13,6 +13,9 @@ public class DriveManuallyCommand extends CommandBase {
      private double rot;
      private Joystick joy;
 
+     private double sAcc;
+     private double rAcc;
+
     public DriveManuallyCommand(DriveSubsystem subsystem, Joystick joy){
         driveSubsystem = subsystem;
         addRequirements(subsystem);
@@ -21,20 +24,33 @@ public class DriveManuallyCommand extends CommandBase {
 
     @Override
     public void initialize(){
-
+        //Called at the beginning of each time command is used
+        sAcc = 0;
+        rAcc = 0;
     }
 
     @Override
-    public void execute(){
-        if(Math.abs(joy.getY()) > .15){
-            change = joy.getY() - speed;
-            speed += change * 0.1;
+    public void execute(){ //what the code does while the command is active
+        if(Math.abs(joy.getY()) > .15)
+        {
+            speed = -joy.getY() * sAcc;
+            if(sAcc < 1.00)
+                sAcc += Constants.sInc;
         }
-        else{
-            speed = 0;
+        else
+        {
+            sAcc = 0;
         }
         if(Math.abs(joy.getZ()) > .15)
-            rot = joy.getZ();
+        {
+            rot = joy.getZ() * rAcc;
+            if(rAcc < 1.00)
+                rAcc += Constants.rInc;
+        }
+        else
+        {
+            rAcc = 0;
+        }
         driveSubsystem.manDrive(speed, rot);
     }
 
