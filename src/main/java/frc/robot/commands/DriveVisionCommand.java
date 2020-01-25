@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj.Joystick;
 public class DriveVisionCommand extends CommandBase {
 
     private final DriveSubsystem driveSubsystem;
+
     private double speed;
     private double rot;
+    private double last;
     //private Joystick joy;
 
     //private double sAcc;
@@ -33,6 +35,7 @@ public class DriveVisionCommand extends CommandBase {
         //Called at the beginning of each time command is used
         //sAcc = 0;
         //rAcc = 0;
+        driveSubsystem.driveState = true;
     }
 
     @Override
@@ -48,15 +51,17 @@ public class DriveVisionCommand extends CommandBase {
         //     sAcc = 0;
         // }
         double alpha = angleEntry.getDouble(0);
-        if(alpha != 0)
+        if(Math.abs(alpha) >= 3 && last != alpha)
         {
-            rot = (alpha < 0 ? -1 : 1) * 0.5;
+            rot = .25 * alpha / 10;
         }
         else
         {
             rot = 0;
         }
+        last = alpha;
         driveSubsystem.manDrive(speed, rot);
+        driveSubsystem.driveState = true;
     }
 
     @Override
@@ -66,7 +71,7 @@ public class DriveVisionCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted){
-
+        driveSubsystem.driveState = false;
     }
     
 }

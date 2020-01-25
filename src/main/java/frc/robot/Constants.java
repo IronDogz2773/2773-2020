@@ -21,11 +21,11 @@ public final class Constants {
     public static double rInc = 0.01;
     
     //PWM
-    public static int leftFrontPort = 0;
-    public static int rightFrontPort = 1;
-    public static int leftBackPort = 2;
-    public static int rightBackPort = 4;
-    public static int flyWheelPort = 5;
+    public static int leftFrontPort = 5;
+    public static int rightFrontPort = 4;
+    public static int leftBackPort = 7;
+    public static int rightBackPort = 6;
+    public static int flyWheelPort = 0;
 
     //USB
     public static int joyPort = 0;

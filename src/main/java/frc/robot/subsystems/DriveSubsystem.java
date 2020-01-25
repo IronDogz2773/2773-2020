@@ -21,6 +21,8 @@ public class DriveSubsystem extends SubsystemBase {
     //Differential drive
     private final DifferentialDrive drive = new DifferentialDrive(leftMotors, rightMotors);
 
+    public boolean driveState = false; //when true vision is running
+
     public DriveSubsystem(){
         //enter constructor properties here
     }
