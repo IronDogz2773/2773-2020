@@ -7,21 +7,17 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
-import edu.wpi.first.wpilibj.Joystick;
 
 public class StartSpinCommand extends CommandBase {
   private ShooterSubsystem shooter;
-  private Joystick joystick;
   
   /**
    * Creates a new StartSpinCommand.
    */
-  public StartSpinCommand(ShooterSubsystem shooter, Joystick joystick) {
+  public StartSpinCommand(ShooterSubsystem shooter) {
     this.shooter = shooter;
-    this.joystick = joystick;
     addRequirements(shooter);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -35,16 +31,10 @@ public class StartSpinCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (joystick.getRawButton(1)) {
-      shooter.startSpin(1);
-    }
-    else 
-    {
-      shooter.stopSpin();
-    }
+    shooter.startSpin(1);
     checkSpeed();
-    //shooter.startSpin(1);
   }
+
   public boolean checkSpeed() {
     if (shooter.checkSpinSpeed() != 0)
     {
@@ -55,6 +45,7 @@ public class StartSpinCommand extends CommandBase {
       return false;
     }
   }
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
