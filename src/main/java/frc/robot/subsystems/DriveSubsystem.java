@@ -25,8 +25,13 @@ public class DriveSubsystem extends SubsystemBase {
         //enter constructor properties here
     }
 
-    public void manualDrive(double speed, double rotation)
+    public void rawDrive(double speed, double rotation)
     {
         drive.arcadeDrive(speed, rotation);
+    }
+
+    public void rawDrive(double speed, double rotation, boolean accel)
+    {
+        drive.arcadeDrive(speed, rotation, accel);
     }
 }

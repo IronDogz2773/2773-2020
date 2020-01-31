@@ -38,7 +38,7 @@ public class DriveVisionCommand extends CommandBase {
         {
             rot = 0;
         }
-        driveSubsystem.manualDrive(speed, rot);
+        driveSubsystem.rawDrive(speed, rot);
     }
 
     @Override
