@@ -1,7 +1,5 @@
 package frc.robot.commands;
 
-//import frc.robot.Constants;
-//import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -40,16 +38,6 @@ public class DriveVisionCommand extends CommandBase {
 
     @Override
     public void execute(){ //what the code does while the command is active
-        // if(Math.abs(joy.getY()) > .15)
-        // {
-        //     speed = -joy.getY() * sAcc;
-        //     if(sAcc < 1.00)
-        //         sAcc += Constants.sInc;
-        // }
-        // else
-        // {
-        //     sAcc = 0;
-        // }
         double alpha = angleEntry.getDouble(0);
         if(Math.abs(alpha) >= 3 && last != alpha)
         {
@@ -60,7 +48,7 @@ public class DriveVisionCommand extends CommandBase {
             rot = 0;
         }
         last = alpha;
-        driveSubsystem.manDrive(speed, rot);
+        driveSubsystem.rawDrive(speed, rot);
         driveSubsystem.driveState = true;
     }
 
