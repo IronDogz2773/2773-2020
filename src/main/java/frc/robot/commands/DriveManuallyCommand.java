@@ -29,6 +29,31 @@ public class DriveManuallyCommand extends CommandBase {
 
     @Override
     public void execute(){ //what the code does while the command is active
+        /*if(!driveSubsystem.driveState)
+        {
+            if(Math.abs(joy.getY()) > .15)
+            {
+                speed = -joy.getY() * sAcc;
+                if(sAcc < 1.00)
+                    sAcc += Constants.sInc;
+            }
+            else
+            {
+                sAcc = 0;
+            }
+            if(Math.abs(joy.getZ()) > .15)
+            {
+                rot = joy.getZ() * rAcc;
+                if(rAcc < 1.00)
+                    rAcc += Constants.rInc;
+            }
+            else
+            {
+                rAcc = 0;
+            }
+            driveSubsystem.manDrive(speed, rot);
+        }*/
+
         if(Math.abs(joystick.getY()) > .1)
         {
             speed = -joystick.getY();// * speedAcceleration * Constants.movementSpeedCap;
