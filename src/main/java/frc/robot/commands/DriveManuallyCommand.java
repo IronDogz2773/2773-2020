@@ -11,8 +11,8 @@ public class DriveManuallyCommand extends CommandBase {
      private double speed;
      private double rotation;
      private Joystick joystick;
-     private double speedAcceleration;
-     private double rotationAcceleration;
+     //private double speedAcceleration;
+     //private double rotationAcceleration;
 
     public DriveManuallyCommand(DriveSubsystem subsystem, Joystick joystick){
         driveSubsystem = subsystem;
@@ -23,33 +23,35 @@ public class DriveManuallyCommand extends CommandBase {
     @Override
     public void initialize(){
         //Called at the beginning of each time command is used
-        speedAcceleration = .6;
-        rotationAcceleration = 1;
+        //speedAcceleration = .6;
+        //rotationAcceleration = 1;
     }
 
     @Override
     public void execute(){ //what the code does while the command is active
-        if(Math.abs(joystick.getY()) > .15)
+        if(Math.abs(joystick.getY()) > .1)
         {
-            speed = -joystick.getY() * speedAcceleration * Constants.movementSpeedCap;
-            if(speedAcceleration < 1.00)
-                speedAcceleration += Constants.speedIncrement;
+            speed = -joystick.getY();// * speedAcceleration * Constants.movementSpeedCap;
+            /*if(speedAcceleration < 1.00)
+                speedAcceleration += Constants.speedIncrement;*/
         }
         else
         {
-            speedAcceleration = 0.7;
+            //speedAcceleration = 0.7;
+            speed = 0;
         }
-        if(Math.abs(joystick.getZ()) > .15)
+        if(Math.abs(joystick.getZ()) > .1)
         {
-            rotation = joystick.getZ() * rotationAcceleration * Constants.rotationSpeedCap;
-            if(rotationAcceleration < 1.00)
-                rotationAcceleration += Constants.rotationIncrement;
+            rotation = joystick.getZ() / 1.2; //* rotationAcceleration * Constants.rotationSpeedCap;
+            /*if(rotationAcceleration < 1.00)
+                rotationAcceleration += Constants.rotationIncrement;*/
         }
         else
         {
-            rotationAcceleration = 0.5;
+            //rotationAcceleration = 1;
+            rotation = 0;
         }
-        driveSubsystem.manualDrive(speed, rotation);
+        driveSubsystem.rawDrive(speed, rotation);
     }
 
     @Override

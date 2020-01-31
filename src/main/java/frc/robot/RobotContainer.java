@@ -40,7 +40,7 @@ public class RobotContainer {
   //Commands
   private final ExampleCommand m_autonomousCommand = new ExampleCommand(m_exampleSubsystem);
   private final DriveManuallyCommand driveManuallyCommand = new DriveManuallyCommand(driveSubsystem, joystick);
-  private final StartSpinCommand spinCommand = new StartSpinCommand(shooterSubsystem, joystick);
+  private final StartSpinCommand spinCommand = new StartSpinCommand(shooterSubsystem);
   private final DriveVisionCommand visionCommand = new DriveVisionCommand(driveSubsystem, joystick);
 
   /**
@@ -62,7 +62,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     JoystickButton spinButton = new JoystickButton(joystick, Constants.spinButton);
-    spinButton.whenPressed(spinCommand);
+    spinButton.whenHeld(spinCommand, true);
     JoystickButton visionButton = new JoystickButton(joystick, Constants.spinButton);
     visionButton.whenHeld(visionCommand, true);
   }
