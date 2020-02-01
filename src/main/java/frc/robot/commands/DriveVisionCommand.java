@@ -1,19 +1,20 @@
 package frc.robot.commands;
 
-import frc.robot.subsystems.DriveSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.DriveSubsystem;
 
 public class DriveVisionCommand extends CommandBase {
 
     private final DriveSubsystem driveSubsystem;
 
+    PIDController obamaController = new PIDController(1.0, 1.0, 1.0);
     private double speed;
     private double rot;
     private double last;
-    //private Joystick joy;
 
     //private double sAcc;
     //private double rAcc;
