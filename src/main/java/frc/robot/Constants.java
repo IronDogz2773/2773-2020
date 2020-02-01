@@ -16,6 +16,7 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    
     public static final double pi = 3.1415926535;
     public static double speedIncrement  = 0.012;
     public static double rotationIncrement = 0.03;
