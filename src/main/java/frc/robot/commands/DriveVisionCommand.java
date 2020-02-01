@@ -38,16 +38,14 @@ public class DriveVisionCommand extends CommandBase {
 
     @Override
     public void execute(){ //what the code does while the command is active
+
         double alpha = angleEntry.getDouble(0);
-        if(Math.abs(alpha) >= 3 && last != alpha)
+
+        if(!obamaController.atSetpoint())
         {
-            rot = .25 * alpha / 10;
+          rot = obamaController.calculate(alpha);
         }
-        else
-        {
-            rot = 0;
-        }
-        last = alpha;
+        
         driveSubsystem.rawDrive(speed, rot);
         driveSubsystem.driveState = true;
     }
