@@ -38,5 +38,6 @@ public final class Constants {
     // Buttons
     public static int spinButton = 1;
     public static int visionButton = 7;
+    public static int gyroButton = 5;
 
 }

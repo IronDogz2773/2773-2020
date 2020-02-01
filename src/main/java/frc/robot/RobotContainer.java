@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.DriveVisionCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.ResetGyroscopeCommand;
 import frc.robot.commands.StartSpinCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -25,6 +26,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.ADXL362; //Accelerometer
+import edu.wpi.first.wpilibj.ADXRS450_Gyro; //Gyroscope
 
 
 /**
@@ -49,6 +52,7 @@ public class RobotContainer {
   private final DriveManuallyCommand driveManuallyCommand = new DriveManuallyCommand(driveSubsystem, joystick);
   private final StartSpinCommand spinCommand = new StartSpinCommand(shooterSubsystem);
   private final DriveVisionCommand visionCommand = new DriveVisionCommand(driveSubsystem, joystick);
+  private final ResetGyroscopeCommand resetGyroscope = new ResetGyroscopeCommand(driveSubsystem);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -74,6 +78,8 @@ public class RobotContainer {
     spinButton.whenHeld(spinCommand, true);
     JoystickButton visionButton = new JoystickButton(joystick, Constants.visionButton);
     visionButton.whenHeld(visionCommand, true);
+    JoystickButton gyroButton = new JoystickButton(joystick, Constants.gyroButton);
+    gyroButton.whenHeld(resetGyroscope, true);
   }
 
 
@@ -93,5 +99,7 @@ public class RobotContainer {
     SmartDashboard.putNumber("Speed", driveManuallyCommand.speed);
     SmartDashboard.putNumber("Rotation", driveManuallyCommand.rotation);
     SmartDashboard.putData("Power Distribution Panel", powerDistributionPanel);
+    SmartDashboard.putData("Gyroscope", driveSubsystem.gyroscope);
+    SmartDashboard.putData("Accelerometer", driveSubsystem.accelerometer);
   }
 }
