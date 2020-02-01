@@ -41,7 +41,7 @@ public class RobotContainer {
   private final ExampleCommand m_autonomousCommand = new ExampleCommand(m_exampleSubsystem);
   private final DriveManuallyCommand driveManuallyCommand = new DriveManuallyCommand(driveSubsystem, joystick);
   private final StartSpinCommand spinCommand = new StartSpinCommand(shooterSubsystem);
-  private final DriveVisionCommand visionCommand = new DriveVisionCommand(driveSubsystem, joystick);
+  private final DriveVisionCommand visionCommand = new DriveVisionCommand(driveSubsystem);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.

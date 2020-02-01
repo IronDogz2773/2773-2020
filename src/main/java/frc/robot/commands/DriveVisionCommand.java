@@ -1,26 +1,23 @@
 package frc.robot.commands;
 
-import frc.robot.subsystems.DriveSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.DriveSubsystem;
 
 public class DriveVisionCommand extends CommandBase {
 
     private final DriveSubsystem driveSubsystem;
-
+    
+    PIDController obamaController = new PIDController(1.0, 1.0, 1.0);
     private double speed;
     private double rot;
     private double last;
-    //private Joystick joy;
-
-    //private double sAcc;
-    //private double rAcc;
 
     private NetworkTableEntry angleEntry;
 
-    public DriveVisionCommand(DriveSubsystem subsystem, Joystick joy){
+    public DriveVisionCommand(DriveSubsystem subsystem){
         driveSubsystem = subsystem;
         addRequirements(subsystem);
         //this.joy = joy;
@@ -34,20 +31,20 @@ public class DriveVisionCommand extends CommandBase {
         //sAcc = 0;
         //rAcc = 0;
         driveSubsystem.driveState = true;
+        obamaController.setTolerance(1);
+        obamaController.setSetpoint(0);
     }
 
     @Override
     public void execute(){ //what the code does while the command is active
+
         double alpha = angleEntry.getDouble(0);
-        if(Math.abs(alpha) >= 3 && last != alpha)
+
+        if(!obamaController.atSetpoint())
         {
-            rot = .25 * alpha / 10;
+          rot = obamaController.calculate(alpha);
         }
-        else
-        {
-            rot = 0;
-        }
-        last = alpha;
+        
         driveSubsystem.rawDrive(speed, rot);
         driveSubsystem.driveState = true;
     }
