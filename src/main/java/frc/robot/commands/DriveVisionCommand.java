@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
+
 public class DriveVisionCommand extends CommandBase {
 
     private final DriveSubsystem driveSubsystem;
@@ -52,6 +53,7 @@ public class DriveVisionCommand extends CommandBase {
         driveSubsystem.driveState = true;
         SmartDashboard.putNumber("Alpha", alpha);
         SmartDashboard.putNumber("Rot", rot);
+        
     }
 
     @Override
