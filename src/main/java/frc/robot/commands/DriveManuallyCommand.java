@@ -80,6 +80,7 @@ public class DriveManuallyCommand extends CommandBase {
         driveSubsystem.rawDrive(speed, rotation);
         SmartDashboard.putNumber("Speed", speed);
         SmartDashboard.putNumber("Rotation", rotation);
+        //driveSubsystem.accelerometer.getAccelerations();
     }
 
     @Override

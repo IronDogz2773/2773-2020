@@ -4,6 +4,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
@@ -42,13 +43,15 @@ public class DriveVisionCommand extends CommandBase {
 
         double alpha = angleEntry.getDouble(0);
 
-        if(!obamaController.atSetpoint())
-        {
-          rot = obamaController.calculate(alpha);
-        }
+        //if(!obamaController.atSetpoint())
+        //{
+          rot = -obamaController.calculate(alpha);
+        //}
         
         driveSubsystem.rawDrive(speed, rot);
         driveSubsystem.driveState = true;
+        SmartDashboard.putNumber("Alpha", alpha);
+        SmartDashboard.putNumber("Rot", rot);
     }
 
     @Override
