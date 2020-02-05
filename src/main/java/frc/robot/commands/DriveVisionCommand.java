@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveVisionCommand extends CommandBase {
 
@@ -50,6 +51,8 @@ public class DriveVisionCommand extends CommandBase {
         last = alpha;
         driveSubsystem.rawDrive(speed, rot);
         driveSubsystem.driveState = true;
+        SmartDashboard.putNumber("Alpha", alpha);
+        
     }
 
     @Override

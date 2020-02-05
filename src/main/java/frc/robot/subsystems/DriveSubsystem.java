@@ -29,7 +29,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     //Sensors
     public final ADXRS450_Gyro gyroscope = new ADXRS450_Gyro();
-    public final ADXL362 accelerometer = new ADXL362(Accelerometer.Range.k8G);
+    public final ADXL362 accelerometer = new ADXL362(Accelerometer.Range.k2G);
 
     public boolean driveState = false; //when true vision is running
 
@@ -39,7 +39,7 @@ public class DriveSubsystem extends SubsystemBase {
             gyroscope.reset();
             gyroscope.calibrate();
         }
-        accelerometer.setRange(Accelerometer.Range.k8G);
+        accelerometer.setRange(Accelerometer.Range.k2G);
     }
 
     public void rawDrive(final double speed, final double rotation) {
