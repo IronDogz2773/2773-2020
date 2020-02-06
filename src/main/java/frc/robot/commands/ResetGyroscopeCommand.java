@@ -9,17 +9,18 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class StartSpinCommand extends CommandBase {
-  private ShooterSubsystem shooter;
+public class ResetGyroscopeCommand extends CommandBase {
+  private DriveSubsystem driveSubsystem;
   
   /**
    * Creates a new StartSpinCommand.
    */
-  public StartSpinCommand(ShooterSubsystem shooter) {
-    this.shooter = shooter;
-    addRequirements(shooter);
+  public ResetGyroscopeCommand(DriveSubsystem driveSubsystem) {
+    this.driveSubsystem = driveSubsystem;
+    addRequirements(driveSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -32,27 +33,13 @@ public class StartSpinCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.startSpin(1);
-    SmartDashboard.putBoolean("Shooter", true);
-    checkSpeed();
-  }
-
-  public boolean checkSpeed() {
-    if (shooter.checkSpinSpeed() != 0)
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
+    driveSubsystem.gyroscope.reset();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    SmartDashboard.putBoolean("Shooter", false);
-    shooter.stopSpin();
+    
   }
 
   // Returns true when the command should end.

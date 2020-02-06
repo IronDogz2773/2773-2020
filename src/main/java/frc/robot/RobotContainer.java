@@ -9,9 +9,13 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveManuallyCommand;
+import frc.robot.commands.DriveVisionCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.ResetGyroscopeCommand;
 import frc.robot.commands.StartSpinCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -19,6 +23,12 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.ADXL362; //Accelerometer
+import edu.wpi.first.wpilibj.ADXRS450_Gyro; //Gyroscope
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -28,7 +38,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  public static Joystick joy = new Joystick(Constants.joyPort);
+  public static Joystick joystick = new Joystick(Constants.joystickPort);
+  public PowerDistributionPanel powerDistributionPanel = new PowerDistributionPanel();
 
   //Subsystems
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
@@ -37,9 +48,11 @@ public class RobotContainer {
   public final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
   //Commands
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private final DriveManuallyCommand driveMan = new DriveManuallyCommand(driveSubsystem, joy);
-  private final StartSpinCommand spinCmd = new StartSpinCommand(shooterSubsystem, joy);
+  private final ExampleCommand m_autonomousCommand = new ExampleCommand(m_exampleSubsystem);
+  private final DriveManuallyCommand driveManuallyCommand = new DriveManuallyCommand(driveSubsystem, joystick);
+  private final StartSpinCommand spinCommand = new StartSpinCommand(shooterSubsystem);
+  private final DriveVisionCommand visionCommand = new DriveVisionCommand(driveSubsystem, joystick);
+  private final ResetGyroscopeCommand resetGyroscope = new ResetGyroscopeCommand(driveSubsystem);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -47,7 +60,9 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    driveSubsystem.setDefaultCommand(driveMan);
+    setShuffleboardVals();
+    driveSubsystem.setDefaultCommand(driveManuallyCommand);
+    
     //shooterSubsystem.setDefaultCommand(spinCmd);
     // TODO give remaining subsystems default commands
   }
@@ -59,8 +74,12 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    JoystickButton spinButton = new JoystickButton(joy, Constants.spinButton);
-    spinButton.whenPressed(spinCmd);
+    JoystickButton spinButton = new JoystickButton(joystick, Constants.spinButton);
+    spinButton.whenHeld(spinCommand, true);
+    JoystickButton visionButton = new JoystickButton(joystick, Constants.visionButton);
+    visionButton.whenHeld(visionCommand, true);
+    JoystickButton gyroButton = new JoystickButton(joystick, Constants.gyroButton);
+    gyroButton.whenHeld(resetGyroscope, true);
   }
 
 
@@ -71,6 +90,16 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return m_autonomousCommand;
+  }
+
+  private void setShuffleboardVals()
+  {
+    SmartDashboard.putBoolean("Shooter", false);
+    SmartDashboard.putNumber("Speed", driveManuallyCommand.speed);
+    SmartDashboard.putNumber("Rotation", driveManuallyCommand.rotation);
+    SmartDashboard.putData("Power Distribution Panel", powerDistributionPanel);
+    SmartDashboard.putData("Gyroscope", driveSubsystem.gyroscope);
+    SmartDashboard.putData("Accelerometer", driveSubsystem.accelerometer);
   }
 }

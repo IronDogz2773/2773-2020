@@ -1,57 +1,85 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveManuallyCommand extends CommandBase {
 
      private final DriveSubsystem driveSubsystem;
-     private double speed;
-     private double rot;
-     private Joystick joy;
+     public double speed;
+     public double rotation;
+     private Joystick joystick;
+     //private double speedAcceleration;
+     //private double rotationAcceleration;
 
-     private double sAcc;
-     private double rAcc;
-
-    public DriveManuallyCommand(DriveSubsystem subsystem, Joystick joy){
+    public DriveManuallyCommand(DriveSubsystem subsystem, Joystick joystick){
         driveSubsystem = subsystem;
         addRequirements(subsystem);
-        this.joy = joy;
+        this.joystick = joystick;
     }
 
     @Override
     public void initialize(){
         //Called at the beginning of each time command is used
-        sAcc = 0;
-        rAcc = 0;
+        //speedAcceleration = .6;
+        //rotationAcceleration = 1;
     }
 
     @Override
     public void execute(){ //what the code does while the command is active
-        if(Math.abs(joy.getY()) > .15)
+        /*if(!driveSubsystem.driveState)
         {
-            speed = -joy.getY() * sAcc;
-            if(sAcc < 1.00)
-                sAcc += Constants.sInc;
+            if(Math.abs(joy.getY()) > .15)
+            {
+                speed = -joy.getY() * sAcc;
+                if(sAcc < 1.00)
+                    sAcc += Constants.sInc;
+            }
+            else
+            {
+                sAcc = 0;
+            }
+            if(Math.abs(joy.getZ()) > .15)
+            {
+                rot = joy.getZ() * rAcc;
+                if(rAcc < 1.00)
+                    rAcc += Constants.rInc;
+            }
+            else
+            {
+                rAcc = 0;
+            }
+            driveSubsystem.manDrive(speed, rot);
+        }*/
+
+        if(Math.abs(joystick.getY()) > .1)
+        {
+            speed = -joystick.getY();// * speedAcceleration * Constants.movementSpeedCap;
+            /*if(speedAcceleration < 1.00)
+                speedAcceleration += Constants.speedIncrement;*/
         }
         else
         {
-            sAcc = 0;
+            //speedAcceleration = 0.7;
+            speed = 0;
         }
-        if(Math.abs(joy.getZ()) > .15)
+        if(Math.abs(joystick.getZ()) > .1)
         {
-            rot = joy.getZ() * rAcc;
-            if(rAcc < 1.00)
-                rAcc += Constants.rInc;
+            rotation = joystick.getZ() / 1.2; //* rotationAcceleration * Constants.rotationSpeedCap;
+            /*if(rotationAcceleration < 1.00)
+                rotationAcceleration += Constants.rotationIncrement;*/
         }
         else
         {
-            rAcc = 0;
+            //rotationAcceleration = 1;
+            rotation = 0;
         }
-        driveSubsystem.manDrive(speed, rot);
+        driveSubsystem.rawDrive(speed, rotation);
+        SmartDashboard.putNumber("Speed", speed);
+        SmartDashboard.putNumber("Rotation", rotation);
     }
 
     @Override
