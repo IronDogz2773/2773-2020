@@ -4,12 +4,13 @@ import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveManuallyCommand extends CommandBase {
 
      private final DriveSubsystem driveSubsystem;
-     private double speed;
-     private double rotation;
+     public double speed;
+     public double rotation;
      private Joystick joystick;
      //private double speedAcceleration;
      //private double rotationAcceleration;
@@ -77,6 +78,9 @@ public class DriveManuallyCommand extends CommandBase {
             rotation = 0;
         }
         driveSubsystem.rawDrive(speed, rotation);
+        SmartDashboard.putNumber("Speed", speed);
+        SmartDashboard.putNumber("Rotation", rotation);
+        //driveSubsystem.accelerometer.getAccelerations();
     }
 
     @Override
