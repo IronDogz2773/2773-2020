@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.I2C;
 
 
 public class ColorSubsystem extends SubsystemBase {
-    private final Spark Tyler = new Spark(Constants.Tyler); 
+    private final Spark Tyler = new Spark(Constants.colorWheelPort); 
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
     public final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
     public final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
