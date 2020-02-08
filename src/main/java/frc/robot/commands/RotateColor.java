@@ -10,19 +10,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ColorSubsystem;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.TimedRobot;
 
 public class RotateColor extends CommandBase {
   private ColorSubsystem Rotater;
-  private final Joystick joy;
   String startingColor = Rotater.gettColor();
   String NeededColor = Rotater.getFieldColor();
     /**
      * Creates a new StartSpinCommand.
      */
     public RotateColor(final ColorSubsystem Rotater, final Joystick joy) {
-        this.joy = joy;
         addRequirements(Rotater);
         // Use addRequirements() here to declare subsystem dependencies.
     }
@@ -35,7 +31,6 @@ public class RotateColor extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-       
     }
 
 

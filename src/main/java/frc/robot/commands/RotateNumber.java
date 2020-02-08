@@ -10,12 +10,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ColorSubsystem;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.TimedRobot;
 
 public class RotateNumber extends CommandBase {
   private ColorSubsystem Rotater;
-  private final Joystick joy;
   String startingColor = Rotater.gettColor();
   int timesColorPassed = 0;
   boolean sameColor = false; 
@@ -23,7 +20,6 @@ public class RotateNumber extends CommandBase {
      * Creates a new StartSpinCommand.
      */
     public RotateNumber(final ColorSubsystem Rotater, final Joystick joy) {
-        this.joy = joy;
         addRequirements(Rotater);
         // Use addRequirements() here to declare subsystem dependencies.
     }

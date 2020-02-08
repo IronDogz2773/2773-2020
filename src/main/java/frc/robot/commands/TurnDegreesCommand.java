@@ -10,15 +10,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.subsystems.DriveSubsystem;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.controller.PIDController;
 
 public class TurnDegreesCommand extends CommandBase {
   PIDController pidController = new PIDController(.025, 0.03, 0.0);
     private final DriveSubsystem driveSubsystem;
-    private double speed;
     private double rot;
     private double angle;
     private double target;
