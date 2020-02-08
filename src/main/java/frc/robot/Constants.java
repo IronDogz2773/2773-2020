@@ -29,6 +29,7 @@ public final class Constants {
     public static int leftBackPort = 2;
     public static int rightBackPort = 3;
     public static int flyWheelPort = 7;
+    public static int colorWheelPort = 8;
 
     //USB
     public static int joystickPort = 0;
