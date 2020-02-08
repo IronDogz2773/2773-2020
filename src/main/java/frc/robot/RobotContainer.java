@@ -96,7 +96,5 @@ public class RobotContainer {
     SmartDashboard.putNumber("Speed", driveManuallyCommand.speed);
     SmartDashboard.putNumber("Rotation", driveManuallyCommand.rotation);
     SmartDashboard.putData("Power Distribution Panel", powerDistributionPanel);
-    SmartDashboard.putData("Gyroscope", navigationSubsystem.gyroscope);
-    SmartDashboard.putData("Accelerometer", navigationSubsystem.accelerometer);
   }
 }

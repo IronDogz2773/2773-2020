@@ -35,7 +35,7 @@ public class TurnDegreesCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    target = nav.gyroscope.getAngle() + angle;
+    target = nav.getGyroAngle() + angle;
     pidController.setSetpoint(target);
     pidController.setTolerance(2.5);
   }
@@ -44,7 +44,7 @@ public class TurnDegreesCommand extends CommandBase {
   @Override
   public void execute() {
     if (!pidController.atSetpoint()) {
-      rot = pidController.calculate(nav.gyroscope.getAngle());
+      rot = pidController.calculate(nav.getGyroAngle());
       rot = MathUtil.clamp(rot, -.8, .8);
       driveSubsystem.rawDrive(0, rot);
     }

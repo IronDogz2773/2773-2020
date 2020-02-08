@@ -34,9 +34,9 @@ public class DriveVisionCommand extends CommandBase {
 
     @Override
     public void execute(){ //what the code does while the command is active
-        double alpha = nav.getAngle();  
+        double alpha = nav.getVisionAngle();  
         SmartDashboard.putNumber("Target", target);
-        double e = obamaController.calculate(nav.gyroscope.getAngle()); 
+        double e = obamaController.calculate(nav.getGyroAngle()); 
         rot = MathUtil.clamp(e, -0.55, 0.55);
         
         driveSubsystem.rawDrive(0, rot, false);

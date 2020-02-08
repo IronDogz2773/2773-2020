@@ -13,12 +13,13 @@ import edu.wpi.first.wpilibj.ADXL362;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class NavigationSubsystem extends SubsystemBase {
 
   // Sensors
-  public final ADXRS450_Gyro gyroscope = new ADXRS450_Gyro();
-  public final ADXL362 accelerometer = new ADXL362(Accelerometer.Range.k2G);
+  private final ADXRS450_Gyro gyroscope = new ADXRS450_Gyro();
+  private final ADXL362 accelerometer = new ADXL362(Accelerometer.Range.k2G);
 
   private NetworkTableEntry angleEntry;
 
@@ -34,10 +35,21 @@ public class NavigationSubsystem extends SubsystemBase {
 
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
     angleEntry = inst.getEntry("/angle");
+
+    SmartDashboard.putData("Gyroscope", gyroscope);
+    SmartDashboard.putData("Accelerometer", accelerometer);
   }
 
-  public double getAngle(){
+  public double getVisionAngle() {
     return angleEntry.getDouble(0);
+  }
+
+  public double getGyroAngle() {
+    return gyroscope.getAngle();
+  }
+
+  public void resetGyro() {
+    gyroscope.reset();
   }
 
   @Override
