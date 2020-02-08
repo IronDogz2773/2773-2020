@@ -22,7 +22,6 @@ public final class Constants {
     public static double rotationIncrement = 0.03;
     public static double rotationSpeedCap = 0.7;
     public static double movementSpeedCap = 0.7;
-    public static int ftw = 69;
     
     //PWM
     public static int leftFrontPort = 0;
@@ -31,10 +30,11 @@ public final class Constants {
     public static int rightBackPort = 3;
     public static int flyWheelPort = 7;
     public static int colorWheelPort = 8;
+    public static int intakePort;
 
     //USB
     public static int joystickPort = 0;
-    public static int gamePort = 1;
+    public static int gamepadPort = 1;
     
 
     // Buttons

@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.DriveVisionCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.IntakeSpinCommand;
 import frc.robot.commands.ResetGyroscopeCommand;
 import frc.robot.commands.StartSpinCommand;
 import frc.robot.subsystems.DriveSubsystem;
@@ -34,6 +35,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static Joystick joystick = new Joystick(Constants.joystickPort);
+  public static Joystick gamepad = new Joystick(Constants.gamepadPort);
   public PowerDistributionPanel powerDistributionPanel = new PowerDistributionPanel();
 
   //Subsystems
@@ -48,6 +50,7 @@ public class RobotContainer {
   private final StartSpinCommand spinCommand = new StartSpinCommand(shooterSubsystem);
   private final DriveVisionCommand visionCommand = new DriveVisionCommand(driveSubsystem);
   private final ResetGyroscopeCommand resetGyroscope = new ResetGyroscopeCommand(driveSubsystem);
+  private final IntakeSpinCommand intakeSpinCommand = new IntakeSpinCommand(intakeSubsystem, gamepad);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -57,6 +60,7 @@ public class RobotContainer {
     configureButtonBindings();
     setShuffleboardVals();
     driveSubsystem.setDefaultCommand(driveManuallyCommand);
+    intakeSubsystem.setDefaultCommand(intakeSpinCommand);
     
     //shooterSubsystem.setDefaultCommand(spinCmd);
     // TODO give remaining subsystems default commands
