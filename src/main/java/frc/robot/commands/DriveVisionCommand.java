@@ -14,7 +14,7 @@ public class DriveVisionCommand extends CommandBase {
 
     private final DriveSubsystem driveSubsystem;
 
-    PIDController obamaController = new PIDController(0.1, 0.01, 0);
+    PIDController obamaController = new PIDController(0.03, 0.02, 0);
     private double speed;
     private double rot;
     private double last;
@@ -39,30 +39,26 @@ public class DriveVisionCommand extends CommandBase {
         //sAcc = 0;
         //rAcc = 0;
         driveSubsystem.driveState = true;
+        target = 10;
+        obamaController.setSetpoint(target);
     }
 
     @Override
     public void execute(){ //what the code does while the command is active
-
         double alpha = angleEntry.getDouble(0); 
-        if(alpha != last)
-        {
-            target =  driveSubsystem.gyroscope.getAngle() + alpha;
-            obamaController.setSetpoint(target);
-            SmartDashboard.putNumber("Target", target);
-        }
-        else{
-            alpha = 0;
-        }
+        
+        SmartDashboard.putNumber("Target", target);
+        
         
 
         //if(!obamaController.atSetpoint())
         //{
         //rot = obamaController.calculate(driveSubsystem.gyroscope.getAngle());
         //}
-        rot = MathUtil.clamp(obamaController.calculate(driveSubsystem.gyroscope.getAngle()), -.6, .6);
+        double e = obamaController.calculate(driveSubsystem.gyroscope.getAngle()); 
+        rot = MathUtil.clamp(e, -0.55, 0.55);
         
-        driveSubsystem.rawDrive(0, rot);
+        driveSubsystem.rawDrive(0, rot, false);
         driveSubsystem.driveState = true;
         SmartDashboard.putNumber("Alpha", alpha);
         SmartDashboard.putNumber("Rotation", rot);

@@ -40,6 +40,7 @@ public class DriveSubsystem extends SubsystemBase {
             gyroscope.calibrate();
         }
         accelerometer.setRange(Accelerometer.Range.k2G);
+        drive.setDeadband(.1);
     }
 
     public void rawDrive(final double speed, final double rotation) {
