@@ -9,19 +9,19 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.IndexerSubsystem;
 
-public class IntakeSpinCommand extends CommandBase {
-  private IntakeSubsystem intakeSubsystem;
+public class IndexerCommand extends CommandBase {
+  private IndexerSubsystem indexerSubsystem;
   private Joystick gamepad;
   /**
-   * Creates a new IntakeSpinCommand.
+   * Creates a new IndexerCommand.
    */
-  public IntakeSpinCommand(IntakeSubsystem intakeSubsystem, Joystick gamepad) {
-    this.intakeSubsystem = intakeSubsystem;
-    addRequirements(intakeSubsystem);
-    this.gamepad = gamepad;
+  public IndexerCommand(IndexerSubsystem indexerSubsystem, Joystick gamepad) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.indexerSubsystem = indexerSubsystem;
+    addRequirements(indexerSubsystem);
+    this.gamepad = gamepad;
   }
 
   // Called when the command is initially scheduled.
@@ -33,17 +33,25 @@ public class IntakeSpinCommand extends CommandBase {
   @Override
   public void execute() {
     if(gamepad.getRawAxis(2) > .2) //raw axis 2 is left trigger
-      intakeSubsystem.startSpin(1);
+    {
+      indexerSubsystem.lock(false);
+      indexerSubsystem.startConveyorSpin(-1);
+    }
     else if(gamepad.getRawAxis(3) > .2) //raw axis 3 is right trigger
-      intakeSubsystem.startSpin(-1);
+    {
+      indexerSubsystem.lock(false);
+      indexerSubsystem.startConveyorSpin(1);
+    }
     else
-      intakeSubsystem.stopSpin();
+    {
+      indexerSubsystem.lock(true);
+      indexerSubsystem.stopConveyorSpin();
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
   }
 
   // Returns true when the command should end.

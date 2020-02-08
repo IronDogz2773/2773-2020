@@ -12,14 +12,18 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.CompressorControlCommand;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.DriveVisionCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.IndexerCommand;
 import frc.robot.commands.IntakeSpinCommand;
 import frc.robot.commands.ResetGyroscopeCommand;
 import frc.robot.commands.StartSpinCommand;
+import frc.robot.subsystems.AirSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.NavigationSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -35,16 +39,18 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  public static Joystick joystick = new Joystick(Constants.joystickPort);
-  public static Joystick gamepad = new Joystick(Constants.gamepadPort);
-  public PowerDistributionPanel powerDistributionPanel = new PowerDistributionPanel();
+  private static Joystick joystick = new Joystick(Constants.joystickPort);
+  private static Joystick gamepad = new Joystick(Constants.gamepadPort);
+  private PowerDistributionPanel powerDistributionPanel = new PowerDistributionPanel();
 
   //Subsystems
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  public final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
-  public final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  public final NavigationSubsystem navigationSubsystem = new NavigationSubsystem();
+  private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  private final NavigationSubsystem navigationSubsystem = new NavigationSubsystem();
+  private final AirSubsystem airSubsystem = new AirSubsystem();
+  private final IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
 
   //Commands
   private final ExampleCommand m_autonomousCommand = new ExampleCommand(m_exampleSubsystem);
@@ -53,6 +59,8 @@ public class RobotContainer {
   private final IntakeSpinCommand intakeSpinCommand = new IntakeSpinCommand(intakeSubsystem, gamepad);
   private final DriveVisionCommand visionCommand = new DriveVisionCommand(driveSubsystem, navigationSubsystem);
   private final ResetGyroscopeCommand resetGyroscope = new ResetGyroscopeCommand(navigationSubsystem);
+  private final CompressorControlCommand compressorControlCommand = new CompressorControlCommand(airSubsystem);
+  private final IndexerCommand indexerCommand = new IndexerCommand(indexerSubsystem, gamepad);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -63,6 +71,8 @@ public class RobotContainer {
     setShuffleboardVals();
     driveSubsystem.setDefaultCommand(driveManuallyCommand);
     intakeSubsystem.setDefaultCommand(intakeSpinCommand);
+    airSubsystem.setDefaultCommand(compressorControlCommand);
+    indexerSubsystem.setDefaultCommand(indexerCommand);
     
     //shooterSubsystem.setDefaultCommand(spinCmd);
     // TODO give remaining subsystems default commands

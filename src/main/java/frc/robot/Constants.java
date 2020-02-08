@@ -28,9 +28,16 @@ public final class Constants {
     public static int rightFrontPort = 1;
     public static int leftBackPort = 2;
     public static int rightBackPort = 3;
-    public static int flyWheelPort = 7;
-    public static int colorWheelPort = 8;
-    public static int intakePort;
+    public static int flyWheelPort = 4;
+    public static int colorWheelPort = 5;
+    public static int intakePort = 6;
+    public static int conveyorRightPort = 7;
+    public static int conveyorLeftPort = 8;
+
+    //PCM
+    public static int compressorPort = 0;
+    public static int indexerForwardChannel = 0;
+    public static int indexerReverseChannel = 1;
 
     //USB
     public static int joystickPort = 0;

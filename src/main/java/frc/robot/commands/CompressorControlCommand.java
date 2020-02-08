@@ -7,43 +7,35 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.AirSubsystem;
 
-public class IntakeSpinCommand extends CommandBase {
-  private IntakeSubsystem intakeSubsystem;
-  private Joystick gamepad;
+public class CompressorControlCommand extends CommandBase {
+  private final AirSubsystem airSubsystem;
   /**
-   * Creates a new IntakeSpinCommand.
+   * Creates a new CompressorControlCommand.
    */
-  public IntakeSpinCommand(IntakeSubsystem intakeSubsystem, Joystick gamepad) {
-    this.intakeSubsystem = intakeSubsystem;
-    addRequirements(intakeSubsystem);
-    this.gamepad = gamepad;
+  public CompressorControlCommand(AirSubsystem airSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.airSubsystem = airSubsystem;
+    addRequirements(airSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    airSubsystem.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(gamepad.getRawAxis(2) > .2) //raw axis 2 is left trigger
-      intakeSubsystem.startSpin(1);
-    else if(gamepad.getRawAxis(3) > .2) //raw axis 3 is right trigger
-      intakeSubsystem.startSpin(-1);
-    else
-      intakeSubsystem.stopSpin();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
+    airSubsystem.stop();
   }
 
   // Returns true when the command should end.
