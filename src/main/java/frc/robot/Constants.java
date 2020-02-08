@@ -16,6 +16,7 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    
     public static final double pi = 3.1415926535;
     public static double speedIncrement  = 0.012;
     public static double rotationIncrement = 0.03;
@@ -28,6 +29,7 @@ public final class Constants {
     public static int leftBackPort = 2;
     public static int rightBackPort = 3;
     public static int flyWheelPort = 7;
+    public static int colorWheelPort = 8;
 
     //USB
     public static int joystickPort = 0;
@@ -37,5 +39,5 @@ public final class Constants {
     // Buttons
     public static int spinButton = 1;
     public static int visionButton = 7;
-
+    public static int gyroButton = 5;
 }
