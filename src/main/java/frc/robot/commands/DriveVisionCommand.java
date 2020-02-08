@@ -1,12 +1,11 @@
 package frc.robot.commands;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.NavigationSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
-import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class DriveVisionCommand extends CommandBase {
 
@@ -14,14 +13,13 @@ public class DriveVisionCommand extends CommandBase {
     PIDController obamaController = new PIDController(0.03, 0.02, 0);
     private double rot;
     private double target;
-    private NetworkTableEntry angleEntry;
+    private final NavigationSubsystem nav;
 
-    public DriveVisionCommand(DriveSubsystem subsystem){
+    public DriveVisionCommand(DriveSubsystem subsystem, NavigationSubsystem nav){
         driveSubsystem = subsystem;
         addRequirements(subsystem);
 
-        NetworkTableInstance inst = NetworkTableInstance.getDefault();
-        angleEntry = inst.getEntry("/angle");
+        this.nav = nav;
     }
 
     @Override
@@ -36,9 +34,9 @@ public class DriveVisionCommand extends CommandBase {
 
     @Override
     public void execute(){ //what the code does while the command is active
-        double alpha = angleEntry.getDouble(0);  
+        double alpha = nav.getVisionAngle();  
         SmartDashboard.putNumber("Target", target);
-        double e = obamaController.calculate(driveSubsystem.gyroscope.getAngle()); 
+        double e = obamaController.calculate(nav.getGyroAngle()); 
         rot = MathUtil.clamp(e, -0.55, 0.55);
         
         driveSubsystem.rawDrive(0, rot, false);
