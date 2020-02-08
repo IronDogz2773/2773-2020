@@ -20,6 +20,7 @@ import frc.robot.commands.StartSpinCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.NavigationSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -41,13 +42,14 @@ public class RobotContainer {
   public final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
   public final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  public final NavigationSubsystem navigationSubsystem = new NavigationSubsystem();
 
   //Commands
   private final ExampleCommand m_autonomousCommand = new ExampleCommand(m_exampleSubsystem);
   private final DriveManuallyCommand driveManuallyCommand = new DriveManuallyCommand(driveSubsystem, joystick);
   private final StartSpinCommand spinCommand = new StartSpinCommand(shooterSubsystem);
-  private final DriveVisionCommand visionCommand = new DriveVisionCommand(driveSubsystem);
-  private final ResetGyroscopeCommand resetGyroscope = new ResetGyroscopeCommand(driveSubsystem);
+  private final DriveVisionCommand visionCommand = new DriveVisionCommand(driveSubsystem, navigationSubsystem);
+  private final ResetGyroscopeCommand resetGyroscope = new ResetGyroscopeCommand(navigationSubsystem);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -94,7 +96,5 @@ public class RobotContainer {
     SmartDashboard.putNumber("Speed", driveManuallyCommand.speed);
     SmartDashboard.putNumber("Rotation", driveManuallyCommand.rotation);
     SmartDashboard.putData("Power Distribution Panel", powerDistributionPanel);
-    SmartDashboard.putData("Gyroscope", driveSubsystem.gyroscope);
-    SmartDashboard.putData("Accelerometer", driveSubsystem.accelerometer);
   }
 }

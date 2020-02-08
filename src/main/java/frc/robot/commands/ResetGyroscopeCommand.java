@@ -8,17 +8,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.NavigationSubsystem;
 
 public class ResetGyroscopeCommand extends CommandBase {
-  private DriveSubsystem driveSubsystem;
+  private NavigationSubsystem nav;
   
   /**
    * Creates a new StartSpinCommand.
    */
-  public ResetGyroscopeCommand(DriveSubsystem driveSubsystem) {
-    this.driveSubsystem = driveSubsystem;
-    addRequirements(driveSubsystem);
+  public ResetGyroscopeCommand(NavigationSubsystem nav) {
+    this.nav = nav;
+    addRequirements(nav);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -31,7 +31,7 @@ public class ResetGyroscopeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    driveSubsystem.gyroscope.reset();
+    nav.resetGyro();
   }
 
   // Called once the command ends or is interrupted.
