@@ -15,14 +15,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.CompressorControlCommand;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.DriveVisionCommand;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IndexerCommand;
 import frc.robot.commands.IntakeSpinCommand;
 import frc.robot.commands.ResetGyroscopeCommand;
 import frc.robot.commands.StartSpinCommand;
 import frc.robot.subsystems.AirSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.NavigationSubsystem;
@@ -30,21 +28,20 @@ import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
-
 /**
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private static Joystick joystick = new Joystick(Constants.joystickPort);
   private static Joystick gamepad = new Joystick(Constants.gamepadPort);
-  private PowerDistributionPanel powerDistributionPanel = new PowerDistributionPanel();
+  private final PowerDistributionPanel powerDistributionPanel = new PowerDistributionPanel();
 
-  //Subsystems
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  // Subsystems
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
@@ -52,18 +49,17 @@ public class RobotContainer {
   private final AirSubsystem airSubsystem = new AirSubsystem();
   private final IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
 
-  //Commands
-  private final ExampleCommand m_autonomousCommand = new ExampleCommand(m_exampleSubsystem);
+  // Commands
   private final DriveManuallyCommand driveManuallyCommand = new DriveManuallyCommand(driveSubsystem, joystick);
-  private final StartSpinCommand spinCommand = new StartSpinCommand(shooterSubsystem);
+  private final StartSpinCommand startSpinCommand = new StartSpinCommand(shooterSubsystem);
   private final IntakeSpinCommand intakeSpinCommand = new IntakeSpinCommand(intakeSubsystem, gamepad);
   private final DriveVisionCommand visionCommand = new DriveVisionCommand(driveSubsystem, navigationSubsystem);
-  private final ResetGyroscopeCommand resetGyroscope = new ResetGyroscopeCommand(navigationSubsystem);
+  private final ResetGyroscopeCommand resetGyroscopeCommand = new ResetGyroscopeCommand(navigationSubsystem);
   private final CompressorControlCommand compressorControlCommand = new CompressorControlCommand(airSubsystem);
   private final IndexerCommand indexerCommand = new IndexerCommand(indexerSubsystem, gamepad);
 
   /**
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
+   * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure the button bindings
@@ -73,26 +69,25 @@ public class RobotContainer {
     intakeSubsystem.setDefaultCommand(intakeSpinCommand);
     airSubsystem.setDefaultCommand(compressorControlCommand);
     indexerSubsystem.setDefaultCommand(indexerCommand);
-    
-    //shooterSubsystem.setDefaultCommand(spinCmd);
+
+    // shooterSubsystem.setDefaultCommand(spinCmd);
     // TODO give remaining subsystems default commands
   }
 
   /**
-   * Use this method to define your button->command mappings.  Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by instantiating a {@link GenericHID} or one of its subclasses
+   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    JoystickButton spinButton = new JoystickButton(joystick, Constants.spinButton);
-    spinButton.whenHeld(spinCommand, true);
-    JoystickButton visionButton = new JoystickButton(joystick, Constants.visionButton);
+    final JoystickButton spinButton = new JoystickButton(joystick, Constants.spinButton);
+    spinButton.whenHeld(startSpinCommand, true);
+    final JoystickButton visionButton = new JoystickButton(joystick, Constants.visionButton);
     visionButton.whenHeld(visionCommand, true);
-    JoystickButton gyroButton = new JoystickButton(joystick, Constants.gyroButton);
-    gyroButton.whenHeld(resetGyroscope, true);
+    final JoystickButton gyroButton = new JoystickButton(joystick, Constants.gyroButton);
+    gyroButton.whenHeld(resetGyroscopeCommand, true);
   }
-
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -101,11 +96,10 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autonomousCommand;
+    return visionCommand;
   }
 
-  private void setShuffleboardVals()
-  {
+  private void setShuffleboardVals() {
     SmartDashboard.putBoolean("Shooter", false);
     SmartDashboard.putNumber("Speed", driveManuallyCommand.speed);
     SmartDashboard.putNumber("Rotation", driveManuallyCommand.rotation);

@@ -26,7 +26,7 @@ public class NavigationSubsystem extends SubsystemBase {
   private final ADIS16470_IMU imu = new ADIS16470_IMU(ADIS16470_IMU.IMUAxis.kY, SPI.Port.kMXP, ADIS16470_IMU.ADIS16470CalibrationTime._256ms);
   private final ADXL362 accelerometer = new ADXL362(Accelerometer.Range.k2G);
 
-  private NetworkTableEntry angleEntry;
+  private final NetworkTableEntry angleEntry;
 
   /**
    * Creates a new NavigationSubsystem.
@@ -38,10 +38,7 @@ public class NavigationSubsystem extends SubsystemBase {
     }
     accelerometer.setRange(Accelerometer.Range.k2G);
 
-    imu.reset();
-    imu.calibrate();
-
-    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    final NetworkTableInstance inst = NetworkTableInstance.getDefault();
     angleEntry = inst.getEntry("/angle");
 
     SmartDashboard.putData("Gyroscope", gyroscope);

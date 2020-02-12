@@ -16,15 +16,15 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 public class TurnDegreesCommand extends CommandBase {
   PIDController pidController = new PIDController(.025, 0.03, 0.0);
   private final DriveSubsystem driveSubsystem;
-  private double rot;
-  private double angle;
+  private double rotation;
+  private final double angle;
   private double target;
-  private NavigationSubsystem nav;
+  private final NavigationSubsystem nav;
 
   /**
    * Creates a new TurnDegreesCommand.
    */
-  public TurnDegreesCommand(DriveSubsystem subsystem, NavigationSubsystem nav, double angle) {
+  public TurnDegreesCommand(final DriveSubsystem subsystem, final NavigationSubsystem nav, final double angle) {
     // Use addRequirements() here to declare subsystem dependencies.
     driveSubsystem = subsystem;
     addRequirements(subsystem);
@@ -44,15 +44,15 @@ public class TurnDegreesCommand extends CommandBase {
   @Override
   public void execute() {
     if (!pidController.atSetpoint()) {
-      rot = pidController.calculate(nav.getGyroAngle());
-      rot = MathUtil.clamp(rot, -.8, .8);
-      driveSubsystem.rawDrive(0, rot);
+      rotation = pidController.calculate(nav.getGyroAngle());
+      rotation = MathUtil.clamp(rotation, -.8, .8);
+      driveSubsystem.rawDrive(0, rotation);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
+  public void end(final boolean interrupted) {
   }
 
   // Returns true when the command should end.

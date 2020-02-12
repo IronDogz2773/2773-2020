@@ -14,25 +14,26 @@ import frc.robot.subsystems.ColorSubsystem;
 public class RotateColor extends CommandBase {
   private ColorSubsystem Rotater;
   String startingColor = Rotater.gettColor();
-  String NeededColor = Rotater.getFieldColor();
-    /**
-     * Creates a new StartSpinCommand.
-     */
-    public RotateColor(final ColorSubsystem Rotater, final Joystick joy) {
-        addRequirements(Rotater);
-        // Use addRequirements() here to declare subsystem dependencies.
-    }
+  String neededColor = Rotater.getFieldColor();
 
-    // Called when the command is initially scheduled.
-    @Override
-    public void initialize() {
-    }
+  /**
+   * Creates a new StartSpinCommand.
+   */
+  public RotateColor(final ColorSubsystem Rotater, final Joystick joy) {
+    addRequirements(Rotater);
+    // Use addRequirements() here to declare subsystem dependencies.
+  }
 
-    // Called every time the scheduler runs while the command is scheduled.
-    @Override
-    public void execute() {
-    }
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+    
+  }
 
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+  }
 
   // Returns true when the command should end.
   @Override
@@ -40,32 +41,34 @@ public class RotateColor extends CommandBase {
     return false;
   }
 }
-/*final Color detectedColor = m_colorSensor.getColor();
-        String colorString;
-        final ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
-        
-        if (match.color == kBlueTarget) {
-            colorString = "Blue";
-        } else if (match.color == kRedTarget) {
-            colorString = "Red";
-        } else if (match.color == kGreenTarget) {
-            colorString = "Green";
-        } else if (match.color == kYellowTarget) {
-            colorString = "Yellow";
-        } else {
-            colorString = "Unknown";
-        }
-        SmartDashboard.putNumber("Red", detectedColor.red);
-        SmartDashboard.putNumber("Green", detectedColor.green);
-        SmartDashboard.putNumber("Blue", detectedColor.blue);
-        SmartDashboard.putNumber("Confidence", match.confidence);
-        SmartDashboard.putString("Detected Color", colorString); */
 
-        /*   
-  public final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
-  public final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
-  public final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
-  public final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
-  private final ColorMatch m_colorMatcher = new ColorMatch();
-  private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
-  */
+/*
+final Color detectedColor = m_colorSensor.getColor();
+    String colorString;
+    final ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+
+    if (match.color == kBlueTarget) {
+      colorString = "Blue";
+    } else if (match.color == kRedTarget) {
+      colorString = "Red";
+    } else if (match.color == kGreenTarget) {
+      colorString = "Green";
+    } else if (match.color == kYellowTarget) {
+      colorString = "Yellow";
+    } else {
+      colorString = "Unknown";
+    }
+    SmartDashboard.putNumber("Red", detectedColor.red);
+    SmartDashboard.putNumber("Green", detectedColor.green);
+    SmartDashboard.putNumber("Blue", detectedColor.blue);
+    SmartDashboard.putNumber("Confidence", match.confidence);
+    SmartDashboard.putString("Detected Color", colorString);
+
+
+public final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
+public final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
+public final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
+public final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
+private final ColorMatch m_colorMatcher = new ColorMatch(); private final
+ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
+*/
