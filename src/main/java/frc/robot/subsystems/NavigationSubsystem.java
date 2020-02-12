@@ -21,7 +21,7 @@ public class NavigationSubsystem extends SubsystemBase {
   private final ADXRS450_Gyro gyroscope = new ADXRS450_Gyro();
   private final ADXL362 accelerometer = new ADXL362(Accelerometer.Range.k2G);
 
-  private NetworkTableEntry angleEntry;
+  private final NetworkTableEntry angleEntry;
 
   /**
    * Creates a new NavigationSubsystem.
@@ -33,7 +33,7 @@ public class NavigationSubsystem extends SubsystemBase {
     }
     accelerometer.setRange(Accelerometer.Range.k2G);
 
-    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    final NetworkTableInstance inst = NetworkTableInstance.getDefault();
     angleEntry = inst.getEntry("/angle");
 
     SmartDashboard.putData("Gyroscope", gyroscope);

@@ -12,10 +12,11 @@ import frc.robot.subsystems.AirSubsystem;
 
 public class CompressorControlCommand extends CommandBase {
   private final AirSubsystem airSubsystem;
+
   /**
    * Creates a new CompressorControlCommand.
    */
-  public CompressorControlCommand(AirSubsystem airSubsystem) {
+  public CompressorControlCommand(final AirSubsystem airSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.airSubsystem = airSubsystem;
     addRequirements(airSubsystem);
@@ -34,7 +35,7 @@ public class CompressorControlCommand extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
+  public void end(final boolean interrupted) {
     airSubsystem.stop();
   }
 

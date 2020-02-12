@@ -12,10 +12,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ColorSubsystem;
 
 public class RotateNumber extends CommandBase {
-  private ColorSubsystem Rotater;
-  String startingColor = Rotater.gettColor();
-  int timesColorPassed = 0;
-  boolean sameColor = false; 
+    private ColorSubsystem Rotater;
+    String startingColor = Rotater.gettColor();
+    int timesColorPassed = 0;
+    boolean sameColor = false;
+
     /**
      * Creates a new StartSpinCommand.
      */
@@ -32,56 +33,47 @@ public class RotateNumber extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (timesColorPassed >= 6)
-        {
+        if (timesColorPassed >= 6) {
             Rotater.stopR2D2();
-        }
-        else 
-        {
+        } else {
             Rotater.doR2D2(0.5);
         }
         if (startingColor != Rotater.gettColor()) {
             sameColor = false;
         }
-        if (startingColor == Rotater.gettColor() && !!(sameColor))  {
+        if (startingColor == Rotater.gettColor() && !!(sameColor)) {
             timesColorPassed += 1;
-            sameColor = true; 
+            sameColor = true;
         }
     }
 
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }
-/*final Color detectedColor = m_colorSensor.getColor();
-        String colorString;
-        final ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
-        
-        if (match.color == kBlueTarget) {
-            colorString = "Blue";
-        } else if (match.color == kRedTarget) {
-            colorString = "Red";
-        } else if (match.color == kGreenTarget) {
-            colorString = "Green";
-        } else if (match.color == kYellowTarget) {
-            colorString = "Yellow";
-        } else {
-            colorString = "Unknown";
-        }
-        SmartDashboard.putNumber("Red", detectedColor.red);
-        SmartDashboard.putNumber("Green", detectedColor.green);
-        SmartDashboard.putNumber("Blue", detectedColor.blue);
-        SmartDashboard.putNumber("Confidence", match.confidence);
-        SmartDashboard.putString("Detected Color", colorString); */
+/*
+ * final Color detectedColor = m_colorSensor.getColor(); String colorString;
+ * final ColorMatchResult match =
+ * m_colorMatcher.matchClosestColor(detectedColor);
+ * 
+ * if (match.color == kBlueTarget) { colorString = "Blue"; } else if
+ * (match.color == kRedTarget) { colorString = "Red"; } else if (match.color ==
+ * kGreenTarget) { colorString = "Green"; } else if (match.color ==
+ * kYellowTarget) { colorString = "Yellow"; } else { colorString = "Unknown"; }
+ * SmartDashboard.putNumber("Red", detectedColor.red);
+ * SmartDashboard.putNumber("Green", detectedColor.green);
+ * SmartDashboard.putNumber("Blue", detectedColor.blue);
+ * SmartDashboard.putNumber("Confidence", match.confidence);
+ * SmartDashboard.putString("Detected Color", colorString);
+ */
 
-        /*   
-  public final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
-  public final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
-  public final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
-  public final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
-  private final ColorMatch m_colorMatcher = new ColorMatch();
-  private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
-  */
+/*
+ * public final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
+ * public final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
+ * public final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
+ * public final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
+ * private final ColorMatch m_colorMatcher = new ColorMatch(); private final
+ * ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
+ */

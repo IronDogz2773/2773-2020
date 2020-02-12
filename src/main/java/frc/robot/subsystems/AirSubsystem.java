@@ -11,8 +11,9 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class AirSubsystem extends SubsystemBase{
+public class AirSubsystem extends SubsystemBase {
   private final Compressor compressor = new Compressor(Constants.compressorPort);
+
   /**
    * Creates a new AirSubsystem.
    */
@@ -24,18 +25,15 @@ public class AirSubsystem extends SubsystemBase{
     // This method will be called once per scheduler run
   }
 
-  public void start()
-  {
+  public void start() {
     compressor.start();
   }
 
-  public void stop()
-  {
+  public void stop() {
     compressor.stop();
   }
 
-  public double getCurrent()
-  {
+  public double getCurrent() {
     return compressor.getCompressorCurrent();
   }
 

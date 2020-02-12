@@ -42,14 +42,13 @@ public class IndexerSubsystem extends SubsystemBase {
 
   public void lock(final boolean locked) // kForward for on, kReverse for off
   {
-    if(locked)
+    if (locked)
       doubleSolenoid.set(DoubleSolenoid.Value.kForward);
     else
       doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
   }
 
-  public DoubleSolenoid.Value getSolenoidValue()
-  {
+  public DoubleSolenoid.Value getSolenoidValue() {
     return doubleSolenoid.get();
   }
 }

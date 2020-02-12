@@ -14,7 +14,7 @@ import frc.robot.Constants;
 public class ShooterSubsystem extends SubsystemBase {
 
   private final Spark flyWheel = new Spark(Constants.flyWheelPort);
-  
+
   /**
    * Creates a new ShooterSubsystem.
    */
@@ -27,7 +27,7 @@ public class ShooterSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void startSpin(double speed) {
+  public void startSpin(final double speed) {
     flyWheel.set(speed);
   }
 
@@ -35,9 +35,9 @@ public class ShooterSubsystem extends SubsystemBase {
     flyWheel.set(0.0);
   }
 
-  //encoder tells me the speed is right if true
+  // encoder tells me the speed is right if true
   public double checkSpinSpeed() {
-    return flyWheel.get(); 
+    return flyWheel.get();
   }
 
   public void send() {
