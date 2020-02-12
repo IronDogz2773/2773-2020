@@ -12,12 +12,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class StartSpinCommand extends CommandBase {
-  private ShooterSubsystem shooter;
-  
+  private final ShooterSubsystem shooter;
+
   /**
    * Creates a new StartSpinCommand.
    */
-  public StartSpinCommand(ShooterSubsystem shooter) {
+  public StartSpinCommand(final ShooterSubsystem shooter) {
     this.shooter = shooter;
     addRequirements(shooter);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -26,7 +26,7 @@ public class StartSpinCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -38,19 +38,16 @@ public class StartSpinCommand extends CommandBase {
   }
 
   public boolean checkSpeed() {
-    if (shooter.checkSpinSpeed() != 0)
-    {
+    if (shooter.checkSpinSpeed() != 0) {
       return true;
-    }
-    else
-    {
+    } else {
       return false;
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
+  public void end(final boolean interrupted) {
     SmartDashboard.putBoolean("Shooter", false);
     shooter.stopSpin();
   }

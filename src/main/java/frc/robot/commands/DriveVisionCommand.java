@@ -10,12 +10,12 @@ import edu.wpi.first.wpiutil.math.MathUtil;
 public class DriveVisionCommand extends CommandBase {
 
     private final DriveSubsystem driveSubsystem;
-    PIDController obamaController = new PIDController(0.03, 0.02, 0);
-    private double rot;
+    PIDController PIDcontrol = new PIDController(0.03, 0.02, 0);
+    private double rotation;
     private double target;
     private final NavigationSubsystem nav;
 
-    public DriveVisionCommand(DriveSubsystem subsystem, NavigationSubsystem nav){
+    public DriveVisionCommand(final DriveSubsystem subsystem, final NavigationSubsystem nav) {
         driveSubsystem = subsystem;
         addRequirements(subsystem);
 
@@ -23,39 +23,37 @@ public class DriveVisionCommand extends CommandBase {
     }
 
     @Override
-    public void initialize(){
+    public void initialize() {
         driveSubsystem.driveState = true;
-        obamaController.setTolerance(1);
-        obamaController.setSetpoint(0);
+        PIDcontrol.setTolerance(1);
+        PIDcontrol.setSetpoint(0);
 
         target = 10;
-        obamaController.setSetpoint(target);
+        PIDcontrol.setSetpoint(target);
     }
 
     @Override
-    public void execute(){ //what the code does while the command is active
-        double alpha = nav.getVisionAngle();  
+    public void execute() { // what the code does while the command is active
+        final double alpha = nav.getVisionAngle();
         SmartDashboard.putNumber("Target", target);
-        double e = obamaController.calculate(nav.getGyroAngle()); 
-        rot = MathUtil.clamp(e, -0.55, 0.55);
-        
-        driveSubsystem.rawDrive(0, rot, false);
+        final double e = PIDcontrol.calculate(nav.getGyroAngle());
+        rotation = MathUtil.clamp(e, -0.55, 0.55);
+
+        driveSubsystem.rawDrive(0, rotation, false);
         driveSubsystem.driveState = true;
         SmartDashboard.putNumber("Alpha", alpha);
-        SmartDashboard.putNumber("Rotation", rot);
-        
+        SmartDashboard.putNumber("Rotation", rotation);
 
-        
     }
 
     @Override
-    public boolean isFinished(){
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    public void end(boolean interrupted){
+    public void end(final boolean interrupted) {
         driveSubsystem.driveState = false;
     }
-    
+
 }
