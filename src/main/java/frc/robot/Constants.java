@@ -46,7 +46,8 @@ public final class Constants {
     public static int gamepadPort = 1;
 
     // Buttons
-    public static int spinButton = 1;
+    public static int spinButton = 10;
     public static int visionButton = 7;
     public static int gyroButton = 5;
+    public static int turnTestButton = 1;
 }

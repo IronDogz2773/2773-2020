@@ -19,6 +19,7 @@ import frc.robot.commands.IndexerCommand;
 import frc.robot.commands.IntakeSpinCommand;
 import frc.robot.commands.ResetGyroscopeCommand;
 import frc.robot.commands.StartSpinCommand;
+import frc.robot.commands.TurnDegreesCommand;
 import frc.robot.subsystems.AirSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -57,6 +58,7 @@ public class RobotContainer {
   private final ResetGyroscopeCommand resetGyroscopeCommand = new ResetGyroscopeCommand(navigationSubsystem);
   private final CompressorControlCommand compressorControlCommand = new CompressorControlCommand(airSubsystem);
   private final IndexerCommand indexerCommand = new IndexerCommand(indexerSubsystem, gamepad);
+  private final TurnDegreesCommand turn90Command = new TurnDegreesCommand(driveSubsystem, navigationSubsystem, 90);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -66,8 +68,8 @@ public class RobotContainer {
     configureButtonBindings();
     setShuffleboardVals();
     driveSubsystem.setDefaultCommand(driveManuallyCommand);
-    intakeSubsystem.setDefaultCommand(intakeSpinCommand);
-    airSubsystem.setDefaultCommand(compressorControlCommand);
+    //intakeSubsystem.setDefaultCommand(intakeSpinCommand);
+    //airSubsystem.setDefaultCommand(compressorControlCommand);
     indexerSubsystem.setDefaultCommand(indexerCommand);
 
     // shooterSubsystem.setDefaultCommand(spinCmd);
@@ -87,6 +89,9 @@ public class RobotContainer {
     visionButton.whenHeld(visionCommand, true);
     final JoystickButton gyroButton = new JoystickButton(joystick, Constants.gyroButton);
     gyroButton.whenHeld(resetGyroscopeCommand, true);
+    final JoystickButton turnButton = new JoystickButton(joystick, Constants.turnTestButton);
+    turnButton.whenHeld(turn90Command, true);
+    
   }
 
   /**

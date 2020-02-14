@@ -12,9 +12,10 @@ import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.NavigationSubsystem;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TurnDegreesCommand extends CommandBase {
-  PIDController pidController = new PIDController(.025, 0.03, 0.0);
+  PIDController pidController = new PIDController(.03, 0.0, 0.0);
   private final DriveSubsystem driveSubsystem;
   private double rotation;
   private final double angle;
@@ -24,10 +25,10 @@ public class TurnDegreesCommand extends CommandBase {
   /**
    * Creates a new TurnDegreesCommand.
    */
-  public TurnDegreesCommand(final DriveSubsystem subsystem, final NavigationSubsystem nav, final double angle) {
+  public TurnDegreesCommand(final DriveSubsystem driveSubsystem, final NavigationSubsystem nav, final double angle) {
     // Use addRequirements() here to declare subsystem dependencies.
-    driveSubsystem = subsystem;
-    addRequirements(subsystem);
+    this.driveSubsystem = driveSubsystem;
+    addRequirements(driveSubsystem);
     this.angle = angle;
     this.nav = nav;
   }
@@ -35,18 +36,24 @@ public class TurnDegreesCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    driveSubsystem.driveState = true;
     target = nav.getGyroAngle() + angle;
+    pidController.setTolerance(0);
     pidController.setSetpoint(target);
-    pidController.setTolerance(2.5);
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    SmartDashboard.putNumber("rotation", rotation);
+    SmartDashboard.putNumber("angle", angle);
+    SmartDashboard.putNumber("target", target);
     if (!pidController.atSetpoint()) {
       rotation = pidController.calculate(nav.getGyroAngle());
       rotation = MathUtil.clamp(rotation, -.8, .8);
-      driveSubsystem.rawDrive(0, rotation);
+      driveSubsystem.rawDrive(0, rotation, false);
+      
     }
   }
 
@@ -58,6 +65,7 @@ public class TurnDegreesCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    driveSubsystem.driveState = false;
     return false;
   }
 }
