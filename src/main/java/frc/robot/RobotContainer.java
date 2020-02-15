@@ -68,8 +68,8 @@ public class RobotContainer {
     configureButtonBindings();
     setShuffleboardVals();
     driveSubsystem.setDefaultCommand(driveManuallyCommand);
-    //intakeSubsystem.setDefaultCommand(intakeSpinCommand);
-    //airSubsystem.setDefaultCommand(compressorControlCommand);
+    intakeSubsystem.setDefaultCommand(intakeSpinCommand);
+    airSubsystem.setDefaultCommand(compressorControlCommand);
     indexerSubsystem.setDefaultCommand(indexerCommand);
 
     // shooterSubsystem.setDefaultCommand(spinCmd);
