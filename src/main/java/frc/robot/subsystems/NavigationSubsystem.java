@@ -11,9 +11,14 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.ADXL362;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.analog.adis16470.frc.ADIS16470_IMU;
 /*import com.analog.adis16470.frc.ADIS16470_IMU.IMUAxis;
@@ -26,7 +31,15 @@ public class NavigationSubsystem extends SubsystemBase {
   private final ADIS16470_IMU imu = new ADIS16470_IMU(ADIS16470_IMU.IMUAxis.kY, SPI.Port.kMXP, ADIS16470_IMU.ADIS16470CalibrationTime._256ms);
   private final ADXL362 accelerometer = new ADXL362(Accelerometer.Range.k2G);
 
+  // Encoders
+  private final Encoder leftEncoder = new Encoder(Constants.leftEncoderPortA, Constants.leftEncoderPortB);
+  private final Encoder rightEncoder = new Encoder(Constants.rightEncoderPortA, Constants.rightEncoderPortB);
+
   private final NetworkTableEntry angleEntry;
+  private final Rotation2d startRotation = new Rotation2d(0);
+  private final Pose2d startPosition = new Pose2d(0, 0, startRotation);
+  private final DifferentialDriveOdometry odometer = new DifferentialDriveOdometry(startRotation);
+  private Pose2d currentPosition = new Pose2d(0, 0, startRotation);
 
   /**
    * Creates a new NavigationSubsystem.
@@ -43,7 +56,12 @@ public class NavigationSubsystem extends SubsystemBase {
 
     SmartDashboard.putData("Gyroscope", gyroscope);
     SmartDashboard.putData("Accelerometer", accelerometer);
-    SmartDashboard.putData("NewCoolIMU", imu);
+  }
+
+  public void setDistancePerPulse(double distancePerPulse)
+  {
+    leftEncoder.setDistancePerPulse(distancePerPulse);
+    rightEncoder.setDistancePerPulse(distancePerPulse);
   }
 
   public double getVisionAngle() {
@@ -55,12 +73,32 @@ public class NavigationSubsystem extends SubsystemBase {
     //return imu.getAngle();
   }
 
+  public Pose2d getCurrentPosition()
+  {
+    return currentPosition;
+  }
+
+  public void resetEncoders()
+  {
+    leftEncoder.reset();
+    rightEncoder.reset();
+  }
+
   public void resetGyro() {
     gyroscope.reset();
   }
-
+  
+  public void resetOdometer(){
+    odometer.resetPosition(startPosition, startRotation);
+  }
+ 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    var gyroAngle = Rotation2d.fromDegrees(-gyroscope.getAngle());
+    currentPosition = odometer.update(gyroAngle, -leftEncoder.getDistance(), rightEncoder.getDistance());
+    SmartDashboard.putNumber("Left Encoder", -leftEncoder.getDistance());
+    SmartDashboard.putNumber("Right Encoder", rightEncoder.getDistance());
+
   }
 }

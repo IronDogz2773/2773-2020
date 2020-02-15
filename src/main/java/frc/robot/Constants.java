@@ -36,18 +36,24 @@ public final class Constants {
     public static int conveyorRightPort = 7;
     public static int conveyorLeftPort = 8;
 
+    // DIO
+    public static int leftEncoderPortA = 0;
+    public static int leftEncoderPortB = 1;
+    public static int rightEncoderPortA = 2;
+    public static int rightEncoderPortB = 3;
+
     // PCM
     public static int compressorPort = 0;
-    public static int indexerForwardChannel = 0;
-    public static int indexerReverseChannel = 1;
+    public static int indexerForwardChannel = 1;
+    public static int indexerReverseChannel = 0;
 
     // USB
     public static int joystickPort = 0;
     public static int gamepadPort = 1;
 
     // Buttons
-    public static int spinButton = 10;
+    public static int spinButton = 1;
     public static int visionButton = 7;
     public static int gyroButton = 5;
-    public static int turnTestButton = 1;
+    public static int turnTestButton = 14;
 }
