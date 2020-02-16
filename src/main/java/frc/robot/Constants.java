@@ -35,6 +35,7 @@ public final class Constants {
     public static int intakePort = 6;
     public static int conveyorRightPort = 7;
     public static int conveyorLeftPort = 8;
+    public static int LEDport = 9;
 
     // DIO
     public static int leftEncoderPortA = 0;
