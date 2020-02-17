@@ -13,7 +13,8 @@ import frc.robot.Constants;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-  private final Spark flyWheel = new Spark(Constants.flyWheelPort);
+  private final Spark flyWheelA = new Spark(Constants.flyWheelPortA);
+  private final Spark flyWheelB = new Spark(Constants.flyWheelPortB);
 
   /**
    * Creates a new ShooterSubsystem.
@@ -28,16 +29,18 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void startSpin(final double speed) {
-    flyWheel.set(speed);
+    flyWheelA.set(speed);
+    flyWheelB.set(-speed);
   }
 
   public void stopSpin() {
-    flyWheel.set(0.0);
+    flyWheelA.set(0.0);
+    flyWheelB.set(0.0);
   }
 
   // encoder tells me the speed is right if true
   public double checkSpinSpeed() {
-    return flyWheel.get();
+    return flyWheelA.get();
   }
 
   public void send() {
