@@ -26,15 +26,16 @@ public final class Constants {
     public static double movementSpeedCap = 0.7;
 
     // PWM
-    public static int leftFrontPort = 0;
+    public static int leftFrontPort = 10;
     public static int rightFrontPort = 1;
     public static int leftBackPort = 2;
     public static int rightBackPort = 3;
-    public static int flyWheelPort = 4;
-    public static int colorWheelPort = 5;
-    public static int intakePort = 6;
-    public static int conveyorRightPort = 7;
-    public static int conveyorLeftPort = 8;
+    public static int flyWheelPortA = 4;
+    public static int flyWheelPortB = 5;
+    public static int colorWheelPort = 6;
+    public static int intakePort = 7;
+    public static int conveyorRightPort = 8;
+    public static int conveyorLeftPort = 9;
 
     // DIO
     public static int leftEncoderPortA = 0;

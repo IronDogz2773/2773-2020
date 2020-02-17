@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -71,9 +73,21 @@ public class RobotContainer {
     intakeSubsystem.setDefaultCommand(intakeSpinCommand);
     airSubsystem.setDefaultCommand(compressorControlCommand);
     indexerSubsystem.setDefaultCommand(indexerCommand);
+    initPIDTable();
 
     // shooterSubsystem.setDefaultCommand(spinCmd);
     // TODO give remaining subsystems default commands
+  }
+
+  private void initPIDTable() {
+    final NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    final NetworkTable pidTable = inst.getTable("PID");
+    if(pidTable.getEntry("P").getDouble(0) != 0) return;
+    
+      pidTable.getEntry("P").forceSetNumber(.03);
+    pidTable.getEntry("I").forceSetNumber(.00);
+    pidTable.getEntry("D").forceSetNumber(.00);
+    pidTable.getEntry("Test angle").forceSetNumber(90);
   }
 
   /**

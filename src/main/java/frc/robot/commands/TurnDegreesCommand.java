@@ -11,14 +11,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.NavigationSubsystem;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TurnDegreesCommand extends CommandBase {
-  PIDController pidController = new PIDController(.03, 0.0, 0.0);
+  //Ku .05
+  PIDController pidController;
   private final DriveSubsystem driveSubsystem;
   private double rotation;
-  private final double angle;
+  private double angle;
   private double target;
   private final NavigationSubsystem nav;
 
@@ -31,11 +34,19 @@ public class TurnDegreesCommand extends CommandBase {
     addRequirements(driveSubsystem);
     this.angle = angle;
     this.nav = nav;
+    
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    final NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    final NetworkTable pidTable = inst.getTable("PID");
+    double Kp = pidTable.getEntry("P").getDouble(0);
+    double Ki = pidTable.getEntry("I").getDouble(0);
+    double Kd = pidTable.getEntry("D").getDouble(0);
+    pidController = new PIDController(Kp, Ki, Kd);
+    angle = pidTable.getEntry("Test angle").getDouble(angle);
     driveSubsystem.driveState = true;
     target = nav.getGyroAngle() + angle;
     pidController.setTolerance(0);
@@ -51,7 +62,7 @@ public class TurnDegreesCommand extends CommandBase {
     SmartDashboard.putNumber("target", target);
     if (!pidController.atSetpoint()) {
       rotation = pidController.calculate(nav.getGyroAngle());
-      rotation = MathUtil.clamp(rotation, -.8, .8);
+      rotation = MathUtil.clamp(rotation, -.5, .5);
       driveSubsystem.rawDrive(0, rotation, false);
       
     }
