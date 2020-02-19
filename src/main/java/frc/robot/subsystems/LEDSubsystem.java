@@ -8,6 +8,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Spark;
 import frc.robot.Constants;
 
@@ -29,6 +31,18 @@ public class LEDSubsystem extends SubsystemBase {
   public double getLED()
   {
     return LED.get();
+  }
+
+  public String getTeam()
+  {
+    NetworkTable fms = NetworkTableInstance.getDefault().getTable("FMSInfo");
+    boolean red = fms.getEntry("IsRedAlliance").getBoolean(false);
+    if(red)
+      return "red";
+    else if(!red)
+      return "blue";
+    else  
+      return "teamError";
   }
 
   @Override

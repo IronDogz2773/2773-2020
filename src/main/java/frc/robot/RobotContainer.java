@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -19,6 +21,7 @@ import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.DriveVisionCommand;
 import frc.robot.commands.IndexerCommand;
 import frc.robot.commands.IntakeSpinCommand;
+import frc.robot.commands.LEDControlCommand;
 import frc.robot.commands.ResetGyroscopeCommand;
 import frc.robot.commands.StartSpinCommand;
 import frc.robot.commands.TurnDegreesCommand;
@@ -26,6 +29,7 @@ import frc.robot.subsystems.AirSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.NavigationSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -43,6 +47,7 @@ public class RobotContainer {
   private static Joystick joystick = new Joystick(Constants.joystickPort);
   private static Joystick gamepad = new Joystick(Constants.gamepadPort);
   private final PowerDistributionPanel powerDistributionPanel = new PowerDistributionPanel();
+  private final UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 
   // Subsystems
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
@@ -51,6 +56,7 @@ public class RobotContainer {
   private final NavigationSubsystem navigationSubsystem = new NavigationSubsystem();
   private final AirSubsystem airSubsystem = new AirSubsystem();
   private final IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
+  private final LEDSubsystem ledSubsystem = new LEDSubsystem();
 
   // Commands
   private final DriveManuallyCommand driveManuallyCommand = new DriveManuallyCommand(driveSubsystem, joystick);
@@ -61,6 +67,7 @@ public class RobotContainer {
   private final CompressorControlCommand compressorControlCommand = new CompressorControlCommand(airSubsystem);
   private final IndexerCommand indexerCommand = new IndexerCommand(indexerSubsystem, gamepad);
   private final TurnDegreesCommand turn90Command = new TurnDegreesCommand(driveSubsystem, navigationSubsystem, 90);
+  private final LEDControlCommand ledControlCommand = new LEDControlCommand(ledSubsystem);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -73,6 +80,10 @@ public class RobotContainer {
     intakeSubsystem.setDefaultCommand(intakeSpinCommand);
     airSubsystem.setDefaultCommand(compressorControlCommand);
     indexerSubsystem.setDefaultCommand(indexerCommand);
+    ledSubsystem.setDefaultCommand(ledControlCommand);
+    camera.setResolution(160, 120);
+    camera.setFPS(15);
+
     initPIDTable();
 
     // shooterSubsystem.setDefaultCommand(spinCmd);
@@ -82,9 +93,9 @@ public class RobotContainer {
   private void initPIDTable() {
     final NetworkTableInstance inst = NetworkTableInstance.getDefault();
     final NetworkTable pidTable = inst.getTable("PID");
-    if(pidTable.getEntry("P").getDouble(0) != 0) return;
-    
-      pidTable.getEntry("P").forceSetNumber(.03);
+    if(pidTable.getEntry("P").getDouble(0) != 0) 
+      return;
+    pidTable.getEntry("P").forceSetNumber(.03);
     pidTable.getEntry("I").forceSetNumber(.00);
     pidTable.getEntry("D").forceSetNumber(.00);
     pidTable.getEntry("Test angle").forceSetNumber(90);
@@ -123,5 +134,6 @@ public class RobotContainer {
     SmartDashboard.putNumber("Speed", driveManuallyCommand.speed);
     SmartDashboard.putNumber("Rotation", driveManuallyCommand.rotation);
     SmartDashboard.putData("Power Distribution Panel", powerDistributionPanel);
+
   }
 }

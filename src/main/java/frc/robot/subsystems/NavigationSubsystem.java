@@ -105,6 +105,6 @@ public class NavigationSubsystem extends SubsystemBase {
     byte[] buffer = new byte[2];
     proximity.read(0, 2, buffer);
     int d = ((buffer[0] << 0) & 0xff) | ((buffer[1] << 8) & 0xff00);
-    SmartDashboard.putNumber("Distance3", d);
+    SmartDashboard.putNumber("Distance", d);
   }
 }
