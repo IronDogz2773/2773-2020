@@ -12,6 +12,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.ADXL362;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.I2C;
 //import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -41,6 +42,7 @@ public class NavigationSubsystem extends SubsystemBase {
   private final DifferentialDriveOdometry odometer = new DifferentialDriveOdometry(startRotation);
   private Pose2d currentPosition = new Pose2d(0, 0, startRotation);
 
+  private I2C proximity = new I2C(I2C.Port.kOnboard, 0x31);
   /**
    * Creates a new NavigationSubsystem.
    */
@@ -100,5 +102,9 @@ public class NavigationSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Left Encoder", -leftEncoder.getDistance());
     SmartDashboard.putNumber("Right Encoder", rightEncoder.getDistance());
 
+    byte[] buffer = new byte[2];
+    proximity.read(0, 2, buffer);
+    int d = ((buffer[0] << 0) & 0xff) | ((buffer[1] << 8) & 0xff00);
+    SmartDashboard.putNumber("Distance3", d);
   }
 }
