@@ -100,7 +100,7 @@ public class NavigationSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Left Encoder", -leftEncoder.getDistance());
     SmartDashboard.putNumber("Right Encoder", rightEncoder.getDistance());
 
-    double [] d = proximity.getDistances();
+    double[] d = proximity.getDistances();
     SmartDashboard.putNumberArray("Distances1", d);
   }
 }
