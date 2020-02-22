@@ -15,10 +15,10 @@ public class ProximitySensor {
 
         double[] results = new double[4];
 
-        results[0] = ((buffer[0] << 0) & 0xff) | ((buffer[1] << 8) & 0xff00);
-        results[1] = ((buffer[2] << 0) & 0xff) | ((buffer[3] << 8) & 0xff00);
-        results[2] = ((buffer[4] << 0) & 0xff) | ((buffer[5] << 8) & 0xff00);
-        results[3] = ((buffer[6] << 0) & 0xff) | ((buffer[7] << 8) & 0xff00);
+        results[0] = (buffer[0] & 0xff) | ((buffer[1] & 0xff) << 8);
+        results[1] = (buffer[2] & 0xff) | ((buffer[3] & 0xff) << 8);
+        results[2] = (buffer[4] & 0xff) | ((buffer[5] & 0xff) << 8);
+        results[3] = (buffer[6] & 0xff) | ((buffer[7] & 0xff) << 8);
 
         return results;
     }
