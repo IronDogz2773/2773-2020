@@ -7,15 +7,12 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LEDSubsystem;
 
 public class LEDControlCommand extends CommandBase {
 
   private final LEDSubsystem ledSubystem;
-  private final Alliance team = DriverStation.Alliance.valueOf("Blue");
   /**
    * Creates a new LEDControlCommand.
    */
