@@ -33,7 +33,8 @@ public class StartSpinCommand extends CommandBase {
   @Override
   public void execute() {
     shooter.startSpin(1);
-    SmartDashboard.putBoolean("Shooter", true);
+    SmartDashboard.putBoolean("Shooter Running", true);
+    SmartDashboard.putBoolean("Shooter At RPM", shooter.atRate());
     checkSpeed();
   }
 
