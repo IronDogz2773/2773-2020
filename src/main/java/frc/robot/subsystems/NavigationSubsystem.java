@@ -78,6 +78,11 @@ public class NavigationSubsystem extends SubsystemBase {
     return currentPosition;
   }
 
+  public Pose2d getStartPosition()
+  {
+    return startPosition;
+  }
+
   public void resetEncoders()
   {
     leftEncoder.reset();
@@ -101,6 +106,6 @@ public class NavigationSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Right Encoder", rightEncoder.getDistance());
 
     double[] d = proximity.getDistances();
-    SmartDashboard.putNumberArray("Distances1", d);
+    SmartDashboard.putNumberArray("Distances", d);
   }
 }
