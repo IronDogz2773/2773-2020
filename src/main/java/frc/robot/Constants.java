@@ -24,6 +24,7 @@ public final class Constants {
     public static double rotationIncrement = 0.03;
     public static double rotationSpeedCap = 0.7;
     public static double movementSpeedCap = 0.7;
+    public static double requiredShooterRate = 1000;
 
     // PWM
     public static int leftFrontPort = 0;
@@ -43,6 +44,8 @@ public final class Constants {
     public static int leftEncoderPortB = 1;
     public static int rightEncoderPortA = 2;
     public static int rightEncoderPortB = 3;
+    public static int shooterEncoderPortA = 4;
+    public static int shooterEncoderPortB = 5;
 
     // PCM
     public static int compressorPort = 0;
