@@ -7,40 +7,46 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClimbSubsystem;
 
 public class ClimbControllerCommand extends CommandBase {
   private final ClimbSubsystem climbSubsystem;
-  private final boolean up;
-  private int speed; //-1 for down, 1 for up
+  private final Joystick gamepad;
+  private int pov;
+  private int speed;
+  
   /**
    * Creates a new ClimbControllerCommand.
    */
-  public ClimbControllerCommand(ClimbSubsystem climbSubsystem, boolean up) {
+  public ClimbControllerCommand(ClimbSubsystem climbSubsystem, Joystick gamepad) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.climbSubsystem = climbSubsystem;
-    this.up = up;
+    this.gamepad = gamepad;
     addRequirements(climbSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(up)
-    {
-      speed = 1;
-    }
-    else
-    {
-      speed = -1;
-    }
+    pov = gamepad.getPOV();
+    speed = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if(pov == 0)
+    {
+      speed = 1;
+    }
+    else 
+    {
+      speed = -1;
+    }
     climbSubsystem.climb(speed);
+    
   }
 
   // Called once the command ends or is interrupted.
