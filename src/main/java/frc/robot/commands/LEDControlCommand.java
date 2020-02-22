@@ -28,13 +28,17 @@ public class LEDControlCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(team.equals(DriverStation.Alliance.Blue))
+    if(ledSubystem.getTeam().equals("red"))
     {
       ledSubystem.setLED(-0.29);
     }
-    else
+    else if(ledSubystem.getTeam().equals("blue"))
     {
       ledSubystem.setLED(-0.31);
+    }
+    else 
+    {
+      ledSubystem.setLED(-0.13);
     }
   }
 
