@@ -36,13 +36,13 @@ public class LEDSubsystem extends SubsystemBase {
   public String getTeam()
   {
     NetworkTable fms = NetworkTableInstance.getDefault().getTable("FMSInfo");
-    boolean red = fms.getEntry("IsRedAlliance").getBoolean(false);
-    if(red)
-      return "red";
-    else if(!red)
+    boolean team = fms.getEntry("IsRedAlliance").getBoolean(false);
+    if(team)
       return "blue";
+    else if(!team)
+      return "red";
     else  
-      return "teamError";
+      return "teamError"; 
   }
 
   @Override
