@@ -7,12 +7,13 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class ClimbSubsystem extends SubsystemBase {
-  /**
-   * Creates a new ClimbSubsystem.
-   */
+  private final Spark climbRight = new Spark(Constants.rightClimbPort);
+  private final Spark climbLeft = new Spark(Constants.leftClimbPort);
 
   public ClimbSubsystem() {
 
@@ -21,5 +22,19 @@ public class ClimbSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public void climb(double speed, boolean up)
+  {
+    if(up)
+    {
+      climbRight.set(speed);
+      climbLeft.set(-speed);
+    }
+    else
+    {
+      climbRight.set(-speed);
+      climbLeft.set(speed);
+    }
   }
 }
