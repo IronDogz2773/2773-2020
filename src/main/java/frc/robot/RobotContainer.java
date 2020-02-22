@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.ClimbControllerCommand;
 import frc.robot.commands.CompressorControlCommand;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.DriveVisionCommand;
@@ -26,6 +27,7 @@ import frc.robot.commands.ResetGyroscopeCommand;
 import frc.robot.commands.StartSpinCommand;
 import frc.robot.commands.TurnDegreesCommand;
 import frc.robot.subsystems.AirSubsystem;
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -57,6 +59,7 @@ public class RobotContainer {
   private final AirSubsystem airSubsystem = new AirSubsystem();
   private final IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
   private final LEDSubsystem ledSubsystem = new LEDSubsystem();
+  private final ClimbSubsystem climbSubsystem = new ClimbSubsystem();
 
   // Commands
   private final DriveManuallyCommand driveManuallyCommand = new DriveManuallyCommand(driveSubsystem, joystick);
@@ -68,6 +71,7 @@ public class RobotContainer {
   private final IndexerCommand indexerCommand = new IndexerCommand(indexerSubsystem, gamepad);
   private final TurnDegreesCommand turn90Command = new TurnDegreesCommand(driveSubsystem, navigationSubsystem, 90);
   private final LEDControlCommand ledControlCommand = new LEDControlCommand(ledSubsystem);
+  private final ClimbControllerCommand climbControllerCommand = new ClimbControllerCommand(climbSubsystem, gamepad);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -81,6 +85,7 @@ public class RobotContainer {
     airSubsystem.setDefaultCommand(compressorControlCommand);
     indexerSubsystem.setDefaultCommand(indexerCommand);
     ledSubsystem.setDefaultCommand(ledControlCommand);
+    climbSubsystem.setDefaultCommand(climbControllerCommand);
     camera.setResolution(160, 120);
     camera.setFPS(15);
 
