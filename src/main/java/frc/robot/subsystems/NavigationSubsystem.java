@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import com.analog.adis16470.frc.ADIS16470_IMU;
 /*import com.analog.adis16470.frc.ADIS16470_IMU.IMUAxis;
@@ -96,7 +97,13 @@ public class NavigationSubsystem extends SubsystemBase {
   public void resetOdometer(){
     odometer.resetPosition(startPosition, startRotation);
   }
- 
+  public Pose2d getPose() {
+    return new Pose2d();
+  }
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+      return new DifferentialDriveWheelSpeeds();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
