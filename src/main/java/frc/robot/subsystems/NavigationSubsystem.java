@@ -54,7 +54,7 @@ public class NavigationSubsystem extends SubsystemBase {
 
     final NetworkTableInstance inst = NetworkTableInstance.getDefault();
     angleEntry = inst.getEntry("/angle");
-    this.setDistancePerPulse(.47879);
+    this.setDistancePerPulse(Constants.distancePerPulse);
 
     SmartDashboard.putData("Gyroscope", gyroscope);
     SmartDashboard.putData("Accelerometer", accelerometer);

@@ -27,16 +27,17 @@ public final class Constants {
     public static double rotationSpeedCap = 0.7;
     public static double movementSpeedCap = 0.7;
     public static double requiredShooterRate = 1000;
-    static double M_2_FT = 3.28084;
+    static double metersPerFoot = 0.3048;
     
     // Drive Constants
     public static double ksVolts = 2.29;
-    public static double kvVoltSecondsPerMeter = 0.796 * M_2_FT;
-    public static double kaVoltSecondsSquaredPerMeter = 0.0192 * M_2_FT;
-    public static double kTrackWidthMeters = 1.972485 / M_2_FT;
+    public static double kvVoltSecondsPerMeter = 0.796 / metersPerFoot;
+    public static double kaVoltSecondsSquaredPerMeter = 0.0192 /  metersPerFoot;
+    public static double kTrackWidthMeters = 1.972485 * metersPerFoot;
     public static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
         kTrackWidthMeters);
     public static double kPDriveVel = 0.615;
+    public static double distancePerPulse = .5 * Math.PI * metersPerFoot / 2048;
     
 
     // Auto Constants
