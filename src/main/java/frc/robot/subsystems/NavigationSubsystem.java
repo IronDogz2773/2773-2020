@@ -54,6 +54,7 @@ public class NavigationSubsystem extends SubsystemBase {
 
     final NetworkTableInstance inst = NetworkTableInstance.getDefault();
     angleEntry = inst.getEntry("/angle");
+    this.setDistancePerPulse(.47879);
 
     SmartDashboard.putData("Gyroscope", gyroscope);
     SmartDashboard.putData("Accelerometer", accelerometer);
@@ -97,11 +98,17 @@ public class NavigationSubsystem extends SubsystemBase {
   public void resetOdometer(){
     odometer.resetPosition(startPosition, startRotation);
   }
+
   public Pose2d getPose() {
     return new Pose2d();
   }
+
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
       return new DifferentialDriveWheelSpeeds();
+  }
+
+  public double getHeading() {
+    return Math.IEEEremainder(gyroscope.getAngle(), 360); //* (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 
   @Override

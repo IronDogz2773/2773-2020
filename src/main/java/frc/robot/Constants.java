@@ -39,8 +39,8 @@ public final class Constants {
     
 
     // Auto Constants
-    public static double kMaxSpeedMetersPerSecond = 0;
-    public static double kMaxAccelerationMetersPerSecondSquared = 0;
+    public static double kMaxSpeedMetersPerSecond = 1;
+    public static double kMaxAccelerationMetersPerSecondSquared = 0.5;
     public static double kRamseteB = 0;
     public static double kRamseteZeta = 0;
 
