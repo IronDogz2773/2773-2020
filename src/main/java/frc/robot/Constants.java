@@ -27,22 +27,23 @@ public final class Constants {
     public static double rotationSpeedCap = 0.7;
     public static double movementSpeedCap = 0.7;
     public static double requiredShooterRate = 1000;
-
+    static double M_2_FT = 3.28084;
+    
     // Drive Constants
-    public static double ksVolts = 0;
-    public static double kvVoltSecondsPerMeter = 0;
-    public static double kaVoltSecondsSquaredPerMeter = 0;
-    public static double kTrackWidthMeters = 0;
+    public static double ksVolts = 2.29;
+    public static double kvVoltSecondsPerMeter = 0.796 * M_2_FT;
+    public static double kaVoltSecondsSquaredPerMeter = 0.0192 * M_2_FT;
+    public static double kTrackWidthMeters = 1.972485 / M_2_FT;
     public static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
         kTrackWidthMeters);
-    public static double kPDriveVel = 0;
+    public static double kPDriveVel = 0.615;
     
 
     // Auto Constants
-    public static double kMaxSpeedMetersPerSecond = 0;
-    public static double kMaxAccelerationMetersPerSecondSquared = 0;
-    public static double kRamseteB = 0;
-    public static double kRamseteZeta = 0;
+    public static double kMaxSpeedMetersPerSecond = 1;
+    public static double kMaxAccelerationMetersPerSecondSquared = .5;
+    public static double kRamseteB = 2.0;
+    public static double kRamseteZeta = 0.7;
 
     // PWM
     public static int leftFrontPort = 0;
