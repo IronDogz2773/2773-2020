@@ -75,7 +75,7 @@ public class RobotContainer {
   private final ClimbSubsystem climbSubsystem = new ClimbSubsystem();
 
   // Commands
-  private final DriveManuallyCommand driveManuallyCommand = new DriveManuallyCommand(driveSubsystem, joystick);
+  private final DriveManuallyCommand driveManuallyCommand = new DriveManuallyCommand(driveSubsystem, navigationSubsystem, joystick);
   private final StartSpinCommand startSpinCommand = new StartSpinCommand(shooterSubsystem);
   private final IntakeSpinCommand intakeSpinCommand = new IntakeSpinCommand(intakeSubsystem, gamepad);
   private final DriveVisionCommand visionCommand = new DriveVisionCommand(driveSubsystem, navigationSubsystem);
