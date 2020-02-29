@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import frc.robot.commands.AutonomousCommand;
 import frc.robot.commands.ClimbControllerCommand;
 import frc.robot.commands.CompressorControlCommand;
 import frc.robot.commands.DriveManuallyCommand;
@@ -64,6 +65,7 @@ public class RobotContainer {
   private final PowerDistributionPanel powerDistributionPanel = new PowerDistributionPanel();
   private final UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 
+
   // Subsystems
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
@@ -73,6 +75,7 @@ public class RobotContainer {
   private final IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
   private final LEDSubsystem ledSubsystem = new LEDSubsystem();
   private final ClimbSubsystem climbSubsystem = new ClimbSubsystem();
+  private final AutonomousBuilder autonomousBuilder = new AutonomousBuilder(driveSubsystem, navigationSubsystem, "paths/YourPath.wpilib.json");
 
   // Commands
   private final DriveManuallyCommand driveManuallyCommand = new DriveManuallyCommand(driveSubsystem, joystick);
@@ -85,6 +88,9 @@ public class RobotContainer {
   private final TurnDegreesCommand turn90Command = new TurnDegreesCommand(driveSubsystem, navigationSubsystem, 90);
   private final LEDControlCommand ledControlCommand = new LEDControlCommand(ledSubsystem);
   private final ClimbControllerCommand climbControllerCommand = new ClimbControllerCommand(climbSubsystem, gamepad);
+  private final AutonomousCommand autonomousCommand = new AutonomousCommand(driveSubsystem, navigationSubsystem, autonomousBuilder);
+
+  
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
