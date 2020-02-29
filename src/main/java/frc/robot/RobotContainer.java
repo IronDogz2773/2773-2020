@@ -125,7 +125,6 @@ public class RobotContainer {
     gyroButton.whenHeld(resetGyroscopeCommand, true);
     final JoystickButton turnButton = new JoystickButton(joystick, Constants.turnTestButton);
     turnButton.whenHeld(turn90Command, true);
-    
   }
 
   /**

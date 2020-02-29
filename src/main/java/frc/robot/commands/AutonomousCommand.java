@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.AutonomousBuilder;
 import frc.robot.subsystems.DriveSubsystem;
@@ -21,6 +22,7 @@ public class AutonomousCommand extends CommandBase {
   DriveSubsystem driveSubsystem;
   NavigationSubsystem navigationSubsystem;
   AutonomousBuilder autonomousBuilder;
+  Command autoCommand;
 
   /**
    * Creates a new getAutonomousCommand.
@@ -35,12 +37,14 @@ public class AutonomousCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    autoCommand = autonomousBuilder.build();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    autoCommand.execute();
+    //TODO implement collision detection to interrupt
   }
 
   // Called once the command ends or is interrupted.
