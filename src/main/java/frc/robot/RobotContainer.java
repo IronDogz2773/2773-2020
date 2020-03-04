@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.AutonomousCommand;
 import frc.robot.commands.ClimbControllerCommand;
 import frc.robot.commands.CompressorControlCommand;
 import frc.robot.commands.DriveManuallyCommand;
