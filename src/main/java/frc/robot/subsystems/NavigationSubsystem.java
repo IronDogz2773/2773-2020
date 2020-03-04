@@ -28,7 +28,6 @@ public class NavigationSubsystem extends SubsystemBase {
 
   // Sensors
   private final ADXRS450_Gyro gyroscope = new ADXRS450_Gyro();
-  //private final ADIS16470_IMU imu = new ADIS16470_IMU(ADIS16470_IMU.IMUAxis.kY, SPI.Port.kMXP, ADIS16470_IMU.ADIS16470CalibrationTime._256ms);
   private final ADXL362 accelerometer = new ADXL362(Accelerometer.Range.k2G);
 
   // Encoders
@@ -41,7 +40,10 @@ public class NavigationSubsystem extends SubsystemBase {
   private final DifferentialDriveOdometry odometer = new DifferentialDriveOdometry(startRotation);
   private Pose2d currentPosition = new Pose2d(0, 0, startRotation);
 
+  private double[] proximityDistances;
+
   private ProximitySensor proximity = new ProximitySensor();
+
   /**
    * Creates a new NavigationSubsystem.
    */
@@ -60,8 +62,7 @@ public class NavigationSubsystem extends SubsystemBase {
     SmartDashboard.putData("Accelerometer", accelerometer);
   }
 
-  public void setDistancePerPulse(double distancePerPulse)
-  {
+  public void setDistancePerPulse(double distancePerPulse) {
     leftEncoder.setDistancePerPulse(distancePerPulse);
     rightEncoder.setDistancePerPulse(distancePerPulse);
   }
@@ -72,21 +73,18 @@ public class NavigationSubsystem extends SubsystemBase {
 
   public double getGyroAngle() {
     return gyroscope.getAngle();
-    //return imu.getAngle();
+    // return imu.getAngle();
   }
 
-  public Pose2d getCurrentPosition()
-  {
+  public Pose2d getCurrentPosition() {
     return currentPosition;
   }
 
-  public Pose2d getStartPosition()
-  {
+  public Pose2d getStartPosition() {
     return startPosition;
   }
 
-  public void resetEncoders()
-  {
+  public void resetEncoders() {
     leftEncoder.reset();
     rightEncoder.reset();
   }
@@ -94,8 +92,8 @@ public class NavigationSubsystem extends SubsystemBase {
   public void resetGyro() {
     gyroscope.reset();
   }
-  
-  public void resetOdometer(){
+
+  public void resetOdometer() {
     odometer.resetPosition(startPosition, startRotation);
   }
 
@@ -104,11 +102,16 @@ public class NavigationSubsystem extends SubsystemBase {
   }
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-      return new DifferentialDriveWheelSpeeds();
+    return new DifferentialDriveWheelSpeeds();
   }
 
   public double getHeading() {
-    return Math.IEEEremainder(gyroscope.getAngle(), 360); //* (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+    return Math.IEEEremainder(gyroscope.getAngle(), 360); // * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+  }
+
+  public boolean tooClose() {
+    return proximityDistances[Constants.leftFrontProximitySensor] <= Constants.minDistanceToFrontObsticle
+        || proximityDistances[Constants.rightFrontProximitySensor] <= Constants.minDistanceToFrontObsticle;
   }
 
   @Override
@@ -119,7 +122,7 @@ public class NavigationSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Left Encoder", -leftEncoder.getDistance());
     SmartDashboard.putNumber("Right Encoder", rightEncoder.getDistance());
 
-    double[] d = proximity.getDistances();
-    SmartDashboard.putNumberArray("Distances", d);
+    proximityDistances = proximity.getDistances();
+    SmartDashboard.putNumberArray("Distances", proximityDistances);
   }
 }

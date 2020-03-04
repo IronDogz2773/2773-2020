@@ -46,6 +46,14 @@ public final class Constants {
     public static double kRamseteB = 2.0;
     public static double kRamseteZeta = 0.7;
 
+    // Proximity
+    public static double microsecondsPerMeter = 1000000.0 / 2 / 340;
+    public static double minDistanceToFrontObsticle = 1 * microsecondsPerMeter;
+    public static int leftFrontProximitySensor = 0;
+    public static int rightFrontProximitySensor = 1;
+    public static int leftProximitySensor = 2;
+    public static int rightProximitySensor = 3;
+
     // PWM
     public static int leftFrontPort = 0;
     public static int rightFrontPort = 1;
