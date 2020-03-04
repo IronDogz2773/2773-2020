@@ -9,7 +9,6 @@
 
 package frc.robot.commands;
 
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
@@ -43,7 +42,7 @@ import static edu.wpi.first.wpilibj.util.ErrorMessages.requireNonNullParam;
 @SuppressWarnings("PMD.TooManyFields")
 public class RamseteCommandPlus extends CommandBase {
     private final Timer m_timer = new Timer();
-    private final boolean m_usePID;
+    private double m_waited;
     private final Trajectory m_trajectory;
     private final RamseteController m_follower;
     private final SimpleMotorFeedforward m_feedforward;
@@ -66,7 +65,7 @@ public class RamseteCommandPlus extends CommandBase {
      * of the path - this is left to the user, since it is not appropriate for paths
      * with nonstationary endstates.
      *
-     * @param trajectory      The trajectory to follow.
+     * @param trajectory          The trajectory to follow.
      * @param driveSubsystem
      * @param navigationSubsystem
      * @param requirementsTODO    The subsystems to require.
@@ -76,15 +75,13 @@ public class RamseteCommandPlus extends CommandBase {
             NavigationSubsystem navigationSubsystem) {
 
         m_trajectory = requireNonNullParam(trajectory, "trajectory", "RamseteCommand");
-        
+
         m_follower = new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta);
         m_feedforward = new SimpleMotorFeedforward(Constants.ksVolts, Constants.kvVoltSecondsPerMeter,
                 Constants.kaVoltSecondsSquaredPerMeter);
         m_kinematics = Constants.kDriveKinematics;
         m_leftController = new PIDController(Constants.kPDriveVel, 0, 0);
         m_rightController = new PIDController(Constants.kPDriveVel, 0, 0);
-
-        m_usePID = true;
 
         this.driveSubsystem = driveSubsystem;
         this.navigationSubsystem = navigationSubsystem;
@@ -99,10 +96,9 @@ public class RamseteCommandPlus extends CommandBase {
                 initialState.curvatureRadPerMeter * initialState.velocityMetersPerSecond));
         m_timer.reset();
         m_timer.start();
-        if (m_usePID) {
-            m_leftController.reset();
-            m_rightController.reset();
-        }
+        m_waited = 0;
+        m_leftController.reset();
+        m_rightController.reset();
     }
 
     @Override
@@ -118,25 +114,23 @@ public class RamseteCommandPlus extends CommandBase {
 
         double leftOutput;
         double rightOutput;
+        double leftFeedforward = m_feedforward.calculate(leftSpeedSetpoint,
+                (leftSpeedSetpoint - m_prevSpeeds.leftMetersPerSecond) / dt);
 
-        if (m_usePID) {
-            double leftFeedforward = m_feedforward.calculate(leftSpeedSetpoint,
-                    (leftSpeedSetpoint - m_prevSpeeds.leftMetersPerSecond) / dt);
+        double rightFeedforward = m_feedforward.calculate(rightSpeedSetpoint,
+                (rightSpeedSetpoint - m_prevSpeeds.rightMetersPerSecond) / dt);
 
-            double rightFeedforward = m_feedforward.calculate(rightSpeedSetpoint,
-                    (rightSpeedSetpoint - m_prevSpeeds.rightMetersPerSecond) / dt);
+        var speeds = navigationSubsystem.getWheelSpeeds();
+        leftOutput = leftFeedforward + m_leftController.calculate(speeds.leftMetersPerSecond, leftSpeedSetpoint);
 
-            var speeds = navigationSubsystem.getWheelSpeeds();
-            leftOutput = leftFeedforward + m_leftController.calculate(speeds.leftMetersPerSecond, leftSpeedSetpoint);
+        rightOutput = rightFeedforward + m_rightController.calculate(speeds.rightMetersPerSecond, rightSpeedSetpoint);
 
-            rightOutput = rightFeedforward
-                    + m_rightController.calculate(speeds.rightMetersPerSecond, rightSpeedSetpoint);
-        } else {
-            leftOutput = leftSpeedSetpoint;
-            rightOutput = rightSpeedSetpoint;
-        }
-
-        driveSubsystem.tankDriveVolts(leftOutput, rightOutput);
+        // if there is something in front, we can only move back
+        boolean notMovingForward = leftOutput <= 0 && rightOutput <= 0;
+        if (!navigationSubsystem.tooClose() || notMovingForward)
+            driveSubsystem.tankDriveVolts(leftOutput, rightOutput);
+        else
+            m_waited += dt;
 
         m_prevTime = curTime;
         m_prevSpeeds = targetWheelSpeeds;
@@ -149,6 +143,6 @@ public class RamseteCommandPlus extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return m_timer.hasElapsed(m_trajectory.getTotalTimeSeconds());
+        return m_timer.hasElapsed(m_trajectory.getTotalTimeSeconds() + m_waited);
     }
 }
