@@ -91,4 +91,5 @@ public final class Constants {
     public static int visionButton = 7;
     public static int gyroButton = 5;
     public static int turnTestButton = 14;
+    public static int climbButton = 3;
 }
