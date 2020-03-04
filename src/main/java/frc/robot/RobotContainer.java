@@ -51,6 +51,7 @@ public class RobotContainer {
   private final PowerDistributionPanel powerDistributionPanel = new PowerDistributionPanel();
   private final UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 
+
   // Subsystems
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
@@ -62,7 +63,7 @@ public class RobotContainer {
   private final ClimbSubsystem climbSubsystem = new ClimbSubsystem();
 
   // Commands
-  private final DriveManuallyCommand driveManuallyCommand = new DriveManuallyCommand(driveSubsystem, joystick);
+  private final DriveManuallyCommand driveManuallyCommand = new DriveManuallyCommand(driveSubsystem, navigationSubsystem, joystick);
   private final StartSpinCommand startSpinCommand = new StartSpinCommand(shooterSubsystem);
   private final IntakeSpinCommand intakeSpinCommand = new IntakeSpinCommand(intakeSubsystem, gamepad);
   private final DriveVisionCommand visionCommand = new DriveVisionCommand(driveSubsystem, navigationSubsystem);
@@ -90,9 +91,6 @@ public class RobotContainer {
     camera.setFPS(15);
 
     initPIDTable();
-
-    // shooterSubsystem.setDefaultCommand(spinCmd);
-    // TODO give remaining subsystems default commands
   }
 
   private void initPIDTable() {
@@ -123,7 +121,6 @@ public class RobotContainer {
     turnButton.whenHeld(turn90Command, true);
     final JoystickButton climbButton = new JoystickButton(gamepad, Constants.climbButton);
     climbButton.whenHeld(climbControllerCommand, true);
-    
   }
 
   /**
@@ -132,8 +129,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return visionCommand;
+    AutonomousBuilder builder = new AutonomousBuilder(driveSubsystem, navigationSubsystem);
+    return builder.build();
   }
 
   private void setShuffleboardVals() {

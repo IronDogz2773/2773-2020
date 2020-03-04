@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -25,6 +27,32 @@ public final class Constants {
     public static double rotationSpeedCap = 0.7;
     public static double movementSpeedCap = 0.7;
     public static double requiredShooterRate = 1000;
+    static double metersPerFoot = 0.3048;
+    
+    // Drive Constants
+    public static double ksVolts = 2.29;
+    public static double kvVoltSecondsPerMeter = 0.796 / metersPerFoot;
+    public static double kaVoltSecondsSquaredPerMeter = 0.0192 /  metersPerFoot;
+    public static double kTrackWidthMeters = 1.972485 * metersPerFoot;
+    public static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
+        kTrackWidthMeters);
+    public static double kPDriveVel = 0.615;
+    public static double distancePerPulse = .5 * Math.PI * metersPerFoot / 2048;
+    
+
+    // Auto Constants
+    public static double kMaxSpeedMetersPerSecond = 1;
+    public static double kMaxAccelerationMetersPerSecondSquared = .5;
+    public static double kRamseteB = 2.0;
+    public static double kRamseteZeta = 0.7;
+
+    // Proximity
+    public static double microsecondsPerMeter = 1000000.0 / 2 / 340;
+    public static double minDistanceToFrontObsticle = 1 * microsecondsPerMeter;
+    public static int leftFrontProximitySensor = 0;
+    public static int rightFrontProximitySensor = 1;
+    public static int leftProximitySensor = 2;
+    public static int rightProximitySensor = 3;
 
     // PWM
     public static int leftFrontPort = 0;

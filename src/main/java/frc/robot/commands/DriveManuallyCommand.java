@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.NavigationSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -8,15 +9,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveManuallyCommand extends CommandBase {
 
     private final DriveSubsystem driveSubsystem;
+    private final NavigationSubsystem nav;
     public double speed;
     public double rotation;
     private final Joystick joystick;
     // private double speedAcceleration;
     // private double rotationAcceleration;
 
-    public DriveManuallyCommand(final DriveSubsystem subsystem, final Joystick joystick) {
+    public DriveManuallyCommand(final DriveSubsystem subsystem, NavigationSubsystem nav, final Joystick joystick) {
         driveSubsystem = subsystem;
         addRequirements(subsystem);
+        this.nav = nav;
         this.joystick = joystick;
     }
 
@@ -56,7 +59,11 @@ public class DriveManuallyCommand extends CommandBase {
             // rotationAcceleration = 1;
             rotation = 0;
         }
-        driveSubsystem.rawDrive(speed, rotation);
+
+        // Don't drive if we close to something.
+        if (!nav.tooClose() || speed < 0)
+            driveSubsystem.rawDrive(speed, rotation);
+
         SmartDashboard.putNumber("Speed", speed);
         SmartDashboard.putNumber("Rotation", rotation);
         // driveSubsystem.accelerometer.getAccelerations();
