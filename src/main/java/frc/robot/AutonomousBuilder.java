@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConst
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.Constants;
+import frc.robot.commands.RamseteCommandPlus;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.NavigationSubsystem;
 
@@ -54,20 +55,13 @@ public class AutonomousBuilder {
                 10);
     }
 
-    private void setDemoTrajectory()
-    {
+    private void setDemoTrajectory() {
         TrajectoryConfig config = new TrajectoryConfig(Constants.kMaxSpeedMetersPerSecond,
-                                                       Constants.kMaxAccelerationMetersPerSecondSquared)
-            .setKinematics(Constants.kDriveKinematics)
-            .addConstraint(autoVoltageConstraint);
-        trajectory = TrajectoryGenerator.generateTrajectory(
-        new Pose2d(0, 0, new Rotation2d(0)),
-        List.of(
-            new Translation2d(1, 1),
-            new Translation2d(2, -1)
-        ),
-        new Pose2d(3, 0, new Rotation2d(0)),
-        config);
+                Constants.kMaxAccelerationMetersPerSecondSquared).setKinematics(Constants.kDriveKinematics)
+                        .addConstraint(autoVoltageConstraint);
+        trajectory = TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
+                List.of(new Translation2d(1, 1), new Translation2d(2, -1)), new Pose2d(3, 0, new Rotation2d(0)),
+                config);
     }
 
     private void setTrajectoryPath(String filePath) {
@@ -81,16 +75,7 @@ public class AutonomousBuilder {
     }
 
     public Command build() {
-        var ramseteCommand = new RamseteCommand(trajectory, navigationSubsystem::getPose,
-            new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta),
-            new SimpleMotorFeedforward(Constants.ksVolts, 
-                                       Constants.kvVoltSecondsPerMeter,
-                                       Constants.kaVoltSecondsSquaredPerMeter),
-            Constants.kDriveKinematics, 
-            navigationSubsystem::getWheelSpeeds,
-            new PIDController(Constants.kPDriveVel, 0, 0), 
-            new PIDController(Constants.kPDriveVel, 0, 0),
-            driveSubsystem::tankDriveVolts, driveSubsystem);
+        var ramseteCommand = new RamseteCommandPlus(trajectory, driveSubsystem, navigationSubsystem);
         return ramseteCommand;
     }
 }
