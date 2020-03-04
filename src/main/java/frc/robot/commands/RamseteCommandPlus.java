@@ -31,7 +31,7 @@ import static edu.wpi.first.wpilibj.util.ErrorMessages.requireNonNullParam;
  *
  * <p>
  * The command handles trajectory-following, PID calculations, and feedforwards
- * internally. This is intended to be a more-or-less "complete solution" that
+ * internally. This is intended to be a more specific "complete solution" that
  * can be used by teams without a great deal of controls expertise.
  *
  * <p>
@@ -67,8 +67,8 @@ public class RamseteCommandPlus extends CommandBase {
      * with nonstationary endstates.
      *
      * @param trajectory      The trajectory to follow.
-     * @param pose            A function that supplies the robot pose - use one of
-     *                        the odometry classes to provide this.
+     * @param driveSubsystem
+     * @param navigationSubsystem
      * @param requirementsTODO    The subsystems to require.
      */
     @SuppressWarnings("PMD.ExcessiveParameterList")
