@@ -40,7 +40,7 @@ public class NavigationSubsystem extends SubsystemBase {
   private final DifferentialDriveOdometry odometer = new DifferentialDriveOdometry(startRotation);
   private Pose2d currentPosition = new Pose2d(0, 0, startRotation);
 
-  public boolean tooClose = false;
+  private double[] proximityDistances;
 
   private ProximitySensor proximity = new ProximitySensor();
 
@@ -109,6 +109,11 @@ public class NavigationSubsystem extends SubsystemBase {
     return Math.IEEEremainder(gyroscope.getAngle(), 360); // * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 
+  public boolean tooClose() {
+    return proximityDistances[Constants.leftFrontProximitySensor] <= Constants.minDistanceToFrontObsticle
+        || proximityDistances[Constants.rightFrontProximitySensor] <= Constants.minDistanceToFrontObsticle;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -117,13 +122,7 @@ public class NavigationSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Left Encoder", -leftEncoder.getDistance());
     SmartDashboard.putNumber("Right Encoder", rightEncoder.getDistance());
 
-    double[] d = proximity.getDistances();
-    if (d[Constants.leftFrontProximitySensor] <= Constants.minDistanceToFrontObsticle
-        || d[Constants.rightFrontProximitySensor] <= Constants.minDistanceToFrontObsticle) {
-      tooClose = true;
-    } else {
-      tooClose = false;
-    }
-    SmartDashboard.putNumberArray("Distances", d);
+    proximityDistances = proximity.getDistances();
+    SmartDashboard.putNumberArray("Distances", proximityDistances);
   }
 }

@@ -59,8 +59,11 @@ public class DriveManuallyCommand extends CommandBase {
             // rotationAcceleration = 1;
             rotation = 0;
         }
-        if(!nav.tooClose)
+
+        // Don't drive if we close to something.
+        if (!nav.tooClose() || speed < 0)
             driveSubsystem.rawDrive(speed, rotation);
+
         SmartDashboard.putNumber("Speed", speed);
         SmartDashboard.putNumber("Rotation", rotation);
         // driveSubsystem.accelerometer.getAccelerations();

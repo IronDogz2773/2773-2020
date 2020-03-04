@@ -36,7 +36,7 @@ public class DriveSubsystem extends SubsystemBase {
         drive.arcadeDrive(speed, rotation, accel);
     }
 
-	public void tankDriveVolts(double i, double j) {
-	    drive.tankDrive(i / 12.0, j / 0.12, false);
-	}
+    public void tankDriveVolts(double i, double j) {
+        drive.tankDrive(i / 12.0, j / 0.12, false);
+    }
 }
