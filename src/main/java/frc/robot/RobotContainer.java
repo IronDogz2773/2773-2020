@@ -62,8 +62,6 @@ public class RobotContainer {
   private final IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
   private final LEDSubsystem ledSubsystem = new LEDSubsystem();
   private final ClimbSubsystem climbSubsystem = new ClimbSubsystem();
-  //private final AutonomousBuilder autonomousBuilder = new AutonomousBuilder(driveSubsystem, navigationSubsystem, "paths/YourPath.wpilib.json");
-  private final AutonomousBuilder autonomousBuilder = new AutonomousBuilder(driveSubsystem, navigationSubsystem);
 
   // Commands
   private final DriveManuallyCommand driveManuallyCommand = new DriveManuallyCommand(driveSubsystem, joystick);
@@ -76,10 +74,7 @@ public class RobotContainer {
   private final TurnDegreesCommand turn90Command = new TurnDegreesCommand(driveSubsystem, navigationSubsystem, 90);
   private final LEDControlCommand ledControlCommand = new LEDControlCommand(ledSubsystem);
   private final ClimbControllerCommand climbControllerCommand = new ClimbControllerCommand(climbSubsystem, gamepad);
-  private final AutonomousCommand autonomousCommand = new AutonomousCommand(driveSubsystem, navigationSubsystem, autonomousBuilder);
-
-  
-
+ 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -133,8 +128,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    
-    return autonomousCommand;
+    AutonomousBuilder builder = new AutonomousBuilder(driveSubsystem, navigationSubsystem);
+    return builder.build();
   }
 
   private void setShuffleboardVals() {
