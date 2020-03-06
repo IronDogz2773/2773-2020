@@ -1,6 +1,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.DriveVisionCommand;
+import frc.robot.commands.SingleShotCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.NavigationSubsystem;
@@ -45,13 +47,36 @@ public class MultistepAutonomousBuilder {
         else if (autoTrajectory == 6) {
             trajectoryFilePath = "path6";
         }
+        else if (autoTrajectory == 7) {
+            trajectoryFilePath = "path7";
+        }
         else
             trajectoryFilePath = "";
     }
 
-    /*public Command build()
+    public Command build()
     {
-        return new CommandBase command;
+        AutonomousBuilder autonomousBuilder = new AutonomousBuilder(driveSubsystem, navigationSubsystem, trajectoryFilePath);
+        Command firstPath = autonomousBuilder.build();
+        DriveVisionCommand driveVisionCommand = new DriveVisionCommand(driveSubsystem, navigationSubsystem);
+        SingleShotCommand singleShotCommand = new SingleShotCommand(shooterSubsystem, indexerSubsystem, 3);
+        if(!trajectoryFilePath.equals("path6"))
+        {
+            if(trajectoryFilePath.equals("path1")){
+                AutonomousBuilder secondAutonomousBuilder = new AutonomousBuilder(driveSubsystem, navigationSubsystem, "path2");
+                Command secondPath = autonomousBuilder.build();
+            }
+            if(trajectoryFilePath.equals("path3")){
+                AutonomousBuilder secondAutonomousBuilder = new AutonomousBuilder(driveSubsystem, navigationSubsystem, "path4");
+                Command secondPath = autonomousBuilder.build();
+            }
+            if(trajectoryFilePath.equals("path4")){
+                AutonomousBuilder secondAutonomousBuilder = new AutonomousBuilder(driveSubsystem, navigationSubsystem, "path5");
+                Command secondPath = autonomousBuilder.build();
+            }
+        }
+        return firstPath;
+        //TODO figure out how to string multiple commands together
         //return ramseteCommand.andThen(() -> m_robotDrive.tankDriveVolts(0, 0));
-    }*/
+    }
 }
