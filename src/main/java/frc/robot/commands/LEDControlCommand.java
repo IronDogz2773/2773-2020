@@ -27,15 +27,15 @@ public class LEDControlCommand extends CommandBase {
   public void initialize() {
     if(ledSubystem.getTeam().equals("red"))
     {
-      ledSubystem.setLED(-0.29);
+      ledSubystem.setLED(0.61);
     }
     else if(ledSubystem.getTeam().equals("blue"))
     {
-      ledSubystem.setLED(-0.31);
+      ledSubystem.setLED(0.87);
     }
     else 
     {
-      ledSubystem.setLED(-0.13);
+      ledSubystem.setLED(0.99);
     }
   }
 
