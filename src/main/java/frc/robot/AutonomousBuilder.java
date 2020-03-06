@@ -70,11 +70,6 @@ public class AutonomousBuilder {
         }
     }
 
-    private void setFilePath(int file)
-    {
-        
-    }
-
     public Command build() {
         var ramseteCommand = new RamseteCommandPlus(trajectory, driveSubsystem, navigationSubsystem);
         return ramseteCommand;

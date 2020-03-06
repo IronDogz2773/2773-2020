@@ -27,6 +27,7 @@ public class ClimbControllerCommand extends CommandBase {
   @Override
   public void initialize() {
     speed = 0;
+    //TODO change speed
   }
 
   // Called every time the scheduler runs while the command is scheduled.
