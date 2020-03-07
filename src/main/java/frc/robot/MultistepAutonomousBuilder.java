@@ -7,6 +7,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.NavigationSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class MultistepAutonomousBuilder {
     private final DriveSubsystem driveSubsystem;
@@ -14,7 +15,8 @@ public class MultistepAutonomousBuilder {
     private final IndexerSubsystem indexerSubsystem;
     private final ShooterSubsystem shooterSubsystem;
     private int autoTrajectory;
-    private String trajectoryFilePath;
+    private String firstTrajectoryFilePath;
+    private String secondTrajectoryFilePath;
 
     public MultistepAutonomousBuilder(DriveSubsystem driveSubsystem, NavigationSubsystem navigationSubsystem,
             IndexerSubsystem indexerSubsystem, ShooterSubsystem shooterSubsystem, int autoTrajectory) {
@@ -28,54 +30,57 @@ public class MultistepAutonomousBuilder {
     }
 
     public void setAutoFilePath() {
-        trajectoryFilePath = "";
+        firstTrajectoryFilePath = "";
         if (autoTrajectory == 0) {
-            trajectoryFilePath = "path1";
+            firstTrajectoryFilePath = "path1";
         }
         else if (autoTrajectory == 1) {
-            trajectoryFilePath = "path2";
+            firstTrajectoryFilePath = "path2";
         }
         else if (autoTrajectory == 3) {
-            trajectoryFilePath = "path3";
+            firstTrajectoryFilePath = "path3";
         }
         else if (autoTrajectory == 4) {
-            trajectoryFilePath = "path4";
+            firstTrajectoryFilePath = "path4";
         }
         else if (autoTrajectory == 5) {
-            trajectoryFilePath = "path5";
+            firstTrajectoryFilePath = "path5";
         }
         else if (autoTrajectory == 6) {
-            trajectoryFilePath = "path6";
+            firstTrajectoryFilePath = "path6";
         }
         else if (autoTrajectory == 7) {
-            trajectoryFilePath = "path7";
+            firstTrajectoryFilePath = "path7";
         }
-        else
-            trajectoryFilePath = "";
     }
 
     public Command build()
     {
-        AutonomousBuilder autonomousBuilder = new AutonomousBuilder(driveSubsystem, navigationSubsystem, trajectoryFilePath);
-        Command firstPath = autonomousBuilder.build();
+        AutonomousBuilder firstAutonomousBuilder = new AutonomousBuilder(driveSubsystem, navigationSubsystem, firstTrajectoryFilePath);
+        Command firstPath = firstAutonomousBuilder.build(); //first Ramsete command
         DriveVisionCommand driveVisionCommand = new DriveVisionCommand(driveSubsystem, navigationSubsystem);
         SingleShotCommand singleShotCommand = new SingleShotCommand(shooterSubsystem, indexerSubsystem, 3);
-        if(!trajectoryFilePath.equals("path6"))
+
+        if(!firstTrajectoryFilePath.equals("path6"))
         {
-            if(trajectoryFilePath.equals("path1")){
-                AutonomousBuilder secondAutonomousBuilder = new AutonomousBuilder(driveSubsystem, navigationSubsystem, "path2");
-                Command secondPath = autonomousBuilder.build();
+            if(firstTrajectoryFilePath.equals("path1")){
+                secondTrajectoryFilePath = "path2";
             }
-            if(trajectoryFilePath.equals("path3")){
-                AutonomousBuilder secondAutonomousBuilder = new AutonomousBuilder(driveSubsystem, navigationSubsystem, "path4");
-                Command secondPath = autonomousBuilder.build();
+            else if(firstTrajectoryFilePath.equals("path3")){
+                secondTrajectoryFilePath = "path4";
             }
-            if(trajectoryFilePath.equals("path4")){
-                AutonomousBuilder secondAutonomousBuilder = new AutonomousBuilder(driveSubsystem, navigationSubsystem, "path5");
-                Command secondPath = autonomousBuilder.build();
+            else if(firstTrajectoryFilePath.equals("path5")){
+                secondTrajectoryFilePath = "path6";
             }
+            AutonomousBuilder secondAutonomousBuilder = new AutonomousBuilder(driveSubsystem, navigationSubsystem, secondTrajectoryFilePath);
+            Command secondPath = secondAutonomousBuilder.build();
+            SequentialCommandGroup autonomousCommands = new SequentialCommandGroup(firstPath, driveVisionCommand, singleShotCommand, secondPath);
+            return autonomousCommands;
         }
-        return firstPath;
+        else
+        {
+            return firstPath;
+        }
         //TODO figure out how to string multiple commands together
         //return ramseteCommand.andThen(() -> m_robotDrive.tankDriveVolts(0, 0));
     }
