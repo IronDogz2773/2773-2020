@@ -18,6 +18,7 @@ public class SingleShotCommand extends CommandBase {
   private final double INDEXER_TIME = 1.0;
   private double numBalls;
   private final Timer timer;
+  private boolean alreadyResetTime = false;
 
   /**
    * Creates a new SingleShotCommand.
@@ -43,9 +44,16 @@ public class SingleShotCommand extends CommandBase {
     shooterSubsystem.startSpin(1.0);
     if(shooterSubsystem.atRate())
     {
-      timer.reset();
+      if(!alreadyResetTime)
+      {
+        timer.reset();
+        alreadyResetTime = true;
+      }
       if(timer.get() <= INDEXER_TIME && numBalls > 0)
+      {
         indexerSubsystem.startConveyorSpin(1.0);
+        indexerSubsystem.lock(false);
+      }
       else
         numBalls--;
         //TODO add limit switch functionality hopefully
@@ -53,7 +61,7 @@ public class SingleShotCommand extends CommandBase {
     else
     {
       indexerSubsystem.stopConveyorSpin();
-      timer.reset();
+      alreadyResetTime = false;
     }
     
   }

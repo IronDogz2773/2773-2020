@@ -36,11 +36,11 @@ public class IndexerCommand extends CommandBase {
     if (gamepad.getRawAxis(2) > .2) // raw axis 2 is left trigger
     {
       indexerSubsystem.lock(false);
-      indexerSubsystem.startConveyorSpin(-1);
+      indexerSubsystem.startConveyorSpin(gamepad.getRawAxis(2));
     } else if (gamepad.getRawAxis(3) > .2) // raw axis 3 is right trigger
     {
       indexerSubsystem.lock(false);
-      indexerSubsystem.startConveyorSpin(1);
+      indexerSubsystem.startConveyorSpin(-gamepad.getRawAxis(3));
     } else {
       indexerSubsystem.lock(true);
       indexerSubsystem.stopConveyorSpin();
