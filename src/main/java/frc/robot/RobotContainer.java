@@ -51,11 +51,7 @@ public class RobotContainer {
   private static Joystick gamepad = new Joystick(Constants.gamepadPort);
   private final PowerDistributionPanel powerDistributionPanel = new PowerDistributionPanel();
   private final UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-  SendableChooser<String> autoChooser = new SendableChooser<>();
-  private final String leftShoot = "leftShoot";
-  private final String middleShoot = "middleShoot";
-  private final String rightShoot = "rightShoot";
-  private final String rightRetreat = "rightRetreat";
+  SendableChooser<Integer> autoChooser = new SendableChooser<>();
 
 
   // Subsystems
@@ -137,7 +133,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     MultistepAutonomousBuilder multiStepAutonomousBuilder = new MultistepAutonomousBuilder(driveSubsystem,
-        navigationSubsystem, indexerSubsystem, shooterSubsystem, 0);
+        navigationSubsystem, indexerSubsystem, shooterSubsystem, autoChooser.getSelected());
     return multiStepAutonomousBuilder.build();
   }
 
@@ -150,9 +146,9 @@ public class RobotContainer {
   }
 
   private void addSendableChooserOptions(){
-    autoChooser.addOption("Left Shoot", leftShoot);
-    autoChooser.addOption("Middle Shoot", middleShoot);
-    autoChooser.addOption("Right Shoot", rightShoot);
-    autoChooser.addOption("Right Retreat", rightRetreat);
+    autoChooser.addOption("Left Shoot", 0);
+    autoChooser.addOption("Middle Shoot", 1);
+    autoChooser.addOption("Right Shoot", 2);
+    autoChooser.addOption("Right Retreat", 3);
   }
 }

@@ -38,12 +38,4 @@ public class IntakeSubsystem extends SubsystemBase {
   public double checkSpinSpeed() {
     return intake.getSpeed();
   }
-
-  public void intakeMax() {
-  }
-  // TODO find the max amount of area for the balls
-
-  public void intakeStop() {
-  }
-  // TODO if there are no balls then the shooter cannot work
 }
