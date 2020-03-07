@@ -58,7 +58,7 @@ public class MultistepAutonomousBuilder {
     {
         AutonomousBuilder firstAutonomousBuilder = new AutonomousBuilder(driveSubsystem, navigationSubsystem, firstTrajectoryFilePath);
         Command firstPath = firstAutonomousBuilder.build(); //first Ramsete command
-        DriveVisionCommand driveVisionCommand = new DriveVisionCommand(driveSubsystem, navigationSubsystem);
+        DriveVisionCommand driveVisionCommand = new DriveVisionCommand(driveSubsystem, navigationSubsystem, true);
         SingleShotCommand singleShotCommand = new SingleShotCommand(shooterSubsystem, indexerSubsystem, 3);
 
         if(!firstTrajectoryFilePath.equals("path6"))
