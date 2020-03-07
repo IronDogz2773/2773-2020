@@ -25,7 +25,6 @@ public class MultistepAutonomousBuilder {
         this.indexerSubsystem = indexerSubsystem;
         this.shooterSubsystem = shooterSubsystem;
         this.autoTrajectory = autoTrajectory;
-        //TODO set autoTrajectory based on sendable chooser
         setAutoFilePath();
     }
 
@@ -35,21 +34,12 @@ public class MultistepAutonomousBuilder {
             firstTrajectoryFilePath = "path1";
         }
         else if (autoTrajectory == 1) {
-            firstTrajectoryFilePath = "path2";
-        }
-        else if (autoTrajectory == 3) {
             firstTrajectoryFilePath = "path3";
         }
-        else if (autoTrajectory == 4) {
-            firstTrajectoryFilePath = "path4";
-        }
-        else if (autoTrajectory == 5) {
+        else if (autoTrajectory == 2){
             firstTrajectoryFilePath = "path5";
         }
-        else if (autoTrajectory == 6) {
-            firstTrajectoryFilePath = "path6";
-        }
-        else if (autoTrajectory == 7) {
+        else if (autoTrajectory == 3){
             firstTrajectoryFilePath = "path7";
         }
     }
