@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.NavigationSubsystem;
@@ -11,15 +12,18 @@ public class DriveVisionCommand extends CommandBase {
 
     private final DriveSubsystem driveSubsystem;
     PIDController PIDcontrol = new PIDController(0.03, 0.02, 0);
+    Timer time = new Timer();
     private double rotation;
     private double target;
+    private boolean isTimed;
     private final NavigationSubsystem nav;
 
-    public DriveVisionCommand(final DriveSubsystem subsystem, final NavigationSubsystem nav) {
+    public DriveVisionCommand(final DriveSubsystem subsystem, final NavigationSubsystem nav, boolean isTimed) {
         driveSubsystem = subsystem;
         addRequirements(subsystem);
 
         this.nav = nav;
+        this.isTimed = isTimed;
     }
 
     @Override
@@ -29,6 +33,7 @@ public class DriveVisionCommand extends CommandBase {
         PIDcontrol.setSetpoint(0);
 
         target = 10;
+        time.start();
         PIDcontrol.setSetpoint(target);
     }
 
@@ -48,7 +53,14 @@ public class DriveVisionCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return false;
+        if (time.get() >= 3.0 && isTimed)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     @Override

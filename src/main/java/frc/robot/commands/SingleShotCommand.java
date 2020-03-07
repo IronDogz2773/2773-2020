@@ -55,6 +55,7 @@ public class SingleShotCommand extends CommandBase {
       indexerSubsystem.stopConveyorSpin();
       timer.reset();
     }
+    
   }
 
   // Called once the command ends or is interrupted.
@@ -68,6 +69,10 @@ public class SingleShotCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(numBalls == 0)
+    {
+      return true;
+    }
     return false;
   }
 }
