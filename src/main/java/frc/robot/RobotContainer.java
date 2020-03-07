@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ClimbControllerCommand;
 import frc.robot.commands.CompressorControlCommand;
@@ -50,6 +51,11 @@ public class RobotContainer {
   private static Joystick gamepad = new Joystick(Constants.gamepadPort);
   private final PowerDistributionPanel powerDistributionPanel = new PowerDistributionPanel();
   private final UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+  SendableChooser<String> autoChooser = new SendableChooser<>();
+  private final String leftShoot = "leftShoot";
+  private final String middleShoot = "middleShoot";
+  private final String rightShoot = "rightShoot";
+  private final String rightRetreat = "rightRetreat";
 
 
   // Subsystems
@@ -66,7 +72,7 @@ public class RobotContainer {
   private final DriveManuallyCommand driveManuallyCommand = new DriveManuallyCommand(driveSubsystem, navigationSubsystem, joystick);
   private final StartSpinCommand startSpinCommand = new StartSpinCommand(shooterSubsystem);
   private final IntakeSpinCommand intakeSpinCommand = new IntakeSpinCommand(intakeSubsystem, gamepad);
-  private final DriveVisionCommand visionCommand = new DriveVisionCommand(driveSubsystem, navigationSubsystem);
+  private final DriveVisionCommand visionCommand = new DriveVisionCommand(driveSubsystem, navigationSubsystem, false);
   private final ResetGyroscopeCommand resetGyroscopeCommand = new ResetGyroscopeCommand(navigationSubsystem);
   private final CompressorControlCommand compressorControlCommand = new CompressorControlCommand(airSubsystem);
   private final IndexerCommand indexerCommand = new IndexerCommand(indexerSubsystem, gamepad);
@@ -80,6 +86,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    addSendableChooserOptions();
     setShuffleboardVals();
     driveSubsystem.setDefaultCommand(driveManuallyCommand);
     intakeSubsystem.setDefaultCommand(intakeSpinCommand);
@@ -129,8 +136,9 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    AutonomousBuilder builder = new AutonomousBuilder(driveSubsystem, navigationSubsystem);
-    return builder.build();
+    MultistepAutonomousBuilder multiStepAutonomousBuilder = new MultistepAutonomousBuilder(driveSubsystem,
+        navigationSubsystem, indexerSubsystem, shooterSubsystem, 0);
+    return multiStepAutonomousBuilder.build();
   }
 
   private void setShuffleboardVals() {
@@ -138,6 +146,13 @@ public class RobotContainer {
     SmartDashboard.putNumber("Speed", driveManuallyCommand.speed);
     SmartDashboard.putNumber("Rotation", driveManuallyCommand.rotation);
     SmartDashboard.putData("Power Distribution Panel", powerDistributionPanel);
+    SmartDashboard.putData("Autonomous Chooser", autoChooser);
+  }
 
+  private void addSendableChooserOptions(){
+    autoChooser.addOption("Left Shoot", leftShoot);
+    autoChooser.addOption("Middle Shoot", middleShoot);
+    autoChooser.addOption("Right Shoot", rightShoot);
+    autoChooser.addOption("Right Retreat", rightRetreat);
   }
 }
