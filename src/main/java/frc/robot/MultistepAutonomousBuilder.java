@@ -31,16 +31,16 @@ public class MultistepAutonomousBuilder {
     public void setAutoFilePath() {
         firstTrajectoryFilePath = "";
         if (autoTrajectory == 0) {
-            firstTrajectoryFilePath = "path1";
+            firstTrajectoryFilePath = "src/main/deploy/output/Left1.wpilib.json";
         }
         else if (autoTrajectory == 1) {
-            firstTrajectoryFilePath = "path3";
+            firstTrajectoryFilePath = "src/main/deploy/output/Middle1.wpilib.json";
         }
         else if (autoTrajectory == 2){
-            firstTrajectoryFilePath = "path5";
+            firstTrajectoryFilePath = "src/main/deploy/output/Right1.wpilib.json";
         }
         else if (autoTrajectory == 3){
-            firstTrajectoryFilePath = "path7";
+            firstTrajectoryFilePath = "src/main/deploy/output/RightRetreat.wpilib.json";
         }
     }
 
@@ -51,16 +51,16 @@ public class MultistepAutonomousBuilder {
         DriveVisionCommand driveVisionCommand = new DriveVisionCommand(driveSubsystem, navigationSubsystem, true);
         SingleShotCommand singleShotCommand = new SingleShotCommand(shooterSubsystem, indexerSubsystem, 3);
 
-        if(!firstTrajectoryFilePath.equals("path6"))
+        if(!firstTrajectoryFilePath.equals("src/main/deploy/output/Right2.wpilib.json"))
         {
-            if(firstTrajectoryFilePath.equals("path1")){
-                secondTrajectoryFilePath = "path2";
+            if(firstTrajectoryFilePath.equals("src/main/deploy/output/Left1.wpilib.json")){
+                secondTrajectoryFilePath = "src/main/deploy/output/Left2.wpilib.json";
             }
-            else if(firstTrajectoryFilePath.equals("path3")){
-                secondTrajectoryFilePath = "path4";
+            else if(firstTrajectoryFilePath.equals("src/main/deploy/output/Middle1.wpilib.json")){
+                secondTrajectoryFilePath = "src/main/deploy/output/Middle2.wpilib.json";
             }
-            else if(firstTrajectoryFilePath.equals("path5")){
-                secondTrajectoryFilePath = "path6";
+            else if(firstTrajectoryFilePath.equals("src/main/deploy/output/Right1.wpilib.json")){
+                secondTrajectoryFilePath = "src/main/deploy/output/Right2.wpilib.json";
             }
             AutonomousBuilder secondAutonomousBuilder = new AutonomousBuilder(driveSubsystem, navigationSubsystem, secondTrajectoryFilePath);
             Command secondPath = secondAutonomousBuilder.build();
@@ -71,7 +71,5 @@ public class MultistepAutonomousBuilder {
         {
             return firstPath;
         }
-        //TODO figure out how to string multiple commands together
-        //return ramseteCommand.andThen(() -> m_robotDrive.tankDriveVolts(0, 0));
     }
 }
