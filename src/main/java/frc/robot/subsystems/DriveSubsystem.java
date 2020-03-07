@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -9,14 +10,12 @@ import frc.robot.Constants;
 public class DriveSubsystem extends SubsystemBase {
 
     // Motors
-    private final Spark FL = new Spark(Constants.leftFrontPort);
-    private final Spark FR = new Spark(Constants.rightFrontPort);
-    private final Spark BL = new Spark(Constants.leftBackPort);
-    private final Spark BR = new Spark(Constants.rightBackPort);
+    private final PWMVictorSPX leftWheels = new PWMVictorSPX(Constants.leftWheelsPort);
+    private final PWMVictorSPX rightWheels = new PWMVictorSPX(Constants.rightWheelsPort);
 
     // Speed controller groups
-    private final SpeedControllerGroup leftMotors = new SpeedControllerGroup(FL, BL);
-    private final SpeedControllerGroup rightMotors = new SpeedControllerGroup(FR, BR);
+    private final SpeedControllerGroup leftMotors = new SpeedControllerGroup(leftWheels);
+    private final SpeedControllerGroup rightMotors = new SpeedControllerGroup(rightWheels);
 
     // Differential drive
     private final DifferentialDrive drive = new DifferentialDrive(leftMotors, rightMotors);

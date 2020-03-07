@@ -74,7 +74,7 @@ public class RobotContainer {
   private final IndexerCommand indexerCommand = new IndexerCommand(indexerSubsystem, gamepad);
   private final TurnDegreesCommand turn90Command = new TurnDegreesCommand(driveSubsystem, navigationSubsystem, 90);
   private final LEDControlCommand ledControlCommand = new LEDControlCommand(ledSubsystem);
-  private final ClimbControllerCommand climbControllerCommand = new ClimbControllerCommand(climbSubsystem);
+  private final ClimbControllerCommand climbControllerCommand = new ClimbControllerCommand(climbSubsystem, gamepad);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -122,8 +122,6 @@ public class RobotContainer {
     gyroButton.whenHeld(resetGyroscopeCommand, true);
     final JoystickButton turnButton = new JoystickButton(joystick, Constants.turnTestButton);
     turnButton.whenHeld(turn90Command, true);
-    final JoystickButton climbButton = new JoystickButton(gamepad, Constants.climbButton);
-    climbButton.whenHeld(climbControllerCommand, true);
   }
 
   /**
