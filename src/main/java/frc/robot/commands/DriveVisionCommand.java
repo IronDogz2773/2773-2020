@@ -10,19 +10,21 @@ import edu.wpi.first.wpiutil.math.MathUtil;
 
 public class DriveVisionCommand extends CommandBase {
 
+    private static final double MAX_TURNING_SPEED = 0.55;
+    private static final double TIMED_COMMAND_DURATION = 3.0;
     private final DriveSubsystem driveSubsystem;
     PIDController PIDcontrol = new PIDController(0.03, 0.02, 0);
     Timer time = new Timer();
     private double rotation;
-    private double target;
     private boolean isTimed;
-    private final NavigationSubsystem nav;
+    private final NavigationSubsystem navigationSubsystem;
 
-    public DriveVisionCommand(final DriveSubsystem subsystem, final NavigationSubsystem nav, boolean isTimed) {
+    public DriveVisionCommand(final DriveSubsystem subsystem, final NavigationSubsystem navigationSubsystem,
+            boolean isTimed) {
         driveSubsystem = subsystem;
         addRequirements(subsystem);
 
-        this.nav = nav;
+        this.navigationSubsystem = navigationSubsystem;
         this.isTimed = isTimed;
     }
 
@@ -32,17 +34,14 @@ public class DriveVisionCommand extends CommandBase {
         PIDcontrol.setTolerance(1);
         PIDcontrol.setSetpoint(0);
 
-        target = 10;
         time.start();
-        PIDcontrol.setSetpoint(target);
     }
 
     @Override
-    public void execute() { // what the code does while the command is active
-        final double alpha = nav.getVisionAngle();
-        SmartDashboard.putNumber("Target", target);
-        final double e = PIDcontrol.calculate(nav.getGyroAngle());
-        rotation = MathUtil.clamp(e, -0.55, 0.55);
+    public void execute() {
+        final double alpha = navigationSubsystem.getVisionAngle();
+        final double e = PIDcontrol.calculate(navigationSubsystem.getGyroAngle());
+        rotation = MathUtil.clamp(e, -MAX_TURNING_SPEED, MAX_TURNING_SPEED);
 
         driveSubsystem.rawDrive(0, rotation, false);
         driveSubsystem.driveState = true;
@@ -53,12 +52,9 @@ public class DriveVisionCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (time.get() >= 3.0 && isTimed)
-        {
+        if (time.get() >= TIMED_COMMAND_DURATION && isTimed) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
