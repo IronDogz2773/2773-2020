@@ -18,6 +18,11 @@ public class MultistepAutonomousBuilder {
     private String firstTrajectoryFilePath;
     private String secondTrajectoryFilePath;
 
+    public final static int LEFT = 0;
+    public final static int MIDDLE = 1;
+    public final static int RIGHT = 2;
+    public final static int RIGHT_RETREAT = 3;
+
     public MultistepAutonomousBuilder(DriveSubsystem driveSubsystem, NavigationSubsystem navigationSubsystem,
             IndexerSubsystem indexerSubsystem, ShooterSubsystem shooterSubsystem, int autoTrajectory) {
         this.driveSubsystem = driveSubsystem;
@@ -29,46 +34,46 @@ public class MultistepAutonomousBuilder {
     }
 
     public void setAutoFilePath() {
-        firstTrajectoryFilePath = "";
-        if (autoTrajectory == 0) {
-            firstTrajectoryFilePath = "src/main/deploy/output/Left1.wpilib.json";
-        }
-        else if (autoTrajectory == 1) {
-            firstTrajectoryFilePath = "src/main/deploy/output/Middle1.wpilib.json";
-        }
-        else if (autoTrajectory == 2){
-            firstTrajectoryFilePath = "src/main/deploy/output/Right1.wpilib.json";
-        }
-        else if (autoTrajectory == 3){
-            firstTrajectoryFilePath = "src/main/deploy/output/RightRetreat.wpilib.json";
+        switch (autoTrajectory) {
+        case LEFT:
+            firstTrajectoryFilePath = "output/Left1.wpilib.json";
+            secondTrajectoryFilePath = "output/Left2.wpilib.json";
+            break;
+        case RIGHT:
+            firstTrajectoryFilePath = "output/Right1.wpilib.json";
+            secondTrajectoryFilePath = "output/Right2.wpilib.json";
+            break;
+        case MIDDLE:
+            firstTrajectoryFilePath = "output/Middle1.wpilib.json";
+            secondTrajectoryFilePath = "output/Middle2.wpilib.json";
+            break;
+        case RIGHT_RETREAT:
+            firstTrajectoryFilePath = "output/RightRetreat.wpilib.json";
+            secondTrajectoryFilePath = "";
+            break;
+        default:
+            firstTrajectoryFilePath = "";
+            secondTrajectoryFilePath = "";
+            break;
+
         }
     }
 
-    public Command build()
-    {
-        AutonomousBuilder firstAutonomousBuilder = new AutonomousBuilder(driveSubsystem, navigationSubsystem, firstTrajectoryFilePath);
-        Command firstPath = firstAutonomousBuilder.build(); //first Ramsete command
+    public Command build() {
+        AutonomousBuilder firstAutonomousBuilder = new AutonomousBuilder(driveSubsystem, navigationSubsystem,
+                firstTrajectoryFilePath);
+        Command firstPath = firstAutonomousBuilder.build(); // first Ramsete command
         DriveVisionCommand driveVisionCommand = new DriveVisionCommand(driveSubsystem, navigationSubsystem, true);
         SingleShotCommand singleShotCommand = new SingleShotCommand(shooterSubsystem, indexerSubsystem, 3);
 
-        if(!firstTrajectoryFilePath.equals("src/main/deploy/output/Right2.wpilib.json"))
-        {
-            if(firstTrajectoryFilePath.equals("src/main/deploy/output/Left1.wpilib.json")){
-                secondTrajectoryFilePath = "src/main/deploy/output/Left2.wpilib.json";
-            }
-            else if(firstTrajectoryFilePath.equals("src/main/deploy/output/Middle1.wpilib.json")){
-                secondTrajectoryFilePath = "src/main/deploy/output/Middle2.wpilib.json";
-            }
-            else if(firstTrajectoryFilePath.equals("src/main/deploy/output/Right1.wpilib.json")){
-                secondTrajectoryFilePath = "src/main/deploy/output/Right2.wpilib.json";
-            }
-            AutonomousBuilder secondAutonomousBuilder = new AutonomousBuilder(driveSubsystem, navigationSubsystem, secondTrajectoryFilePath);
+        if (!secondTrajectoryFilePath.equals("")) {
+            AutonomousBuilder secondAutonomousBuilder = new AutonomousBuilder(driveSubsystem, navigationSubsystem,
+                    secondTrajectoryFilePath);
             Command secondPath = secondAutonomousBuilder.build();
-            SequentialCommandGroup autonomousCommands = new SequentialCommandGroup(firstPath, driveVisionCommand, singleShotCommand, secondPath);
+            SequentialCommandGroup autonomousCommands = new SequentialCommandGroup(firstPath, driveVisionCommand,
+                    singleShotCommand, secondPath);
             return autonomousCommands;
-        }
-        else
-        {
+        } else {
             return firstPath;
         }
     }
