@@ -53,6 +53,7 @@ public final class Constants {
     public static int rightFrontProximitySensor = 1;
     public static int leftProximitySensor = 2;
     public static int rightProximitySensor = 3;
+    public static boolean enableProximitySensor = false;
 
     // PWM
     public static int leftFrontPort = 0;
