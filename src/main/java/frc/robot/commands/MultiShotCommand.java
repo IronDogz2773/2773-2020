@@ -7,18 +7,15 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class MultiShotCommand extends CommandBase {
   private final ShooterSubsystem shooterSubsystem;
-  private final IndexerSubsystem indexerSubsystem;
-  private final static double INDEXER_TIME = 1.0;
   private double numBalls;
-  private final Timer timer;
   private int shooterState;
+  private MoveBallCommand moveBallCommand;
   private final static int START_SPIN = 0;
   private final static int WAIT_FOR_SPIN = 1;
   private final static int MOVE_BALL = 2;
@@ -30,17 +27,14 @@ public class MultiShotCommand extends CommandBase {
   public MultiShotCommand(final ShooterSubsystem shooterSubsystem, final IndexerSubsystem indexerSubsystem,
       final double balls) {
     this.shooterSubsystem = shooterSubsystem;
-    this.indexerSubsystem = indexerSubsystem;
-    timer = new Timer();
+    this.moveBallCommand = new MoveBallCommand(indexerSubsystem);
     numBalls = balls;
-    addRequirements(shooterSubsystem, indexerSubsystem);
+    addRequirements(shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    timer.reset();
-    timer.start();
     shooterState = START_SPIN;
   }
 
@@ -56,18 +50,17 @@ public class MultiShotCommand extends CommandBase {
       // if shooter at rate, decreases number of balls and starts conveyor
       if (shooterSubsystem.atRate()) {
         numBalls--;
-        timer.reset();
-        indexerSubsystem.startConveyorSpin(1.0);
+        // begin to move ball (using subcommand)
+        moveBallCommand.initialize();
         shooterState = MOVE_BALL;
       }
       break;
     case MOVE_BALL:
-      // timer used to track conveyor movment.
-      if (timer.get() > INDEXER_TIME) {
-        // if moved enough, stop moving the conveyor
-        indexerSubsystem.stopConveyorSpin();
-        timer.reset();
-        // keeps repeating until no more balls (three times)
+      // invoke subcommand and check if it's finished
+      moveBallCommand.execute();
+      if (moveBallCommand.isFinished()) {
+        moveBallCommand.end(false);
+        // keeps repeating until no more balls
         if (numBalls > 0) {
           shooterState = WAIT_FOR_SPIN;
         } else {
@@ -82,9 +75,11 @@ public class MultiShotCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(final boolean interrupted) {
-    timer.stop();
     shooterSubsystem.stopSpin();
-    indexerSubsystem.stopConveyorSpin();
+    if (interrupted && shooterState == MOVE_BALL) {
+      // if interrupted, interupt running subcommand
+      moveBallCommand.end(true);
+    }
   }
 
   // Returns true when the command should end.
