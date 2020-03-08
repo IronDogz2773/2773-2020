@@ -12,17 +12,23 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class SingleShotCommand extends CommandBase {
+public class MultiShotCommand extends CommandBase {
   private final ShooterSubsystem shooterSubsystem;
   private final IndexerSubsystem indexerSubsystem;
-  private final double INDEXER_TIME = 1.0;
+  private final static double INDEXER_TIME = 1.0;
   private double numBalls;
   private final Timer timer;
+  private int shooterState;
+  private final static int START_SPIN = 0;
+  private final static int WAIT_FOR_SPIN = 1;
+  private final static int MOVE_BALL = 2;
+  private final static int STOP_SPIN = 3;
 
   /**
-   * Creates a new SingleShotCommand.
+   * Creates a new MultiShotCommand.
    */
-  public SingleShotCommand(ShooterSubsystem shooterSubsystem, IndexerSubsystem indexerSubsystem, double balls) {
+  public MultiShotCommand(final ShooterSubsystem shooterSubsystem, final IndexerSubsystem indexerSubsystem,
+      final double balls) {
     this.shooterSubsystem = shooterSubsystem;
     this.indexerSubsystem = indexerSubsystem;
     timer = new Timer();
@@ -35,32 +41,47 @@ public class SingleShotCommand extends CommandBase {
   public void initialize() {
     timer.reset();
     timer.start();
+    shooterState = START_SPIN;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.startSpin(1.0);
-    if(shooterSubsystem.atRate())
-    {
-      timer.reset();
-      if(timer.get() <= INDEXER_TIME && numBalls > 0)
-        indexerSubsystem.startConveyorSpin(1.0);
-      else
+    switch (shooterState) {
+    case START_SPIN:
+      shooterSubsystem.startSpin(1.0);
+      shooterState = WAIT_FOR_SPIN;
+      break;
+    case WAIT_FOR_SPIN:
+      // if shooter at rate, decreases number of balls and starts conveyor
+      if (shooterSubsystem.atRate()) {
         numBalls--;
-        //TODO add limit switch functionality hopefully
+        timer.reset();
+        indexerSubsystem.startConveyorSpin(1.0);
+        shooterState = MOVE_BALL;
+      }
+      break;
+    case MOVE_BALL:
+      // timer used to track conveyor movment.
+      if (timer.get() > INDEXER_TIME) {
+        // if moved enough, stop moving the conveyor
+        indexerSubsystem.stopConveyorSpin();
+        timer.reset();
+        // keeps repeating until no more balls (three times)
+        if (numBalls > 0) {
+          shooterState = WAIT_FOR_SPIN;
+        } else {
+          shooterSubsystem.stopSpin();
+          shooterState = STOP_SPIN;
+        }
+      }
+      break;
     }
-    else
-    {
-      indexerSubsystem.stopConveyorSpin();
-      timer.reset();
-    }
-    
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
+  public void end(final boolean interrupted) {
     timer.stop();
     shooterSubsystem.stopSpin();
     indexerSubsystem.stopConveyorSpin();
@@ -69,10 +90,6 @@ public class SingleShotCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(numBalls == 0)
-    {
-      return true;
-    }
-    return false;
+    return shooterState == STOP_SPIN;
   }
 }

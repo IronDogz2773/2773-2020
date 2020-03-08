@@ -2,7 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.DriveVisionCommand;
-import frc.robot.commands.SingleShotCommand;
+import frc.robot.commands.MultiShotCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.NavigationSubsystem;
@@ -64,7 +64,7 @@ public class MultistepAutonomousBuilder {
                 firstTrajectoryFilePath);
         Command firstPath = firstAutonomousBuilder.build(); // first Ramsete command
         DriveVisionCommand driveVisionCommand = new DriveVisionCommand(driveSubsystem, navigationSubsystem, true);
-        SingleShotCommand singleShotCommand = new SingleShotCommand(shooterSubsystem, indexerSubsystem, 3);
+        MultiShotCommand singleShotCommand = new MultiShotCommand(shooterSubsystem, indexerSubsystem, 3);
 
         if (!secondTrajectoryFilePath.equals("")) {
             AutonomousBuilder secondAutonomousBuilder = new AutonomousBuilder(driveSubsystem, navigationSubsystem,
