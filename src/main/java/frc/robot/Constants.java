@@ -22,75 +22,73 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 public final class Constants {
 
     public static final double pi = 3.1415926535;
-    public static double speedIncrement = 0.012;
-    public static double rotationIncrement = 0.03;
-    public static double rotationSpeedCap = 0.7;
-    public static double movementSpeedCap = 0.7;
-    public static double requiredShooterRate = 1000;
-    static double metersPerFoot = 0.3048;
+    public static final double speedIncrement = 0.012;
+    public static final double rotationIncrement = 0.03;
+    public static final double rotationSpeedCap = 0.7;
+    public static final double movementSpeedCap = 0.7;
+    public static final double requiredShooterRate = 1000;
+    public static final double metersPerFoot = 0.3048;
     
     // Drive Constants
-    public static double ksVolts = 2.29;
-    public static double kvVoltSecondsPerMeter = 0.796 / metersPerFoot;
-    public static double kaVoltSecondsSquaredPerMeter = 0.0192 /  metersPerFoot;
-    public static double kTrackWidthMeters = 1.972485 * metersPerFoot;
-    public static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
+    public static final double ksVolts = 2.29;
+    public static final double kvVoltSecondsPerMeter = 0.796 / metersPerFoot;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.0192 /  metersPerFoot;
+    public static final double kTrackWidthMeters = 1.972485 * metersPerFoot;
+    public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
         kTrackWidthMeters);
-    public static double kPDriveVel = 0.615;
-    public static double distancePerPulse = .5 * Math.PI * metersPerFoot / 2048;
+    public static final double kPDriveVel = 0.615;
+    public static final double distancePerPulse = .5 * Math.PI * metersPerFoot / 2048;
     
 
     // Auto Constants
-    public static double kMaxSpeedMetersPerSecond = 1;
-    public static double kMaxAccelerationMetersPerSecondSquared = .5;
-    public static double kRamseteB = 2.0;
-    public static double kRamseteZeta = 0.7;
+    public static final double kMaxSpeedMetersPerSecond = 1;
+    public static final double kMaxAccelerationMetersPerSecondSquared = .5;
+    public static final double kRamseteB = 2.0;
+    public static final double kRamseteZeta = 0.7;
 
     // Proximity
-    public static double microsecondsPerMeter = 1000000.0 / 2 / 340;
-    public static double minDistanceToFrontObsticle = 1 * microsecondsPerMeter;
-    public static int leftFrontProximitySensor = 0;
-    public static int rightFrontProximitySensor = 1;
-    public static int leftProximitySensor = 2;
-    public static int rightProximitySensor = 3;
-    public static boolean enableProximitySensor = false;
+    public static final double microsecondsPerMeter = 1000000.0 / 2 / 340;
+    public static final double minDistanceToFrontObsticle = 1 * microsecondsPerMeter;
+    public static final int leftFrontProximitySensor = 0;
+    public static final int rightFrontProximitySensor = 1;
+    public static final int leftProximitySensor = 2;
+    public static final int rightProximitySensor = 3;
+    public static final boolean enableProximitySensor = false;
 
     // PWM
-    public static int leftFrontPort = 0;
-    public static int rightFrontPort = 1;
-    public static int leftBackPort = 2;
-    public static int rightBackPort = 3;
-    public static int flyWheelPortA = 4;
-    public static int flyWheelPortB = 5;
-    public static int colorWheelPort = 6;
-    public static int intakePort = 7;
-    public static int conveyorRightPort = 8;
-    public static int conveyorLeftPort = 9;
-    public static int LEDport = 10;
-    public static int rightClimbPort = 11;
-    public static int leftClimbPort = 12;
+    public static final int leftWheelsPort = 11;
+    public static final int rightWheelsPort = 2;
+    public static final int flyWheelPortA = 14;
+    public static final int flyWheelPortB = 5;
+    public static final int colorWheelPort = 8;
+    public static final int intakePort = 0;
+    public static final int conveyorRightPort = 1;
+    public static final int conveyorLeftPort = 10;
+    public static final int LEDport = 4;
+    public static final int rightClimbPort = 3;
+    public static final int leftClimbPort = 12;
 
     // DIO
-    public static int leftEncoderPortA = 0;
-    public static int leftEncoderPortB = 1;
-    public static int rightEncoderPortA = 2;
-    public static int rightEncoderPortB = 3;
-    public static int shooterEncoderPortA = 4;
-    public static int shooterEncoderPortB = 5;
+    public static final int leftEncoderPortA = 0;
+    public static final int leftEncoderPortB = 1;
+    public static final int rightEncoderPortA = 2;
+    public static final int rightEncoderPortB = 3;
+    public static final int shooterEncoderPortA = 4;
+    public static final int shooterEncoderPortB = 5;
 
     // PCM
-    public static int compressorPort = 0;
-    public static int indexerForwardChannel = 1;
-    public static int indexerReverseChannel = 0;
+    public static final int compressorPort = 0;
+    public static final int indexerForwardChannel = 1;
+    public static final int indexerReverseChannel = 0;
 
     // USB
-    public static int joystickPort = 0;
-    public static int gamepadPort = 1;
+    public static final int joystickPort = 0;
+    public static final int gamepadPort = 1;
 
     // Buttons
-    public static int spinButton = 1;
-    public static int visionButton = 7;
-    public static int gyroButton = 5;
-    public static int turnTestButton = 14;
-    public static int climbButton = 3;
+    public static final int spinButton = 1;
+    public static final int visionButton = 7;
+    public static final int gyroButton = 5;
+    public static final int turnTestButton = 14;
+    public static final int climbButton = 3;
 }
