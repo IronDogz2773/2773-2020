@@ -8,6 +8,8 @@ import frc.robot.Constants;
 
 public class DriveSubsystem extends SubsystemBase {
 
+    private static final double MOTOR_VOLTS = 12.0;
+
     // Motors
     private final PWMVictorSPX leftWheels = new PWMVictorSPX(Constants.leftWheelsPort);
     private final PWMVictorSPX rightWheels = new PWMVictorSPX(Constants.rightWheelsPort);
@@ -34,7 +36,15 @@ public class DriveSubsystem extends SubsystemBase {
         drive.arcadeDrive(speed, rotation, accel);
     }
 
-    public void tankDriveVolts(double i, double j) {
-        drive.tankDrive(i / 12.0, j / 0.12, false);
+    public void rotate(final double rotation) {
+        drive.arcadeDrive(0, rotation, false);
+    }
+
+    public void stop() {
+        drive.tankDrive(0, 0);
+    }
+
+    public void tankDriveVolts(double leftVolts, double rightVolts) {
+        drive.tankDrive(leftVolts / MOTOR_VOLTS, rightVolts / MOTOR_VOLTS, false);
     }
 }

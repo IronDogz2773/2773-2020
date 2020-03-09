@@ -10,25 +10,21 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IndexerSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 
-public class SingleShotCommand extends CommandBase {
-  private final ShooterSubsystem shooterSubsystem;
+public class MoveBallCommand extends CommandBase {
+  private static final double INDEXER_TIME = 3.0;
+  private static final double LOCK_DURATION = 1.0;
   private final IndexerSubsystem indexerSubsystem;
-  private final double INDEXER_TIME = 1.0;
-  private double numBalls;
-  private final Timer timer;
-  private boolean alreadyResetTime = false;
+  private Timer timer;
 
   /**
-   * Creates a new SingleShotCommand.
+   * Creates a new MoveBallCommand.
    */
-  public SingleShotCommand(ShooterSubsystem shooterSubsystem, IndexerSubsystem indexerSubsystem, double balls) {
-    this.shooterSubsystem = shooterSubsystem;
+  public MoveBallCommand(IndexerSubsystem indexerSubsystem) {
     this.indexerSubsystem = indexerSubsystem;
+    addRequirements(indexerSubsystem);
+
     timer = new Timer();
-    numBalls = balls;
-    addRequirements(shooterSubsystem, indexerSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -36,51 +32,29 @@ public class SingleShotCommand extends CommandBase {
   public void initialize() {
     timer.reset();
     timer.start();
+    indexerSubsystem.startConveyorSpin(1.0);
+    indexerSubsystem.lock(false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.startSpin(1.0);
-    if(shooterSubsystem.atRate())
-    {
-      if(!alreadyResetTime)
-      {
-        timer.reset();
-        alreadyResetTime = true;
-      }
-      if(timer.get() <= INDEXER_TIME && numBalls > 0)
-      {
-        indexerSubsystem.startConveyorSpin(1.0);
-        indexerSubsystem.lock(false);
-      }
-      else
-        numBalls--;
-        //TODO add limit switch functionality hopefully
+    if (timer.get() >= LOCK_DURATION) {
+      indexerSubsystem.lock(true);
     }
-    else
-    {
-      indexerSubsystem.stopConveyorSpin();
-      alreadyResetTime = false;
-    }
-    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    timer.stop();
-    shooterSubsystem.stopSpin();
     indexerSubsystem.stopConveyorSpin();
+    indexerSubsystem.lock(true);
+    timer.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(numBalls == 0)
-    {
-      return true;
-    }
-    return false;
+    return timer.get() >= INDEXER_TIME;
   }
 }
