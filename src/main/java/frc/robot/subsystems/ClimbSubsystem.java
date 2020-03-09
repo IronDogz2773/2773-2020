@@ -24,9 +24,9 @@ public class ClimbSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void climb(double speed)
+  public void climb(double rightSpeed, double leftSpeed)
   {
-    climbRight.set(speed);
-    climbLeft.set(-speed);
+    climbRight.set(rightSpeed);
+    climbLeft.set(leftSpeed);
   }
 }

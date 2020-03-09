@@ -52,3 +52,4 @@ public class IndexerSubsystem extends SubsystemBase {
     return doubleSolenoid.get();
   }
 }
+   

@@ -55,18 +55,16 @@ public final class Constants {
     public static final int rightProximitySensor = 3;
 
     // PWM
-    public static final int leftFrontPort = 0;
-    public static final int rightFrontPort = 1;
-    public static final int leftBackPort = 2;
-    public static final int rightBackPort = 3;
-    public static final int flyWheelPortA = 4;
+    public static final int leftWheelsPort = 11;
+    public static final int rightWheelsPort = 2;
+    public static final int flyWheelPortA = 14;
     public static final int flyWheelPortB = 5;
-    public static final int colorWheelPort = 6;
-    public static final int intakePort = 7;
-    public static final int conveyorRightPort = 8;
-    public static final int conveyorLeftPort = 9;
-    public static final int LEDport = 10;
-    public static final int rightClimbPort = 11;
+    public static final int colorWheelPort = 8;
+    public static final int intakePort = 0;
+    public static final int conveyorRightPort = 1;
+    public static final int conveyorLeftPort = 10;
+    public static final int LEDport = 4;
+    public static final int rightClimbPort = 3;
     public static final int leftClimbPort = 12;
 
     // DIO
