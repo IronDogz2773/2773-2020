@@ -90,7 +90,8 @@ public final class Constants {
     public static final int turnTestButton = 14;
     public static final int climbButton = 2;
     public static final int indexerReverseButton = 6;
-    public static final int lockButton = 3;
+    public static final int lockButton = 10;
+    public static final int climbReverseButton = 7;
 
     // Axes
     public static final int leftJoystickY = 1;

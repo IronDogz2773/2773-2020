@@ -76,7 +76,7 @@ public class RobotContainer {
   // private final TurnDegreesCommand turn90Command = new
   // TurnDegreesCommand(driveSubsystem, navigationSubsystem, 90);
   private final LEDControlCommand ledControlCommand = new LEDControlCommand(ledSubsystem);
-  private final ClimbControllerCommand climbControllerCommand = new ClimbControllerCommand(climbSubsystem, gamepad);
+  private final ClimbControllerCommand climbControllerCommand = new ClimbControllerCommand(climbSubsystem, ledSubsystem, gamepad);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.

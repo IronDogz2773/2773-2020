@@ -34,10 +34,9 @@ public class IndexerCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speed = gamepad.getRawAxis(Constants.leftTrigger);
-    boolean backward = gamepad.getPOV() == 180;
+    double speed = gamepad.getRawAxis(Constants.leftJoystickY);
     boolean lock = gamepad.getRawButton(Constants.lockButton);
-    indexerSubsystem.setConveyorSpeed(backward ? speed : -speed);
+    indexerSubsystem.setConveyorSpeed(speed);
     indexerSubsystem.lock(lock);
   }
 

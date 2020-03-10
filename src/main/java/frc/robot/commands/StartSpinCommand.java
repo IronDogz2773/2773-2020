@@ -36,7 +36,7 @@ public class StartSpinCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    int speed = (gamepad.getRawAxis(Constants.rightTrigger) > .2 ? -1 : 0);
+    int speed = (gamepad.getRawAxis(Constants.rightJoystickY) < -.2 ? -1 : 0);
     shooter.startSpin(speed);
     SmartDashboard.putBoolean("Shooter Running", true);
     SmartDashboard.putBoolean("Shooter At RPM", shooter.atRate());
