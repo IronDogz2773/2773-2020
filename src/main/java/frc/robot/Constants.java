@@ -22,13 +22,10 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 public final class Constants {
 
     public static final double pi = 3.1415926535;
-    public static final double speedIncrement = 0.012;
-    public static final double rotationIncrement = 0.03;
-    public static final double rotationSpeedCap = 0.7;
-    public static final double movementSpeedCap = 0.7;
-    public static final double requiredShooterRate = 1000;
     public static final double metersPerFoot = 0.3048;
-    
+    public static final double requiredShooterRate = 1000;
+    public static final double indexerSpeedCap = 0.75;
+
     // Drive Constants
     public static final double ksVolts = 2.29;
     public static final double kvVoltSecondsPerMeter = 0.796 / metersPerFoot;
@@ -86,9 +83,21 @@ public final class Constants {
     public static final int gamepadPort = 1;
 
     // Buttons
-    public static final int spinButton = 1;
-    public static final int visionButton = 7;
-    public static final int gyroButton = 5;
+    public static final int spinInButton = 1;
+    public static final int spinOutButton = 3;
+    public static final int visionButton = 5;
+    public static final int gyroButton = 7;
     public static final int turnTestButton = 14;
-    public static final int climbButton = 3;
+    public static final int climbButton = 2;
+    public static final int indexerReverseButton = 6;
+    public static final int lockButton = 3;
+
+    // Axes
+    public static final int leftJoystickY = 1;
+    public static final int leftJoystickX = 0;
+    public static final int rightJoystickY = 5;
+    public static final int rightJoystickX = 4;
+    public static final int leftTrigger = 2;
+    public static final int rightTrigger = 3;
+
 }

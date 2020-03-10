@@ -13,7 +13,7 @@ import frc.robot.subsystems.IndexerSubsystem;
 
 public class MoveBallCommand extends CommandBase {
   private static final double INDEXER_TIME = 3.0;
-  private static final double LOCK_DURATION = 1.0;
+  private static final double LOCK_DURATION = 2.0;
   private final IndexerSubsystem indexerSubsystem;
   private Timer timer;
 
@@ -32,8 +32,8 @@ public class MoveBallCommand extends CommandBase {
   public void initialize() {
     timer.reset();
     timer.start();
-    indexerSubsystem.startConveyorSpin(1.0);
     indexerSubsystem.lock(false);
+    indexerSubsystem.setConveyorSpeed(-0.75);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -47,8 +47,8 @@ public class MoveBallCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    indexerSubsystem.stopConveyorSpin();
-    indexerSubsystem.lock(true);
+    indexerSubsystem.stopConveyor();
+    indexerSubsystem.lock(false);
     timer.stop();
   }
 

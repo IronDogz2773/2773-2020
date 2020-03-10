@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.IndexerSubsystem;
 
 public class IndexerCommand extends CommandBase {
@@ -33,18 +34,11 @@ public class IndexerCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (gamepad.getRawAxis(2) > .2) // raw axis 2 is left trigger
-    {
-      indexerSubsystem.lock(false);
-      indexerSubsystem.startConveyorSpin(gamepad.getRawAxis(2));
-    } else if (gamepad.getRawAxis(3) > .2) // raw axis 3 is right trigger
-    {
-      indexerSubsystem.lock(false);
-      indexerSubsystem.startConveyorSpin(-gamepad.getRawAxis(3));
-    } else {
-      indexerSubsystem.lock(true);
-      indexerSubsystem.stopConveyorSpin();
-    }
+    double speed = gamepad.getRawAxis(Constants.leftTrigger);
+    boolean backward = gamepad.getPOV() == 180;
+    boolean lock = gamepad.getRawButton(Constants.lockButton);
+    indexerSubsystem.setConveyorSpeed(backward ? speed : -speed);
+    indexerSubsystem.lock(lock);
   }
 
   // Called once the command ends or is interrupted.
