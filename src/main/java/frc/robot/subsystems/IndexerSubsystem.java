@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 
 public class IndexerSubsystem extends SubsystemBase {
@@ -17,12 +18,13 @@ public class IndexerSubsystem extends SubsystemBase {
   private final Spark conveyorLeft = new Spark(Constants.conveyorLeftPort);
   private final DoubleSolenoid doubleSolenoid = new DoubleSolenoid(Constants.indexerForwardChannel,
       Constants.indexerReverseChannel);
+  private boolean lockState;
 
   /**
    * Creates a new IndexerSubsystem.
    */
   public IndexerSubsystem() {
-
+    lockState = false;
   }
 
   @Override
@@ -30,22 +32,26 @@ public class IndexerSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void startConveyorSpin(final double speed) {
+  public void setConveyorSpeed(double speed) {
+    speed = MathUtil.clamp(speed, -0.75, 0.75);
     conveyorRight.set(speed); // one turns clockwise, the other turns counterclockwise
     conveyorLeft.set(-speed);
   }
 
-  public void stopConveyorSpin() {
+  public void stopConveyor() {
     conveyorRight.set(0); // one turns clockwise, the other turns counterclockwise
     conveyorLeft.set(0);
   }
 
   public void lock(final boolean locked) // kForward for on, kReverse for off
   {
+    if(locked == lockState)
+    return;
     if (locked)
-      doubleSolenoid.set(DoubleSolenoid.Value.kForward);
-    else
       doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
+    else
+      doubleSolenoid.set(DoubleSolenoid.Value.kForward);
+    lockState = locked;
   }
 
   public DoubleSolenoid.Value getSolenoidValue() {

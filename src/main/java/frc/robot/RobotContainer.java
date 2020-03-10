@@ -26,7 +26,7 @@ import frc.robot.commands.IntakeSpinCommand;
 import frc.robot.commands.LEDControlCommand;
 import frc.robot.commands.ResetGyroscopeCommand;
 import frc.robot.commands.StartSpinCommand;
-import frc.robot.commands.TurnDegreesCommand;
+//import frc.robot.commands.TurnDegreesCommand;
 import frc.robot.subsystems.AirSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -53,7 +53,6 @@ public class RobotContainer {
   private final UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
   SendableChooser<Integer> autoChooser = new SendableChooser<>();
 
-
   // Subsystems
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
@@ -65,14 +64,17 @@ public class RobotContainer {
   private final ClimbSubsystem climbSubsystem = new ClimbSubsystem();
 
   // Commands
-  private final DriveManuallyCommand driveManuallyCommand = new DriveManuallyCommand(driveSubsystem, navigationSubsystem, joystick);
-  private final StartSpinCommand startSpinCommand = new StartSpinCommand(shooterSubsystem);
-  private final IntakeSpinCommand intakeSpinCommand = new IntakeSpinCommand(intakeSubsystem, gamepad);
+  private final DriveManuallyCommand driveManuallyCommand = new DriveManuallyCommand(driveSubsystem,
+      navigationSubsystem, joystick);
+  private final StartSpinCommand startSpinCommand = new StartSpinCommand(shooterSubsystem, gamepad);
+  private final IntakeSpinCommand intakeSpinInCommand = new IntakeSpinCommand(intakeSubsystem, -1.0);
+  private final IntakeSpinCommand intakeSpinOutCommand = new IntakeSpinCommand(intakeSubsystem, 1.0);
   private final DriveVisionCommand visionCommand = new DriveVisionCommand(driveSubsystem, navigationSubsystem, false);
   private final ResetGyroscopeCommand resetGyroscopeCommand = new ResetGyroscopeCommand(navigationSubsystem);
   private final CompressorControlCommand compressorControlCommand = new CompressorControlCommand(airSubsystem);
   private final IndexerCommand indexerCommand = new IndexerCommand(indexerSubsystem, gamepad);
-  private final TurnDegreesCommand turn90Command = new TurnDegreesCommand(driveSubsystem, navigationSubsystem, 90);
+  // private final TurnDegreesCommand turn90Command = new
+  // TurnDegreesCommand(driveSubsystem, navigationSubsystem, 90);
   private final LEDControlCommand ledControlCommand = new LEDControlCommand(ledSubsystem);
   private final ClimbControllerCommand climbControllerCommand = new ClimbControllerCommand(climbSubsystem, gamepad);
 
@@ -85,11 +87,10 @@ public class RobotContainer {
     addSendableChooserOptions();
     setShuffleboardVals();
     driveSubsystem.setDefaultCommand(driveManuallyCommand);
-    intakeSubsystem.setDefaultCommand(intakeSpinCommand);
     airSubsystem.setDefaultCommand(compressorControlCommand);
     indexerSubsystem.setDefaultCommand(indexerCommand);
     ledSubsystem.setDefaultCommand(ledControlCommand);
-    climbSubsystem.setDefaultCommand(climbControllerCommand);
+    shooterSubsystem.setDefaultCommand(startSpinCommand);
     camera.setResolution(160, 120);
     camera.setFPS(15);
 
@@ -99,7 +100,7 @@ public class RobotContainer {
   private void initPIDTable() {
     final NetworkTableInstance inst = NetworkTableInstance.getDefault();
     final NetworkTable pidTable = inst.getTable("PID");
-    if(pidTable.getEntry("P").getDouble(0) != 0) 
+    if (pidTable.getEntry("P").getDouble(0) != 0)
       return;
     pidTable.getEntry("P").forceSetNumber(.03);
     pidTable.getEntry("I").forceSetNumber(.00);
@@ -114,14 +115,18 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    final JoystickButton spinButton = new JoystickButton(joystick, Constants.spinButton);
-    spinButton.whenHeld(startSpinCommand, true);
-    final JoystickButton visionButton = new JoystickButton(joystick, Constants.visionButton);
-    visionButton.whenHeld(visionCommand, true);
     final JoystickButton gyroButton = new JoystickButton(joystick, Constants.gyroButton);
     gyroButton.whenHeld(resetGyroscopeCommand, true);
-    final JoystickButton turnButton = new JoystickButton(joystick, Constants.turnTestButton);
-    turnButton.whenHeld(turn90Command, true);
+    /*final JoystickButton turnButton = new JoystickButton(joystick,
+    Constants.turnTestButton); turnButton.whenHeld(turn90Command, true);*/
+    final JoystickButton climbButton = new JoystickButton(gamepad, Constants.climbButton);
+    climbButton.whenPressed(climbControllerCommand);
+    final JoystickButton spinInButton = new JoystickButton(joystick, Constants.spinInButton);
+    spinInButton.whenHeld(intakeSpinInCommand, true);
+    final JoystickButton spinOutButton = new JoystickButton(joystick, Constants.spinOutButton);
+    spinOutButton.whenHeld(intakeSpinOutCommand);
+    final JoystickButton visionButton = new JoystickButton(joystick, Constants.visionButton);
+    visionButton.whenHeld(visionCommand, true);
   }
 
   /**
@@ -143,7 +148,7 @@ public class RobotContainer {
     SmartDashboard.putData("Autonomous Chooser", autoChooser);
   }
 
-  private void addSendableChooserOptions(){
+  private void addSendableChooserOptions() {
     autoChooser.addOption("Left Shoot", 0);
     autoChooser.addOption("Middle Shoot", 1);
     autoChooser.addOption("Right Shoot", 2);
