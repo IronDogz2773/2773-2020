@@ -23,8 +23,8 @@ public final class Constants {
 
     public static final double pi = 3.1415926535;
     public static final double metersPerFoot = 0.3048;
-    public static final double requiredShooterRate = 1000;
-    public static final double indexerSpeedCap = 0.75;
+    public static final double requiredShooterRate = 180000;
+    public static final double indexerSpeedCap = 0.6;
 
     // Drive Constants
     public static final double ksVolts = 2.29;
@@ -66,12 +66,12 @@ public final class Constants {
     public static final int leftClimbPort = 12;
 
     // DIO
-    public static final int leftEncoderPortA = 0;
-    public static final int leftEncoderPortB = 1;
-    public static final int rightEncoderPortA = 2;
-    public static final int rightEncoderPortB = 3;
-    public static final int shooterEncoderPortA = 4;
-    public static final int shooterEncoderPortB = 5;
+    public static final int leftEncoderPortA = 6;
+    public static final int leftEncoderPortB = 7;
+    public static final int rightEncoderPortA = 3;
+    public static final int rightEncoderPortB = 4;
+    public static final int shooterEncoderPortA = 0;
+    public static final int shooterEncoderPortB = 1;
 
     // PCM
     public static final int compressorPort = 0;
@@ -92,6 +92,7 @@ public final class Constants {
     public static final int indexerReverseButton = 6;
     public static final int lockButton = 10;
     public static final int climbReverseButton = 7;
+    public static final int multiShotButton = 11;
 
     // Axes
     public static final int leftJoystickY = 1;
@@ -100,5 +101,6 @@ public final class Constants {
     public static final int rightJoystickX = 4;
     public static final int leftTrigger = 2;
     public static final int rightTrigger = 3;
+    public static final int joystickSlider = 3;
 
 }

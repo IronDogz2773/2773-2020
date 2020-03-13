@@ -16,6 +16,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class StartSpinCommand extends CommandBase {
   private final ShooterSubsystem shooter;
   private final Joystick gamepad;
+  private boolean running;
 
   /**
    * Creates a new StartSpinCommand.
@@ -30,31 +31,32 @@ public class StartSpinCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    int speed = (gamepad.getRawAxis(Constants.rightJoystickY) < -.2 ? -1 : 0);
-    shooter.startSpin(speed);
-    SmartDashboard.putBoolean("Shooter Running", true);
-    SmartDashboard.putBoolean("Shooter At RPM", shooter.atRate());
-    checkSpeed();
-  }
-
-  public boolean checkSpeed() {
-    if (shooter.checkSpinSpeed() != 0) {
-      return true;
-    } else {
-      return false;
+    double speed;
+    if(Math.abs(gamepad.getRawAxis(Constants.rightJoystickY)) > .2)
+    {
+      speed = gamepad.getRawAxis(Constants.rightJoystickY);
+      running = true;
     }
+    else
+    {
+      speed = 0;
+      running = false;
+    }
+    shooter.startSpin(speed);
+    SmartDashboard.putBoolean("Shooter Running", running);
+    SmartDashboard.putNumber("Shooter RPM, %",shooter.checkSpinRate() * 100);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(final boolean interrupted) {
-    SmartDashboard.putBoolean("Shooter", false);
+    running = false;
     shooter.stopSpin();
   }
 

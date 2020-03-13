@@ -54,8 +54,8 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   // encoder tells me the speed is right if true
-  public double checkSpinSpeed() {
-    return flyWheelA.get();
+  public double checkSpinRate() {
+    return -rate / Constants.requiredShooterRate;
   }
 
   public boolean atRate()

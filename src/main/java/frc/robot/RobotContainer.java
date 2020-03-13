@@ -24,9 +24,10 @@ import frc.robot.commands.DriveVisionCommand;
 import frc.robot.commands.IndexerCommand;
 import frc.robot.commands.IntakeSpinCommand;
 import frc.robot.commands.LEDControlCommand;
+import frc.robot.commands.MultiShotCommand;
 import frc.robot.commands.ResetGyroscopeCommand;
 import frc.robot.commands.StartSpinCommand;
-//import frc.robot.commands.TurnDegreesCommand;
+import frc.robot.commands.TurnDegreesCommand;
 import frc.robot.subsystems.AirSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -73,10 +74,10 @@ public class RobotContainer {
   private final ResetGyroscopeCommand resetGyroscopeCommand = new ResetGyroscopeCommand(navigationSubsystem);
   private final CompressorControlCommand compressorControlCommand = new CompressorControlCommand(airSubsystem);
   private final IndexerCommand indexerCommand = new IndexerCommand(indexerSubsystem, gamepad);
-  // private final TurnDegreesCommand turn90Command = new
-  // TurnDegreesCommand(driveSubsystem, navigationSubsystem, 90);
+  private final TurnDegreesCommand turn90Command = new TurnDegreesCommand(driveSubsystem, navigationSubsystem, 90);
   private final LEDControlCommand ledControlCommand = new LEDControlCommand(ledSubsystem);
   private final ClimbControllerCommand climbControllerCommand = new ClimbControllerCommand(climbSubsystem, ledSubsystem, gamepad);
+  private final MultiShotCommand multiShotCommand = new MultiShotCommand(shooterSubsystem, indexerSubsystem, 3);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -117,8 +118,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     final JoystickButton gyroButton = new JoystickButton(joystick, Constants.gyroButton);
     gyroButton.whenHeld(resetGyroscopeCommand, true);
-    /*final JoystickButton turnButton = new JoystickButton(joystick,
-    Constants.turnTestButton); turnButton.whenHeld(turn90Command, true);*/
+    final JoystickButton turnButton = new JoystickButton(joystick,Constants.turnTestButton); 
+    turnButton.whenHeld(turn90Command, true);
     final JoystickButton climbButton = new JoystickButton(gamepad, Constants.climbButton);
     climbButton.whenPressed(climbControllerCommand);
     final JoystickButton spinInButton = new JoystickButton(joystick, Constants.spinInButton);
@@ -127,6 +128,8 @@ public class RobotContainer {
     spinOutButton.whenHeld(intakeSpinOutCommand);
     final JoystickButton visionButton = new JoystickButton(joystick, Constants.visionButton);
     visionButton.whenHeld(visionCommand, true);
+    final JoystickButton multiShotButton = new JoystickButton(joystick, Constants.multiShotButton);
+    multiShotButton.whenPressed(multiShotCommand, true);
   }
 
   /**

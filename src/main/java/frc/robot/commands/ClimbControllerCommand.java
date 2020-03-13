@@ -43,7 +43,7 @@ public class ClimbControllerCommand extends CommandBase {
     rightSpeed = gamepad.getRawAxis(Constants.rightTrigger);
     leftSpeed = gamepad.getRawAxis(Constants.leftTrigger);
     boolean reverse = gamepad.getRawButton(Constants.climbReverseButton);
-    climbSubsystem.climb(reverse ? -rightSpeed : rightSpeed, reverse ? -leftSpeed : leftSpeed);
+    climbSubsystem.climb(reverse ? rightSpeed : -rightSpeed, reverse ? leftSpeed : -leftSpeed);
   }
 
   // Called once the command ends or is interrupted.

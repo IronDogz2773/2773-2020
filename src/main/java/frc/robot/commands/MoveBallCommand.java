@@ -34,7 +34,7 @@ public class MoveBallCommand extends CommandBase {
     timer.reset();
     timer.start();
     indexerSubsystem.lock(false);
-    indexerSubsystem.setConveyorSpeed(-Constants.indexerSpeedCap);
+    indexerSubsystem.setConveyorSpeed(Constants.indexerSpeedCap);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
