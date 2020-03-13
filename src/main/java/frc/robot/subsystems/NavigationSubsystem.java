@@ -59,7 +59,7 @@ public class NavigationSubsystem extends SubsystemBase {
     this.setDistancePerPulse(Constants.distancePerPulse);
 
     SmartDashboard.putData("Gyroscope", gyroscope);
-    SmartDashboard.putData("Accelerometer", accelerometer);
+    //SmartDashboard.putData("Accelerometer", accelerometer);
   }
 
   public void setDistancePerPulse(double distancePerPulse) {
@@ -119,10 +119,10 @@ public class NavigationSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     var gyroAngle = Rotation2d.fromDegrees(-gyroscope.getAngle());
     currentPosition = odometer.update(gyroAngle, -leftEncoder.getDistance(), rightEncoder.getDistance());
-    SmartDashboard.putNumber("Left Encoder", -leftEncoder.getDistance());
-    SmartDashboard.putNumber("Right Encoder", rightEncoder.getDistance());
+    //SmartDashboard.putNumber("Left Encoder", -leftEncoder.getDistance());
+    //SmartDashboard.putNumber("Right Encoder", rightEncoder.getDistance());
 
     proximityDistances = proximity.getDistances();
-    SmartDashboard.putNumberArray("Distances", proximityDistances);
+    //SmartDashboard.putNumberArray("Distances", proximityDistances);
   }
 }

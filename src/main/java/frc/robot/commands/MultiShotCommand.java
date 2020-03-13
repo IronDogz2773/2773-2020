@@ -13,7 +13,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class MultiShotCommand extends CommandBase {
   private final ShooterSubsystem shooterSubsystem;
-  private double numBalls;
+  private int numBalls;
   private int shooterState;
   private MoveBallCommand moveBallCommand;
   private final static int START_SPIN = 0;
@@ -25,7 +25,7 @@ public class MultiShotCommand extends CommandBase {
    * Creates a new MultiShotCommand.
    */
   public MultiShotCommand(final ShooterSubsystem shooterSubsystem, final IndexerSubsystem indexerSubsystem,
-      final double balls) {
+      final int balls) {
     this.shooterSubsystem = shooterSubsystem;
     this.moveBallCommand = new MoveBallCommand(indexerSubsystem);
     numBalls = balls;

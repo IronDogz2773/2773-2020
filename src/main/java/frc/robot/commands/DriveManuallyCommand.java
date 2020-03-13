@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+//import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.NavigationSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -12,6 +13,7 @@ public class DriveManuallyCommand extends CommandBase {
     private final NavigationSubsystem nav;
     public double speed;
     public double rotation;
+    //private double speedCap;
     private final Joystick joystick;
     // private double speedAcceleration;
     // private double rotationAcceleration;
@@ -39,7 +41,7 @@ public class DriveManuallyCommand extends CommandBase {
          * 1.00) rAcc += Constants.rInc; } else { rAcc = 0; }
          * driveSubsystem.manDrive(speed, rot); }
          */
-
+        //speedCap = joystick.getRawAxis(Constants.joystickSlider) + 1.5;
         if (Math.abs(joystick.getY()) > .1) {
             speed = -joystick.getY();// * speedAcceleration * Constants.movementSpeedCap;
             /*

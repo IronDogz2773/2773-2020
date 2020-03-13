@@ -33,9 +33,9 @@ public class IndexerSubsystem extends SubsystemBase {
   }
 
   public void setConveyorSpeed(double speed) {
-    speed = MathUtil.clamp(speed, -0.75, 0.75);
-    conveyorRight.set(speed); // one turns clockwise, the other turns counterclockwise
-    conveyorLeft.set(-speed);
+    speed = MathUtil.clamp(speed, -Constants.indexerSpeedCap, Constants.indexerSpeedCap);
+    conveyorRight.set(-speed); // one turns clockwise, the other turns counterclockwise
+    conveyorLeft.set(speed);
   }
 
   public void stopConveyor() {

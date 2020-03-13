@@ -45,6 +45,11 @@ public class LEDSubsystem extends SubsystemBase {
       return "teamError"; 
   }
 
+  public void switchToClimb()
+  {
+    setLED(0.91);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
