@@ -14,7 +14,7 @@ import frc.robot.subsystems.ColorSubsystem;
 public class RotateColor extends CommandBase {
   private ColorSubsystem Rotater;
   String startingColor = Rotater.gettColor();
-  String neededColor = Rotater.getFieldColor();
+  String neededColor = "";//Rotater.getFieldColor();
 
   /**
    * Creates a new StartSpinCommand.
