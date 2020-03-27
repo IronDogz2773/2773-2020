@@ -14,6 +14,7 @@ import frc.robot.Constants;
 /**
  * Represents an air compressor and its related components
  * @author Tyler Graham
+ * @author irondogz@gmail.com
  */
 public class AirSubsystem extends SubsystemBase {
   private final Compressor compressor = new Compressor(Constants.compressorPort);
