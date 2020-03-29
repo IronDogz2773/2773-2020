@@ -13,9 +13,15 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Spark;
 import frc.robot.Constants;
 
+/**
+ * Represents a REV Robotics Blinkin LED controller and its related components
+ * @author Tyler Graham
+ * @author irondogz@gmail.com
+ */
 public class LEDSubsystem extends SubsystemBase {
   
   private final Spark LED = new Spark(Constants.LEDport);
+
   /**
    * Creates a new LEDSubsystem.
    */
@@ -23,16 +29,28 @@ public class LEDSubsystem extends SubsystemBase {
     LED.set(0);
   }
 
+  /**
+   * Sets the LED strip to a specified value
+   * @param val The value of the Blinkin LED Controller between -1.0 and 1.0 to set
+   */
   public void setLED(double val)
   {
     LED.set(val);
   }
 
+  /**
+   * Gets the last set value of the LED strip
+   * @return A double representing the last set value of the Blinkin LED Controller
+   */
   public double getLED()
   {
     return LED.get();
   }
 
+  /**
+   * Gets the current alliance color from the SmartDashboard
+   * @return A string representing the current alliance color
+   */
   public String getTeam()
   {
     NetworkTable fms = NetworkTableInstance.getDefault().getTable("FMSInfo");
@@ -45,6 +63,9 @@ public class LEDSubsystem extends SubsystemBase {
       return "teamError"; 
   }
 
+  /**
+   * Sets the Blinkin LED Controller to a value of 0.91
+   */
   public void switchToClimb()
   {
     setLED(0.91);
