@@ -14,7 +14,7 @@ import frc.robot.Constants;
 /**
  * Represents a climber mechanism and its related components
  * @author Tyler Graham
- * @author irondogz@gmail.com
+ * @author irondogzrobotics@gmail.com
  */
 public class ClimbSubsystem extends SubsystemBase {
   private final Spark climbRight = new Spark(Constants.rightClimbPort);

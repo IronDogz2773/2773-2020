@@ -16,7 +16,7 @@ import frc.robot.Constants;
  * Represents a ball shooter mechanism and its related components
  * @author Ilya Dzialendzik
  * @author Yury Dzialendzik
- * @author irondogz@gmail.com
+ * @author irondogzrobotics@gmail.com
  */
 public class ShooterSubsystem extends SubsystemBase {
 

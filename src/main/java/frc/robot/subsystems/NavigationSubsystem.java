@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj.SPI.Port;*/
  * @author Ilya Dzialendzik
  * @author Yury Dzialendzik
  * @author Tyler Graham
- * @author irondogz@gmail.com
+ * @author irondogzrobotics@gmail.com
  */
 public class NavigationSubsystem extends SubsystemBase {
 

@@ -17,7 +17,7 @@ import frc.robot.Constants;
  * Represents a power cell indexer and its related components
  * @author Yury Dzialendzik
  * @author Tyler Graham
- * @author irondogz@gmail.com
+ * @author irondogzrobotics@gmail.com
  */
 public class IndexerSubsystem extends SubsystemBase {
   private final Spark conveyorRight = new Spark(Constants.conveyorRightPort);

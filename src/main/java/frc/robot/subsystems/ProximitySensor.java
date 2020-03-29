@@ -7,7 +7,7 @@ import frc.robot.Constants;
  * Represents a group of ultrasonic sensors and their related components
  * @author Ilya Dzialendzik
  * @author Yury Dzialendzik
- * @author irondogz@gmail.com
+ * @author irondogzrobotics@gmail.com
  */
 public class ProximitySensor {
     private I2C proximity = new I2C(I2C.Port.kOnboard, 0x31);

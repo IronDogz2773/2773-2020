@@ -16,7 +16,7 @@ import frc.robot.Constants;
 /**
  * Represents a REV Robotics Blinkin LED controller and its related components
  * @author Tyler Graham
- * @author irondogz@gmail.com
+ * @author irondogzrobotics@gmail.com
  */
 public class LEDSubsystem extends SubsystemBase {
   
