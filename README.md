@@ -1,6 +1,6 @@
 # FRC Team 2773 2020 Competition Code
 
-<img src="" width="400px">
+![](https://github.com/IronDogz2773/images/blob/master/IMG_1741.png)
 
 ## Summary
 This code is for the [FIRST Robotics Competition](http://www.firstinspires.org/robotics/frc) 2020 Game: FIRST Infinite Recharge. 
