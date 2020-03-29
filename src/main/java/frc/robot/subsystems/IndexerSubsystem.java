@@ -39,7 +39,7 @@ public class IndexerSubsystem extends SubsystemBase {
   }
 
   /**
-   * Sets the speed of the indexer conveyor motors
+   * Spins the conveyor at a specified speed
    * @param speed The speed value of the conveyor motors between -1.0 and 1.0 to set
    */
   public void setConveyorSpeed(double speed) {
