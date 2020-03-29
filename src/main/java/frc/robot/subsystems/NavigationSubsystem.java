@@ -24,6 +24,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /*import com.analog.adis16470.frc.ADIS16470_IMU.IMUAxis;
 import edu.wpi.first.wpilibj.SPI.Port;*/
 
+/**
+ * Represents sensors associated with navigation and odometry
+ * @author Ilya Dzialendzik
+ * @author Yury Dzialendzik
+ * @author Tyler Graham
+ * @author irondogz@gmail.com
+ */
 public class NavigationSubsystem extends SubsystemBase {
 
   // Sensors
@@ -45,7 +52,7 @@ public class NavigationSubsystem extends SubsystemBase {
   private ProximitySensor proximity = new ProximitySensor();
 
   /**
-   * Creates a new NavigationSubsystem.
+   * Creates a new NavigationSubsystem and resets gyroscope.
    */
   public NavigationSubsystem() {
     if (gyroscope.isConnected()) {
@@ -62,53 +69,99 @@ public class NavigationSubsystem extends SubsystemBase {
     //SmartDashboard.putData("Accelerometer", accelerometer);
   }
 
+  /**
+   * Sets the distance per pulse of the left and right encoders
+   * @param distancePerPulse The distance (in meters) per pulse of the encoders
+   */
   public void setDistancePerPulse(double distancePerPulse) {
     leftEncoder.setDistancePerPulse(distancePerPulse);
     rightEncoder.setDistancePerPulse(distancePerPulse);
   }
 
+  /**
+   * Gets the angle of the target from the vision network table
+   * @return A double representing the angle (in degrees) between the camera and the target
+   */
   public double getVisionAngle() {
     return angleEntry.getDouble(0);
   }
 
+  /**
+   * Gets the current heading of the gyroscope
+   * @return A double representing the currrent heading of the gyroscope (in degrees)
+   */
   public double getGyroAngle() {
     return gyroscope.getAngle();
     // return imu.getAngle();
   }
 
+  /**
+   * Gets the current position of the robot
+   * @return A Pose2d representing the current position of the robot
+   */
   public Pose2d getCurrentPosition() {
     return currentPosition;
   }
 
+  /**
+   * Gets the starting position of the robot
+   * @return A Pose2d representing the starting position of the robot
+   */
   public Pose2d getStartPosition() {
     return startPosition;
   }
 
+  /**
+   * Resets the left and right encoders
+   */
   public void resetEncoders() {
     leftEncoder.reset();
     rightEncoder.reset();
   }
 
+  /**
+   * Resets the gyroscope
+   */
   public void resetGyro() {
     gyroscope.reset();
   }
 
+  /** 
+   * Resets the ododometer to the starting position and rotation
+   */
   public void resetOdometer() {
     odometer.resetPosition(startPosition, startRotation);
   }
 
+  /**
+   * Gets a new Pose2d
+   * @return A default Pose2d object
+   */
   public Pose2d getPose() {
     return new Pose2d();
   }
 
+  /** 
+   * Gets a new DifferentialDriveWheelSpeeds 
+   * @return A default DifferentialDriveWheelSpeeds object
+   */
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds();
   }
 
+  /**
+   * Gets the current heading of the gyroscope in degrees (0 to 360)
+   * @return a double representing the current heading of the gyroscope (in degrees 0 to 360)
+   * @deprecated
+   */
   public double getHeading() {
     return Math.IEEEremainder(gyroscope.getAngle(), 360); // * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 
+  /**
+   * Uses ultrasonic sensors to check if the robot is too close to an obstacle
+   * @return A boolean representing if the robot is too close to an obstacle
+   */
   public boolean tooClose() {
     return proximityDistances[Constants.leftFrontProximitySensor] <= Constants.minDistanceToFrontObsticle
         || proximityDistances[Constants.rightFrontProximitySensor] <= Constants.minDistanceToFrontObsticle;

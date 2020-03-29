@@ -16,6 +16,11 @@ import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorMatch;
 import edu.wpi.first.wpilibj.I2C;
 
+/**
+ * Represents a color wheel spinner and its related components
+ * @author David Finch
+ * @author irondgoz@gmail.com
+ */
 public class ColorSubsystem extends SubsystemBase {
     private final Spark Tyler = new Spark(Constants.colorWheelPort);
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
@@ -26,6 +31,9 @@ public class ColorSubsystem extends SubsystemBase {
     private final ColorMatch m_colorMatcher = new ColorMatch();
     private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
 
+    /**
+     * Creates a new ColorSubsystem
+     */
     public ColorSubsystem() {
         m_colorMatcher.addColorMatch(kBlueTarget);
         m_colorMatcher.addColorMatch(kGreenTarget);
@@ -37,14 +45,25 @@ public class ColorSubsystem extends SubsystemBase {
     public void periodic() {
     }
 
+    /**
+     * Spins the color wheel motor at a specified speed
+     * @param speed The speed value of the color wheel motor between -1.0 and 1.0 to set
+     */
     public void doR2D2(final double speed) {
         Tyler.set(speed);
     }
 
+    /**
+     * Stops the color wheel motor
+     */
     public void stopR2D2() {
         Tyler.set(0.0);
     }
 
+    /**
+     * Gets the current color detected by the REV Robotics Color Sensor V3
+     * @return A Color representing the current color detected by the color sensor
+     */
     public String gettColor() {
         final Color detectedColor = m_colorSensor.getColor();
         final ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
@@ -62,6 +81,11 @@ public class ColorSubsystem extends SubsystemBase {
         }
     }
 
+    /**
+     * Gets the designated match color
+     * @return A String representing the color of the match
+     * @deprecated 
+     */
     public String getFieldColor() {
         return "";
     }

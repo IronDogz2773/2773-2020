@@ -11,6 +11,11 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+/**
+ * Represents an air compressor and its related components
+ * @author Tyler Graham
+ * @author irondogz@gmail.com
+ */
 public class AirSubsystem extends SubsystemBase {
   private final Compressor compressor = new Compressor(Constants.compressorPort);
 
@@ -25,14 +30,24 @@ public class AirSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
+  /**
+   * Starts the air compressor
+   */
   public void start() {
     compressor.start();
   }
 
+  /** 
+   * Stops the air compressor
+   */
   public void stop() {
     compressor.stop();
   }
 
+  /**
+   * Gets the amperage used by the compressor
+   * @return A double representing the current used in amps
+   */
   public double getCurrent() {
     return compressor.getCompressorCurrent();
   }
