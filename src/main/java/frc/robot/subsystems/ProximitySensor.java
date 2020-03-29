@@ -3,13 +3,25 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.I2C;
 import frc.robot.Constants;
 
+/**
+ * Represents a group of ultrasonic sensors and their related components
+ * @author Ilya Dzialendzik
+ * @author Yury Dzialendzik
+ */
 public class ProximitySensor {
     private I2C proximity = new I2C(I2C.Port.kOnboard, 0x31);
 
+    /**
+     * Creates a new ProximitySensor
+     */
     public ProximitySensor() {
 
     }
 
+    /**
+     * Gets distance readings from all ultrasonic sensors
+     * @return A double array representing the distance reading of each sensor accordingly
+     */
     public double[] getDistances() {
         double[] results = new double[4];
 
