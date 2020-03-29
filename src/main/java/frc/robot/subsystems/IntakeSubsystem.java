@@ -15,6 +15,7 @@ import frc.robot.Constants;
  * Represents an intake mechanism and its related components
  * @author Ilya Dzialendzik
  * @author Yury Dzialendzik
+ * @author irondogz@gmail.com
  */
 public class IntakeSubsystem extends SubsystemBase {
   private final Spark intake = new Spark(Constants.intakePort);
