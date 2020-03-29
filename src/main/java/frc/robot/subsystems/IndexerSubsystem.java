@@ -15,8 +15,8 @@ import frc.robot.Constants;
 
 /**
  * Represents a power cell indexer and its related components
- * @author Tyler Graham
  * @author Yury Dzialendzik
+ * @author Tyler Graham
  * @author irondogz@gmail.com
  */
 public class IndexerSubsystem extends SubsystemBase {

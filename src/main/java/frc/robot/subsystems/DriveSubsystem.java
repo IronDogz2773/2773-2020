@@ -8,9 +8,9 @@ import frc.robot.Constants;
 
 /**
  * Represents a drivetrain and its related components
- * @author Tyler Graham
  * @author Ilya Dzialendzik
  * @author Yury Dzialendzik
+ * @author Tyler Graham
  * @author irondogz@gmail.com
  */
 public class DriveSubsystem extends SubsystemBase {
